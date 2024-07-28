@@ -1,0 +1,360 @@
+:root {
+    --background-color: #0B1F3F;
+    --text-color: #FFFFFF;
+    --secondary-text-color: #B3C3D9;
+    --accent-color: #D3BC8D;
+    --highlight-color: #FF96A0;
+    --border-color: #1E3A5F;
+    --hover-color: #152C4E;
+}
+
+body {
+    width: 350px;
+    height: 420px;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.header {
+    background: linear-gradient(45deg, var(--accent-color), var(--highlight-color));
+    padding: 16px 20px;
+    position: relative;
+}
+
+h1 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--background-color);
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+#popup-window {
+    position: absolute;
+    top: 18px;
+    right: 12px;
+    background: none;
+    border: none;
+    color: var(--background-color);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.content-wrapper {
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-wrapper::-webkit-scrollbar {
+    width: 6px;
+}
+
+.content-wrapper::-webkit-scrollbar-track {
+    background: var(--background-color);
+}
+
+.content-wrapper::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color);
+    border-radius: 3px;
+}
+
+.content-wrapper::-webkit-scrollbar-thumb:hover {
+    background-color: var(--highlight-color);
+}
+
+#currency-list {
+    list-style-type: none;
+    padding: 0 0 50px 0;
+    margin: 0;
+    width: 100%;
+}
+
+.currency-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box;
+    width: 100%;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.currency-item:hover,
+.currency-item.active-input {
+    background-color: var(--hover-color);
+}
+
+.drag-handle {
+    color: var(--secondary-text-color);
+    margin-right: 12px;
+    cursor: move;
+    flex-shrink: 0;
+}
+
+.flag-icon {
+    width: 20px;
+    height: 15px;
+    margin-right: 8px;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.currency-code {
+    flex-grow: 0;
+    flex-shrink: 0;
+    font-weight: 500;
+    margin-right: 8px;
+    width: 40px;
+    font-size: 16px;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1;
+    margin-right: 2px;
+}
+
+.amount-input {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    color: var(--accent-color);
+    padding: 4px 36px 4px 4px;
+    font-size: 20px;
+    text-align: right;
+    font-weight: 600;
+    text-overflow: ellipsis;
+}
+
+.amount-input:focus,
+.amount-input.last-edited {
+    outline: none;
+    color: var(--highlight-color);
+}
+
+.amount-input::selection {
+    background-color: var(--highlight-color);
+    color: var(--background-color);
+}
+
+.currency-symbol {
+    position: absolute;
+    right: 4px;
+    color: var(--secondary-text-color);
+    font-size: 12px;
+    min-width: 26px;
+    text-align: center;
+}
+
+.delete-button {
+    color: var(--border-color);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 2px;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+}
+
+.delete-button:hover {
+    color: var(--highlight-color);
+}
+
+.delete-button.disabled {
+    color: var(--border-color);
+    cursor: not-allowed;
+}
+
+#add-currency {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    color: var(--background-color);
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+#currency-modal {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(11, 31, 63, 0.8);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: 1001;
+}
+
+.modal-content {
+    background-color: var(--background-color);
+    margin: 10px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    height: calc(100% - 60px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: var(--secondary-text-color);
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1002;
+}
+
+#currency-search {
+    width: calc(100% - 40px);
+    /* 減少寬度 */
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: var(--hover-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    border-radius: 4px;
+}
+
+#all-currencies {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+#all-currencies::-webkit-scrollbar {
+    width: 6px;
+}
+
+#all-currencies::-webkit-scrollbar-track {
+    background: var(--background-color);
+}
+
+#all-currencies::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color);
+    border-radius: 3px;
+}
+
+#all-currencies::-webkit-scrollbar-thumb:hover {
+    background-color: var(--highlight-color);
+}
+
+.all-currency-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.all-currency-item:hover {
+    background-color: var(--hover-color);
+}
+
+.added-icon {
+    margin-left: auto;
+    color: var(--accent-color);
+}
+
+.add-icon {
+    margin-left: auto;
+    color: var(--secondary-text-color);
+}
+
+/* 彈出窗口樣式 */
+body.popup-window {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+body.popup-window .content-wrapper {
+    height: calc(100vh - 80px);
+    /* 扣除 header 高度 */
+    overflow-y: auto;
+}
+
+.flag-icon {
+    font-size: 16px;
+    /* 調整大小以適應表情符號 */
+    margin-right: 8px;
+    flex-shrink: 0;
+    width: 22px;
+    /* 給定固定寬度以保持對齊 */
+    text-align: center;
+}
+
+.search-container {
+    position: relative;
+    width: 100%;
+}
+
+#clear-search {
+    position: absolute;
+    right: 25px;
+    top: 35%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: none;
+    color: var(--secondary-text-color);
+}
+.no-results {
+    text-align: center;
+    padding: 20px;
+    color: var(--secondary-text-color);
+}
+
+.currency-icon {
+    min-width: 20px !important;
+    min-height: 20px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 6px;
+}
+
+.crypto-icon {
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}

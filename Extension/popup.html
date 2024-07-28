@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Currency Converter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/7.2.3/css/flag-icons.min.css" integrity="sha512-bZBu2H0+FGFz/stDN/L0k8J0G8qVsAL0ht1qg5kTwtAheiXwiRKyCq1frwfbSFSJN3jooR5kauE0YjtPzhZtJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Multi-Currency Converter</h1>
+        <button id="popup-window"><i class="fas fa-external-link-alt"></i></button>
+    </div>
+    <div class="content-wrapper">
+        <ul id="currency-list"></ul>
+    </div>
+    <button id="add-currency">+</button>
+    <div id="currency-modal">
+        <div class="modal-content">
+            <span id="close-modal">&times;</span>
+            <div class="search-container">
+                <input type="text" id="currency-search" placeholder="搜尋貨幣...">
+                <button id="clear-search">&times;</button>
+            </div>
+            <ul id="all-currencies"></ul>
+            <div id="no-results" class="no-results" style="display: none;">沒有符合的搜尋結果</div>
+        </div>
+    </div>
+    
+    <script src="Sortable.min.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>
