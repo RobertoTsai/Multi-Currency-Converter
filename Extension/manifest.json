@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "實時匯率換算器",
+  "name": "Multi-Currency Converter",
   "version": "1.0",
-  "description": "一個簡單的實時匯率換算Chrome擴展",
+  "description": "Instantly convert and compare multiple currencies with this fast, user-friendly Chrome extension.",
   "action": {
     "default_popup": "popup.html",
     "default_icon": {

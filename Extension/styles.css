@@ -23,12 +23,27 @@ body {
 
 .header {
     background: linear-gradient(45deg, var(--accent-color), var(--highlight-color));
-    padding: 16px 20px;
+    padding: 14px 16px;
     position: relative;
 }
 
+.header-content {
+    display: flex;
+    align-items: center;
+}
+
+.header-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    padding: 4px;
+}
+
 h1 {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     margin: 0;
     color: var(--background-color);
@@ -37,7 +52,7 @@ h1 {
 
 #popup-window {
     position: absolute;
-    top: 18px;
+    top: 20px;
     right: 12px;
     background: none;
     border: none;
