@@ -8,7 +8,9 @@ const closeModalButton = document.getElementById('close-modal');
 
 const defaultCurrencies = ['USD', 'EUR', 'JPY', 'TWD', 'BTC', 'ETH'];
 const currentLanguage = 'en'; // 或者從某處獲取當前語言設置
+const CACHE_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
 let exchangeRates = {};
+let lastUpdated = 0;
 let lastAmount = 100;
 let lastEditedCurrency = 'USD';
 let allCurrencies = {};
@@ -149,32 +151,29 @@ async function getLastInput() {
 // 初始化貨幣列表
 async function initCurrencyList() {
     try {
-        //console.log('Initializing currency list');
-        await getLastInput(); // 獲取上次的輸入
+        await getLastInput();
         const savedOrder = await getSavedOrder();
-        //console.log('Saved order:', savedOrder);
         
-        // 清空現有的貨幣列表
         currencyList.innerHTML = '';
         
-        let currencies;
-        if (savedOrder && savedOrder.length > 0) {
-            currencies = savedOrder;
-        } else {
-            currencies = defaultCurrencies;
-            // 保存默認順序
-            await saveOrder(currencies);
-        }
+        let currencies = savedOrder.length > 0 ? savedOrder : defaultCurrencies;
         
-        //console.log('Currencies to display:', currencies);
-        currencies.forEach(currency => addCurrencyItem(currency));
+        currencies.forEach(currency => addCurrencyItem(currency, null, true));
         
-        // 更新所有金額
-        updateAllAmounts(lastEditedAmount, lastEditedCurrency);
+        await updateExchangeRates();
+        
+        // 移除 skeleton 效果並更新金額
+        document.querySelectorAll('.currency-item').forEach(item => {
+            const currency = item.dataset.currency;
+            item.classList.remove('skeleton');
+            addCurrencyItem(currency, convert(lastEditedAmount, lastEditedCurrency, currency), false);
+            item.remove(); // 移除原始的 skeleton 項目
+        });
         
         //console.log('Currency list initialized');
     } catch (error) {
-        //console.error('Error initializing currency list:', error);
+        console.error('Error initializing currency list:', error);
+        showError('Failed to initialize currency list. Please try again.');
     }
 }
 
@@ -188,47 +187,59 @@ function getFlagEmoji(countryCode) {
 }
 
 // 添加貨幣項目
-// 添加貨幣項目
-function addCurrencyItem(currency, amount = null) {
+function addCurrencyItem(currency, amount = null, isSkeleton = false) {
     const item = document.createElement('li');
-    item.className = 'currency-item';
+    item.className = `currency-item ${isSkeleton ? 'skeleton' : ''}`;
     item.dataset.currency = currency;
     const isLastEdited = currency === lastEditedCurrency;
     
-    // 如果沒有提供金額，使用最後編輯的貨幣和金額進行換算
-    if (amount === null) {
-        const lastEditedInput = document.querySelector('.amount-input.last-edited');
-        if (lastEditedInput) {
-            const fromCurrency = lastEditedInput.dataset.currency;
-            const fromAmount = parseFormattedNumber(lastEditedInput.value);
-            amount = convert(fromAmount, fromCurrency, currency);
-        } else {
-            amount = 0;
-        }
-    }
-
-    // 格式化金額
-    const formattedAmount = isLastEdited ? formatUserInput(amount) : formatConversionResult(amount);
-
     const iconContent = getCurrencyIcon(currency);
     const isCrypto = currencyConfig.crypto[currency] !== undefined;
 
-    item.innerHTML = `
-        <span class="drag-handle"><i class="fas fa-grip-lines"></i></span>
-        <span class="currency-icon ${isCrypto ? 'crypto-icon' : iconContent}">${isCrypto ? iconContent : ''}</span>
-        <span class="currency-code">${currency}</span>
-        <div class="input-wrapper">
-            <input type="text" class="amount-input ${isLastEdited ? 'last-edited' : ''}" data-currency="${currency}" value="${formattedAmount}">
-            <span class="currency-symbol">${getCurrencySymbol(currency)}</span>
-        </div>
-        <button class="delete-button" title="刪除"><i class="fas fa-times"></i></button>
-    `;
-    currencyList.appendChild(item);
+    if (isSkeleton) {
+        item.innerHTML = `
+            <span class="drag-handle"><i class="fas fa-grip-lines"></i></span>
+            <span class="currency-icon ${isCrypto ? 'crypto-icon' : iconContent}">${isCrypto ? iconContent : ''}</span>
+            <span class="currency-code">${currency}</span>
+            <div class="input-wrapper">
+                <div class="skeleton-loader"></div>
+            </div>
+            <button class="delete-button" title="刪除"><i class="fas fa-times"></i></button>
+        `;
+    } else {
+        // 如果沒有提供金額，使用最後編輯的貨幣和金額進行換算
+        if (amount === null) {
+            const lastEditedInput = document.querySelector('.amount-input.last-edited');
+            if (lastEditedInput) {
+                const fromCurrency = lastEditedInput.dataset.currency;
+                const fromAmount = parseFormattedNumber(lastEditedInput.value);
+                amount = convert(fromAmount, fromCurrency, currency);
+            } else {
+                amount = lastEditedAmount;
+            }
+        }
 
-    const input = item.querySelector('.amount-input');
-    input.addEventListener('input', handleAmountInput);
-    input.addEventListener('focus', handleAmountFocus);
-    input.addEventListener('blur', handleAmountBlur);
+        // 格式化金額
+        const formattedAmount = isLastEdited ? formatUserInput(amount) : formatConversionResult(amount);
+
+        item.innerHTML = `
+            <span class="drag-handle"><i class="fas fa-grip-lines"></i></span>
+            <span class="currency-icon ${isCrypto ? 'crypto-icon' : iconContent}">${isCrypto ? iconContent : ''}</span>
+            <span class="currency-code">${currency}</span>
+            <div class="input-wrapper">
+                <input type="text" class="amount-input ${isLastEdited ? 'last-edited' : ''}" data-currency="${currency}" value="${formattedAmount}">
+                <span class="currency-symbol">${getCurrencySymbol(currency)}</span>
+            </div>
+            <button class="delete-button" title="刪除"><i class="fas fa-times"></i></button>
+        `;
+
+        const input = item.querySelector('.amount-input');
+        input.addEventListener('input', handleAmountInput);
+        input.addEventListener('focus', handleAmountFocus);
+        input.addEventListener('blur', handleAmountBlur);
+    }
+
+    currencyList.appendChild(item);
 
     const deleteButton = item.querySelector('.delete-button');
     deleteButton.addEventListener('click', () => deleteCurrencyItem(item));
@@ -352,7 +363,7 @@ function convert(amount, fromCurrency, toCurrency) {
     // 檢查匯率是否可用
     if (!isCurrencyAvailable(fromCurrency) || !isCurrencyAvailable(toCurrency)) {
         //console.error(`Exchange rate not available for ${fromCurrency} or ${toCurrency}`);
-        return 0;
+        return amount; // 返回原始金額作為默認值
     }
     
     // 如果源貨幣和目標貨幣相同，直接返回金額
@@ -407,6 +418,17 @@ function isCurrencyAvailable(currency) {
 // 更新匯率
 async function updateExchangeRates() {
     try {
+        // 首先檢查快取
+        const cachedData = await getFromCache('exchangeRates');
+        if (cachedData && !isCacheExpired(cachedData.timestamp)) {
+            fiatRates = cachedData.data.fiatRates;
+            cryptoRates = cachedData.data.cryptoRates;
+            btcToUsd = cachedData.data.btcToUsd;
+            
+            // 使用快取數據更新 UI
+            updateAllAmounts(lastEditedAmount, lastEditedCurrency);
+        }
+
         // 獲取法定貨幣匯率
         let fiatData;
         try {
@@ -415,17 +437,13 @@ async function updateExchangeRates() {
                 throw new Error(`HTTP error! status: ${fiatResponse.status}`);
             }
             fiatData = await fiatResponse.json();
-            saveToCache('fiatRates', fiatData);
+            fiatRates = fiatData.rates;
         } catch (error) {
-            //console.error('Error fetching fiat rates, using cache:', error);
-            const cachedFiatData = await getFromCache('fiatRates');
-            if (cachedFiatData && !isCacheExpired(cachedFiatData.timestamp)) {
-                fiatData = cachedFiatData.data;
-            } else {
+            console.error('Error fetching fiat rates:', error);
+            if (!fiatRates) {
                 throw new Error('No valid fiat rate data available');
             }
         }
-        fiatRates = fiatData.rates;
 
         // 獲取加密貨幣匯率
         let cryptoData;
@@ -435,31 +453,29 @@ async function updateExchangeRates() {
                 throw new Error(`HTTP error! status: ${cryptoResponse.status}`);
             }
             cryptoData = await cryptoResponse.json();
-            saveToCache('cryptoRates', cryptoData);
         } catch (error) {
-            //console.error('Error fetching crypto rates, using cache:', error);
-            const cachedCryptoData = await getFromCache('cryptoRates');
-            if (cachedCryptoData && !isCacheExpired(cachedCryptoData.timestamp)) {
-                cryptoData = cachedCryptoData.data;
-            } else {
+            console.error('Error fetching crypto rates:', error);
+            if (!cryptoRates) {
                 throw new Error('No valid crypto rate data available');
             }
         }
 
         // 更新 BTC 到 USD 的匯率
-        btcToUsd = cryptoData.rates.usd.value;
+        if (cryptoData) {
+            btcToUsd = cryptoData.rates.usd.value;
         
-        // 更新加密貨幣匯率，只包含有匯率的加密貨幣
-        cryptoRates = {};
-        Object.keys(cryptoData.rates).forEach(crypto => {
-            const upperCaseCrypto = crypto.toUpperCase();
-            if (cryptoCurrencies[upperCaseCrypto]) {
-                cryptoRates[upperCaseCrypto] = 1 / cryptoData.rates[crypto].value;
-            }
-        });
+            // 更新加密貨幣匯率，只包含有匯率的加密貨幣
+            cryptoRates = {};
+            Object.keys(cryptoData.rates).forEach(crypto => {
+                const upperCaseCrypto = crypto.toUpperCase();
+                if (cryptoCurrencies[upperCaseCrypto]) {
+                    cryptoRates[upperCaseCrypto] = 1 / cryptoData.rates[crypto].value;
+                }
+            });
         
-        // 確保 BTC 對自身的匯率為 1
-        cryptoRates['BTC'] = 1;
+            // 確保 BTC 對自身的匯率為 1
+            cryptoRates['BTC'] = 1;
+        }
 
         // 填充 allCurrencies 對象
         allCurrencies = {
@@ -483,21 +499,41 @@ async function updateExchangeRates() {
             }, {})
         };
 
+        // 保存到快取
+        saveToCache('exchangeRates', {
+            fiatRates: fiatRates,
+            cryptoRates: cryptoRates,
+            btcToUsd: btcToUsd
+        });
+
         // 調用日誌函數來檢查匯率
         logExchangeRates();
 
-        // 更新所有金額
-        const lastEditedInput = document.querySelector('.amount-input.last-edited');
-        if (lastEditedInput) {
-            const amount = parseFormattedNumber(lastEditedInput.value);
-            updateAllAmounts(amount, lastEditedInput.dataset.currency);
+        // 確保我們有有效的匯率數據
+        if (Object.keys(fiatRates).length === 0 && Object.keys(cryptoRates).length === 0) {
+            throw new Error('No valid exchange rate data available');
         }
+
+        // 移除 skeleton 效果
+        document.querySelectorAll('.currency-item').forEach(item => {
+            const currency = item.dataset.currency;
+            item.classList.remove('skeleton');
+            addCurrencyItem(currency, convert(lastEditedAmount, lastEditedCurrency, currency), false);
+            item.remove(); // 移除原始的 skeleton 項目
+        });
+
+        // 更新所有金額
+        updateAllAmounts(lastEditedAmount, lastEditedCurrency);
 
         // 重新填充所有貨幣列表
         populateAllCurrencies();
+
     } catch (error) {
-        //console.error('Failed to update exchange rates:', error);
-        // 可以在這裡添加用戶通知邏輯
+        console.error('Failed to update exchange rates:', error);
+        // 如果我們沒有任何匯率數據（首次加載失敗），顯示一個錯誤
+        if (!Object.keys(fiatRates).length && !Object.keys(cryptoRates).length) {
+            showError('Failed to load exchange rates. Please check your internet connection and try again.');
+        }
     }
 }
 
@@ -729,8 +765,16 @@ async function getFromCache(key) {
 
 // 檢查快取是否過期（這裡設置為 1 小時）
 function isCacheExpired(timestamp) {
-    const oneHour = 60 * 60 * 1000; // 毫秒
-    return Date.now() - timestamp > oneHour;
+    return Date.now() - timestamp > CACHE_DURATION;
+}
+
+// 新增一個顯示錯誤的函數
+function showError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = message;
+    currencyList.innerHTML = '';
+    currencyList.appendChild(errorDiv);
 }
 
 // 初始化

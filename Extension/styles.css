@@ -351,6 +351,7 @@ body.popup-window .content-wrapper {
     display: none;
     color: var(--secondary-text-color);
 }
+
 .no-results {
     text-align: center;
     padding: 20px;
@@ -372,4 +373,26 @@ body.popup-window .content-wrapper {
     font-size: 14px;
     font-weight: bold;
     color: #333;
+}
+
+.skeleton .input-wrapper {
+    position: relative;
+}
+
+.skeleton-loader {
+    height: 25px;
+    background: linear-gradient(90deg, var(--border-color) 25%, var(--hover-color) 50%, var(--border-color) 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 4px;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
 }
