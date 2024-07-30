@@ -754,6 +754,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         isPopupWindow = window.type === 'popup';
         if (isPopupWindow) {
             document.body.classList.add('popup-window');
+            // 隱藏彈窗按鈕
+            popupWindowButton.style.display = 'none';
         }
     });
 
@@ -776,6 +778,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     addCurrencyButton.addEventListener('click', () => {
         currencyModal.style.display = 'block';
         populateAllCurrencies(); // 確保列表是最新的
+        // 將焦點移到搜索輸入框
+        currencySearch.focus();
     });
 
     // 關閉模態框
@@ -805,6 +809,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             currentSearchTerm = '';
             clearSearchButton.style.display = 'none';
             populateAllCurrencies();
+            // 將焦點重新聚焦到搜索輸入框
+            currencySearch.focus();
         });
     } else {
         //console.error('Currency search input or clear button not found');
