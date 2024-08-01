@@ -7,13 +7,11 @@ const allCurrenciesList = document.getElementById('all-currencies');
 const closeModalButton = document.getElementById('close-modal');
 
 const defaultCurrencies = ['USD', 'EUR', 'JPY', 'TWD', 'BTC', 'ETH'];
-const currentLanguage = 'en'; // 或者從某處獲取當前語言設置
 const CACHE_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
-let exchangeRates = {};
-let lastUpdated = 0;
-let lastAmount = 100;
-let lastEditedCurrency = 'USD';
+const CURRENCY_INFO_CACHE_DURATION = 7 * 24 * 60 * 60 * 1000; // 7天的毫秒數
+let currentLanguage = 'en'; 
 let allCurrencies = {};
+let lastEditedCurrency = 'USD';
 let lastEditedAmount = 100;
 let isPopupWindow = false;
 let currencyConfig = null;
@@ -23,69 +21,69 @@ let fiatRates = {};  // 儲存法幣對 USD 的匯率
 let cryptoRates = {};  // 儲存加密貨幣對 BTC 的匯率
 let btcToUsd = 0;  // 儲存 BTC 對 USD 的匯率
 
-// 獲取加密貨幣列表
-async function getCryptoCurrencies() {
-    try {
-        const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false');
-        const data = await response.json();
-        data.forEach(coin => {
-            const symbol = coin.symbol.toUpperCase();
-            if (currencyConfig.crypto[symbol]) {
-                // 使用自定義配置，但添加 API 提供的圖標
-                cryptoCurrencies[symbol] = {
-                    ...currencyConfig.crypto[symbol],
-                    icon: coin.image
-                };
+//取得用戶語言設定
+async function getUserLanguage() {
+    return new Promise((resolve) => {
+        chrome.storage.sync.get('userLanguage', function(result) {
+            if (result.userLanguage) {
+                resolve(result.userLanguage);
             } else {
-                // 使用 API 數據
-                cryptoCurrencies[symbol] = {
-                    symbol: symbol,
-                    icon: coin.image,
-                    names: {
-                        en: coin.name,
-                        "zh-TW": coin.name, // 使用英文名稱作為佔位符
-                        "zh-CN": coin.name  // 使用英文名稱作為佔位符
+                // 如果沒有設置，使用瀏覽器的語言
+                const browserLang = navigator.language || navigator.userLanguage;
+                if (browserLang.startsWith('zh')) {
+                    if (browserLang === 'zh-TW' || browserLang === 'zh-HK') {
+                        resolve('zh-TW');
+                    } else {
+                        resolve('zh-CN');
                     }
-                };
+                } else {
+                    resolve('en');
+                }
             }
         });
-        //console.log('Crypto currencies loaded:', cryptoCurrencies);
-    } catch (error) {
-        //console.error('Error fetching crypto currencies:', error);
-    }
-}
-
-// 獲取加密貨幣匯率
-async function getCryptoRates() {
-    try {
-        const response = await fetch('https://api.coingecko.com/api/v3/exchange_rates');
-        const data = await response.json();
-        Object.keys(data.rates).forEach(currency => {
-            if (cryptoCurrencies[currency.toUpperCase()]) {
-                exchangeRates[currency.toUpperCase()] = 1 / data.rates[currency].value;
-            }
-        });
-        //console.log('Crypto rates loaded:', exchangeRates);
-    } catch (error) {
-        //console.error('Error fetching crypto rates:', error);
-    }
+    });
 }
 
 // 加載貨幣配置
 async function loadCurrencyConfig() {
     try {
-        const response = await fetch('currency_config.json');
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        const cachedConfig = await getFromCache('currencyConfig');
+        if (cachedConfig && !isCacheExpired(cachedConfig.timestamp, CURRENCY_INFO_CACHE_DURATION)) {
+            currencyConfig = cachedConfig.data;
+            //console.log('Using cached currency config');
+        } else {
+            const response = await fetch('currency_config.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            currencyConfig = await response.json();
+            saveToCache('currencyConfig', currencyConfig, CURRENCY_INFO_CACHE_DURATION);
+            //console.log('Fetched and cached new currency config');
         }
-        currencyConfig = await response.json();
-        //console.log('Currency config loaded:', currencyConfig);
 
         // 初始化 cryptoCurrencies 對象
         cryptoCurrencies = { ...currencyConfig.crypto };
 
-        // 在這裡調用 getCryptoCurrencies 以獲取額外的加密貨幣信息
-        await getCryptoCurrencies();
+        // 填充 allCurrencies 對象
+        allCurrencies = {
+            ...Object.keys(currencyConfig.fiat).reduce((acc, code) => {
+                acc[code] = {
+                    code: code,
+                    name: getCountryName(code, currentLanguage),
+                    type: 'fiat'
+                };
+                return acc;
+            }, {}),
+            ...Object.keys(currencyConfig.crypto).reduce((acc, code) => {
+                acc[code] = {
+                    ...currencyConfig.crypto[code],
+                    type: 'crypto',
+                    name: getCountryName(code, currentLanguage)
+                };
+                return acc;
+            }, {})
+        };
+
     } catch (error) {
         //console.error('Error loading currency config:', error);
     }
@@ -158,93 +156,90 @@ async function initCurrencyList() {
         
         let currencies = savedOrder.length > 0 ? savedOrder : defaultCurrencies;
         
-        currencies.forEach(currency => addCurrencyItem(currency, null, true));
+        // 先顯示幣別列表，不包含金額
+        currencies.forEach(currency => addCurrencyItem(currency));
         
-        await updateExchangeRates();
+        // 嘗試使用快取的匯率
+        const cachedRates = await getFromCache('exchangeRates');
+        if (cachedRates && !isCacheExpired(cachedRates.timestamp)) {
+            fiatRates = cachedRates.data.fiatRates;
+            cryptoRates = cachedRates.data.cryptoRates;
+            btcToUsd = cachedRates.data.btcToUsd;
+            updateAllAmounts(lastEditedAmount, lastEditedCurrency);
+        } else {
+            // 如果沒有快取的匯率，顯示加載中的狀態
+            currencies.forEach(currency => {
+                const item = document.querySelector(`.currency-item[data-currency="${currency}"]`);
+                if (item) {
+                    const input = item.querySelector('.amount-input');
+                    input.value = 'Loading...';
+                    item.classList.add('skeleton');
+                }
+            });
+        }
         
-        // 移除 skeleton 效果並更新金額
-        document.querySelectorAll('.currency-item').forEach(item => {
-            const currency = item.dataset.currency;
-            item.classList.remove('skeleton');
-            addCurrencyItem(currency, convert(lastEditedAmount, lastEditedCurrency, currency), false);
-            item.remove(); // 移除原始的 skeleton 項目
+        // 非同步獲取最新匯率
+        updateExchangeRates().then(() => {
+            // 更新金額並移除 skeleton 效果
+            updateAllAmounts(lastEditedAmount, lastEditedCurrency);
+            document.querySelectorAll('.currency-item').forEach(item => {
+                item.classList.remove('skeleton');
+            });
         });
         
         //console.log('Currency list initialized');
     } catch (error) {
-        console.error('Error initializing currency list:', error);
+        //console.error('Error initializing currency list:', error);
         showError('Failed to initialize currency list. Please try again.');
     }
 }
 
-// 添加這個新函數來轉換國家代碼為國旗表情符號
-function getFlagEmoji(countryCode) {
-    const codePoints = countryCode
-        .toUpperCase()
-        .split('')
-        .map(char => 127397 + char.charCodeAt());
-    return String.fromCodePoint(...codePoints);
-}
-
 // 添加貨幣項目
-function addCurrencyItem(currency, amount = null, isSkeleton = false) {
+function addCurrencyItem(currency) {
+    const existingItem = document.querySelector(`.currency-item[data-currency="${currency}"]`);
+    if (existingItem) {
+        return existingItem;
+    }
+
     const item = document.createElement('li');
-    item.className = `currency-item ${isSkeleton ? 'skeleton' : ''}`;
+    item.className = 'currency-item';
     item.dataset.currency = currency;
-    const isLastEdited = currency === lastEditedCurrency;
     
     const iconContent = getCurrencyIcon(currency);
     const isCrypto = currencyConfig.crypto[currency] !== undefined;
 
-    if (isSkeleton) {
-        item.innerHTML = `
-            <span class="drag-handle"><i class="fas fa-grip-lines"></i></span>
-            <span class="currency-icon ${isCrypto ? 'crypto-icon' : iconContent}">${isCrypto ? iconContent : ''}</span>
-            <span class="currency-code">${currency}</span>
-            <div class="input-wrapper">
-                <div class="skeleton-loader"></div>
-            </div>
-            <button class="delete-button" title="刪除"><i class="fas fa-times"></i></button>
-        `;
-    } else {
-        // 如果沒有提供金額，使用最後編輯的貨幣和金額進行換算
-        if (amount === null) {
-            const lastEditedInput = document.querySelector('.amount-input.last-edited');
-            if (lastEditedInput) {
-                const fromCurrency = lastEditedInput.dataset.currency;
-                const fromAmount = parseFormattedNumber(lastEditedInput.value);
-                amount = convert(fromAmount, fromCurrency, currency);
-            } else {
-                amount = lastEditedAmount;
-            }
-        }
+    item.innerHTML = `
+        <span class="drag-handle"><i class="fas fa-grip-lines"></i></span>
+        <span class="currency-icon ${isCrypto ? 'crypto-icon' : iconContent}">${isCrypto ? iconContent : ''}</span>
+        <span class="currency-code">${currency}</span>
+        <div class="input-wrapper">
+            <input type="text" class="amount-input" data-currency="${currency}" value="">
+            <span class="currency-symbol">${getCurrencySymbol(currency)}</span>
+        </div>
+        <button class="delete-button" title="刪除"><i class="fas fa-times"></i></button>
+    `;
 
-        // 格式化金額
-        const formattedAmount = isLastEdited ? formatUserInput(amount) : formatConversionResult(amount);
-
-        item.innerHTML = `
-            <span class="drag-handle"><i class="fas fa-grip-lines"></i></span>
-            <span class="currency-icon ${isCrypto ? 'crypto-icon' : iconContent}">${isCrypto ? iconContent : ''}</span>
-            <span class="currency-code">${currency}</span>
-            <div class="input-wrapper">
-                <input type="text" class="amount-input ${isLastEdited ? 'last-edited' : ''}" data-currency="${currency}" value="${formattedAmount}">
-                <span class="currency-symbol">${getCurrencySymbol(currency)}</span>
-            </div>
-            <button class="delete-button" title="刪除"><i class="fas fa-times"></i></button>
-        `;
-
-        const input = item.querySelector('.amount-input');
-        input.addEventListener('input', handleAmountInput);
-        input.addEventListener('focus', handleAmountFocus);
-        input.addEventListener('blur', handleAmountBlur);
-    }
-
-    currencyList.appendChild(item);
+    const input = item.querySelector('.amount-input');
+    input.addEventListener('input', handleAmountInput);
+    input.addEventListener('focus', handleAmountFocus);
+    input.addEventListener('blur', handleAmountBlur);
 
     const deleteButton = item.querySelector('.delete-button');
     deleteButton.addEventListener('click', () => deleteCurrencyItem(item));
 
-    updateDeleteButtons();
+    currencyList.appendChild(item);
+    return item;
+}
+
+//更新特定貨幣的金額顯示
+function updateCurrencyAmount(currency, amount) {
+    const item = document.querySelector(`.currency-item[data-currency="${currency}"]`);
+    if (!item) return;
+
+    const input = item.querySelector('.amount-input');
+    const formattedAmount = currency === lastEditedCurrency ? formatUserInput(amount) : formatConversionResult(amount);
+    input.value = formattedAmount;
+    input.classList.toggle('last-edited', currency === lastEditedCurrency);
 }
 
 // 刪除貨幣項目
@@ -330,19 +325,17 @@ function handleAmountFocus(event) {
 
 // 更新所有金額
 function updateAllAmounts(amount, fromCurrency) {
-    const inputs = document.querySelectorAll('.amount-input');
-    inputs.forEach(input => {
-        const toCurrency = input.dataset.currency;
-        if (toCurrency === fromCurrency) {
-            input.value = formatUserInput(amount);
-            input.classList.add('last-edited');
+    const items = document.querySelectorAll('.currency-item');
+    items.forEach(item => {
+        const currency = item.dataset.currency;
+        if (currency === fromCurrency) {
+            updateCurrencyAmount(currency, amount);
         } else {
-            const convertedAmount = convert(amount, fromCurrency, toCurrency);
-            input.value = formatConversionResult(convertedAmount);
-            input.classList.remove('last-edited');
+            const convertedAmount = convert(amount, fromCurrency, currency);
+            updateCurrencyAmount(currency, convertedAmount);
         }
     });
-    updateDeleteButtons(); // 每次更新金額時檢查刪除按鈕狀態
+    updateDeleteButtons();
 }
 
 // 處理金額輸入框失去焦點
@@ -395,13 +388,6 @@ function convert(amount, fromCurrency, toCurrency) {
     return result;
 }
 
-// 新增一個用於調試的函數
-function logExchangeRates() {
-    //console.log("BTC to USD rate:", btcToUsd);
-    //console.log("Fiat rates:", fiatRates);
-    //console.log("Crypto rates:", cryptoRates);
-}
-
 // 輔助函數
 function isFiat(currency) {
     return currency in fiatRates;
@@ -418,50 +404,19 @@ function isCurrencyAvailable(currency) {
 // 更新匯率
 async function updateExchangeRates() {
     try {
-        // 首先檢查快取
-        const cachedData = await getFromCache('exchangeRates');
-        if (cachedData && !isCacheExpired(cachedData.timestamp)) {
-            fiatRates = cachedData.data.fiatRates;
-            cryptoRates = cachedData.data.cryptoRates;
-            btcToUsd = cachedData.data.btcToUsd;
-            
-            // 使用快取數據更新 UI
-            updateAllAmounts(lastEditedAmount, lastEditedCurrency);
-        }
-
         // 獲取法定貨幣匯率
-        let fiatData;
-        try {
-            const fiatResponse = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-            if (fiatResponse.status !== 200) {
-                throw new Error(`HTTP error! status: ${fiatResponse.status}`);
-            }
-            fiatData = await fiatResponse.json();
+        const fiatResponse = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+        if (fiatResponse.status === 200) {
+            const fiatData = await fiatResponse.json();
             fiatRates = fiatData.rates;
-        } catch (error) {
-            console.error('Error fetching fiat rates:', error);
-            if (!fiatRates) {
-                throw new Error('No valid fiat rate data available');
-            }
+        } else {
+            throw new Error(`HTTP error! status: ${fiatResponse.status}`);
         }
 
         // 獲取加密貨幣匯率
-        let cryptoData;
-        try {
-            const cryptoResponse = await fetch('https://api.coingecko.com/api/v3/exchange_rates');
-            if (cryptoResponse.status !== 200) {
-                throw new Error(`HTTP error! status: ${cryptoResponse.status}`);
-            }
-            cryptoData = await cryptoResponse.json();
-        } catch (error) {
-            console.error('Error fetching crypto rates:', error);
-            if (!cryptoRates) {
-                throw new Error('No valid crypto rate data available');
-            }
-        }
-
-        // 更新 BTC 到 USD 的匯率
-        if (cryptoData) {
+        const cryptoResponse = await fetch('https://api.coingecko.com/api/v3/exchange_rates');
+        if (cryptoResponse.status === 200) {
+            const cryptoData = await cryptoResponse.json();
             btcToUsd = cryptoData.rates.usd.value;
         
             // 更新加密貨幣匯率，只包含有匯率的加密貨幣
@@ -475,51 +430,15 @@ async function updateExchangeRates() {
         
             // 確保 BTC 對自身的匯率為 1
             cryptoRates['BTC'] = 1;
+        } else {
+            throw new Error(`HTTP error! status: ${cryptoResponse.status}`);
         }
-
-        // 填充 allCurrencies 對象
-        allCurrencies = {
-            ...Object.keys(fiatRates).reduce((acc, code) => {
-                acc[code] = {
-                    code: code,
-                    name: getCountryName(code, currentLanguage),
-                    type: 'fiat'
-                };
-                return acc;
-            }, {}),
-            ...Object.keys(cryptoRates).reduce((acc, code) => {
-                if (cryptoCurrencies[code]) {
-                    acc[code] = {
-                        ...cryptoCurrencies[code],
-                        type: 'crypto',
-                        name: getCountryName(code, currentLanguage)
-                    };
-                }
-                return acc;
-            }, {})
-        };
 
         // 保存到快取
         saveToCache('exchangeRates', {
             fiatRates: fiatRates,
             cryptoRates: cryptoRates,
             btcToUsd: btcToUsd
-        });
-
-        // 調用日誌函數來檢查匯率
-        logExchangeRates();
-
-        // 確保我們有有效的匯率數據
-        if (Object.keys(fiatRates).length === 0 && Object.keys(cryptoRates).length === 0) {
-            throw new Error('No valid exchange rate data available');
-        }
-
-        // 移除 skeleton 效果
-        document.querySelectorAll('.currency-item').forEach(item => {
-            const currency = item.dataset.currency;
-            item.classList.remove('skeleton');
-            addCurrencyItem(currency, convert(lastEditedAmount, lastEditedCurrency, currency), false);
-            item.remove(); // 移除原始的 skeleton 項目
         });
 
         // 更新所有金額
@@ -529,7 +448,7 @@ async function updateExchangeRates() {
         populateAllCurrencies();
 
     } catch (error) {
-        console.error('Failed to update exchange rates:', error);
+        //console.error('Failed to update exchange rates:', error);
         // 如果我們沒有任何匯率數據（首次加載失敗），顯示一個錯誤
         if (!Object.keys(fiatRates).length && !Object.keys(cryptoRates).length) {
             showError('Failed to load exchange rates. Please check your internet connection and try again.');
@@ -539,21 +458,24 @@ async function updateExchangeRates() {
 
 // 初始化 Sortable
 function initSortable() {
-    Sortable.create(currencyList, {
-        animation: 150,
-        handle: '.drag-handle',
-        onEnd: function () {
-            saveOrder();
-        }
-    });
+    if (typeof Sortable !== 'undefined' && Sortable.create) {
+        Sortable.create(currencyList, {
+            animation: 150,
+            handle: '.drag-handle', // 只有拖放按鈕可以觸發拖動
+            draggable: '.currency-item', // 整個貨幣項目是可拖動的元素
+            onEnd: function () {
+                saveOrder();
+            }
+        });
+    } else {
+        console.warn('Sortable library not found. Drag and drop functionality may not work.');
+    }
 }
 
 // 保存貨幣順序
 // 修改 saveOrder 函數以接受參數
-function saveOrder(order = null) {
-    if (!order) {
-        order = Array.from(currencyList.children).map(item => item.dataset.currency);
-    }
+function saveOrder() {
+    const order = Array.from(currencyList.children).map(item => item.dataset.currency);
     return new Promise((resolve) => {
         chrome.storage.sync.set({ currencyOrder: order }, function() {
             //console.log('Order saved:', order);
@@ -595,8 +517,8 @@ function populateAllCurrencies() {
         item.dataset.currency = code;
         const isAdded = Array.from(document.querySelectorAll('#currency-list li')).some(el => el.dataset.currency === code);
         const iconContent = getCurrencyIcon(code);
-        const isCrypto = currencyConfig.crypto[code] !== undefined;
-        const currencyName = getCountryName(code, currentLanguage);
+        const isCrypto = config.type === 'crypto';
+        const currencyName = config.name;
         
         item.innerHTML = `
             <span class="currency-icon ${isCrypto ? 'crypto-icon' : iconContent}">${isCrypto ? iconContent : ''}</span>
@@ -628,39 +550,12 @@ function toggleCurrencyInMain(code) {
         existingItem.remove();
     } else {
         addCurrencyItem(code);
+        // 立即更新新添加貨幣的金額
+        updateCurrencyAmount(code, convert(lastEditedAmount, lastEditedCurrency, code));
     }
     saveOrder();
+    updateDeleteButtons();
     populateAllCurrencies(); // 重新填充列表，保持搜索狀態
-}
-
-// 格式化數字，添加千分位分隔符
-function formatNumber(num) {
-    // 将输入转换为数字，以确保我们处理的是数值
-    const number = Number(num);
-    
-    // 如果数字为 0，直接返回 "0.00"
-    if (number === 0) {
-        return "0.00";
-    }
-    
-    // 开始时使用 2 位小数
-    let precision = 2;
-    let formattedNum = number.toFixed(precision);
-
-    // 如果格式化后的数字绝对值小于 0.01，则增加精度直到出现非零数字或达到最大精度
-    while (Number(formattedNum) === 0 && precision < 8) {
-        precision += 1;
-        formattedNum = number.toFixed(precision);
-    }
-
-    // 分割整数部分和小数部分
-    const parts = formattedNum.split('.');
-    
-    // 添加千位分隔符到整数部分
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    // 重新组合数字，包括小数部分（如果有的话）
-    return parts.join('.');
 }
 
 // 新增处理用户输入的格式化函数
@@ -738,9 +633,10 @@ function parseFormattedNumber(str) {
 }
 
 // 保存數據到快取
-function saveToCache(key, data) {
+function saveToCache(key, data, duration = CACHE_DURATION) {
     const cacheData = {
         timestamp: Date.now(),
+        expirationTime: Date.now() + duration,
         data: data
     };
     chrome.storage.local.set({ [key]: cacheData }, () => {
@@ -764,8 +660,8 @@ async function getFromCache(key) {
 }
 
 // 檢查快取是否過期（這裡設置為 1 小時）
-function isCacheExpired(timestamp) {
-    return Date.now() - timestamp > CACHE_DURATION;
+function isCacheExpired(timestamp, duration = CACHE_DURATION) {
+    return Date.now() - timestamp > duration;
 }
 
 // 新增一個顯示錯誤的函數
@@ -777,18 +673,32 @@ function showError(message) {
     currencyList.appendChild(errorDiv);
 }
 
+// 在初始化函數中設置語言
+async function initialize() {
+    currentLanguage = await getUserLanguage();
+    await loadCurrencyConfig();
+    if (!currencyConfig) {
+        throw new Error('Failed to load currency config');
+    }
+    await initCurrencyList();
+    initSortable();
+    updateDeleteButtons();
+    populateAllCurrencies(); // 確保所有貨幣列表在初始化時被填充
+}
+
 // 初始化
 document.addEventListener('DOMContentLoaded', async function() {
+    await initialize();
     await loadCurrencyConfig();
     if (!currencyConfig) {
         throw new Error('Failed to load currency config');
     }
 
-    await getCryptoCurrencies();
     await updateExchangeRates();
     await initCurrencyList();
     initSortable();
     updateDeleteButtons();
+    updateAllAmounts(lastEditedAmount, lastEditedCurrency);
 
     // 設置定時更新匯率
     setInterval(updateExchangeRates, 60000); // 每分鐘更新一次
