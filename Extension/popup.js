@@ -156,8 +156,11 @@ async function initCurrencyList() {
         
         let currencies = savedOrder.length > 0 ? savedOrder : defaultCurrencies;
         
-        // 先顯示幣別列表，不包含金額
-        currencies.forEach(currency => addCurrencyItem(currency));
+        // 先顯示幣別列表，使用骨架屏效果
+        currencies.forEach(currency => {
+            const item = addCurrencyItem(currency);
+            item.classList.add('skeleton'); // 添加骨架屏類
+        });
         
         // 嘗試使用快取的匯率
         const cachedRates = await getFromCache('exchangeRates');
@@ -166,21 +169,11 @@ async function initCurrencyList() {
             cryptoRates = cachedRates.data.cryptoRates;
             btcToUsd = cachedRates.data.btcToUsd;
             updateAllAmounts(lastEditedAmount, lastEditedCurrency);
-        } else {
-            // 如果沒有快取的匯率，顯示加載中的狀態
-            currencies.forEach(currency => {
-                const item = document.querySelector(`.currency-item[data-currency="${currency}"]`);
-                if (item) {
-                    const input = item.querySelector('.amount-input');
-                    input.value = 'Loading...';
-                    item.classList.add('skeleton');
-                }
-            });
         }
         
         // 非同步獲取最新匯率
         updateExchangeRates().then(() => {
-            // 更新金額並移除 skeleton 效果
+            // 更新金額並移除骨架屏效果
             updateAllAmounts(lastEditedAmount, lastEditedCurrency);
             document.querySelectorAll('.currency-item').forEach(item => {
                 item.classList.remove('skeleton');
@@ -213,6 +206,7 @@ function addCurrencyItem(currency) {
         <span class="currency-icon ${isCrypto ? 'crypto-icon' : iconContent}">${isCrypto ? iconContent : ''}</span>
         <span class="currency-code">${currency}</span>
         <div class="input-wrapper">
+            <div class="skeleton-loader"></div>
             <input type="text" class="amount-input" data-currency="${currency}" value="">
             <span class="currency-symbol">${getCurrencySymbol(currency)}</span>
         </div>
@@ -240,6 +234,9 @@ function updateCurrencyAmount(currency, amount) {
     const formattedAmount = currency === lastEditedCurrency ? formatUserInput(amount) : formatConversionResult(amount);
     input.value = formattedAmount;
     input.classList.toggle('last-edited', currency === lastEditedCurrency);
+    
+    // 移除骨架屏效果
+    item.classList.remove('skeleton');
 }
 
 // 刪除貨幣項目
