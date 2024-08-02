@@ -39,7 +39,8 @@ body {
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     background-color: white;
-    padding: 4px;
+    padding: 5px;
+    overflow: visible;
 }
 
 h1 {
