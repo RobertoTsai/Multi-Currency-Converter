@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Multi-Currency Converter",
-  "version": "1.0",
+  "version": "1.0.1",
   "description": "Instantly convert and compare multiple currencies with this fast, user-friendly Chrome extension.",
   "action": {
     "default_popup": "popup.html",
