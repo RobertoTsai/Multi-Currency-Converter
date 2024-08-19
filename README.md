@@ -2,6 +2,10 @@
 
 Instantly convert and compare multiple currencies with this fast, user-friendly Chrome extension.
 
+## Install
+Chrome Web Store: 
+https://chromewebstore.google.com/detail/multi-currency-converter/pdijoelkgapghgagoihlmebcpobiblgl
+
 ## Key Features:
 - Simultaneous conversion of multiple currencies
 - Real-time exchange rates for both fiat and cryptocurrencies
