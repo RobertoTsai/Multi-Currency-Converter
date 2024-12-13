@@ -468,15 +468,6 @@
         "zh-CN": "乌克兰格里夫纳"
       }
     },
-    "UYU": {
-      "symbol": "$U",
-      "icon": "🇺🇾",
-      "names": {
-        "en": "Uruguayan peso",
-        "zh-TW": "烏拉圭比索",
-        "zh-CN": "乌拉圭比索"
-      }
-    },
     "VEF": {
       "symbol": "Bs.",
       "icon": "🇻🇪",
@@ -1429,14 +1420,6 @@
         "en": "Ethereum",
         "zh-TW": "以太幣",
         "zh-CN": "以太币"
-      }
-    },
-    "USDT": {
-      "symbol": "₮",
-      "names": {
-        "en": "Tether",
-        "zh-TW": "泰達幣",
-        "zh-CN": "泰达币"
       }
     },
     "XRP": {

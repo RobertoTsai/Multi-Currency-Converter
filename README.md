@@ -12,6 +12,7 @@ https://chromewebstore.google.com/detail/multi-currency-converter/pdijoelkgapghg
 - Customizable currency list for quick access
 - Intuitive drag-and-drop interface for easy reordering
 - Supports a wide range of global currencies and popular cryptocurrencies
+- Built-in calculator functionality for basic arithmetic operations (+, -, *, /)
 
 ## Perfect for:
 - Frequent travelers
@@ -19,6 +20,6 @@ https://chromewebstore.google.com/detail/multi-currency-converter/pdijoelkgapghg
 - Forex traders and investors
 - Anyone dealing with multiple currencies
 
-Effortlessly manage your multi-currency calculations with Multi-Currency Converter. Whether you're planning a trip, making international purchases, or monitoring your investments, our extension provides you with accurate, up-to-date conversions at your fingertips.
+Effortlessly manage your multi-currency calculations with Multi-Currency Converter. Whether you're planning a trip, making international purchases, or monitoring your investments, our extension provides you with accurate, up-to-date conversions at your fingertips. The built-in calculator allows you to perform basic arithmetic operations directly in the currency input field, making it even more convenient for quick calculations and conversions.
 
 Simplify your currency conversions today – add Multi-Currency Converter to your Chrome browser and experience the convenience of instant, multi-currency calculations!

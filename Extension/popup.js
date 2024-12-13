@@ -214,9 +214,12 @@ function addCurrencyItem(currency) {
     `;
 
     const input = item.querySelector('.amount-input');
+    
+    // 添加所有必要的事件監聽器
     input.addEventListener('input', handleAmountInput);
     input.addEventListener('focus', handleAmountFocus);
     input.addEventListener('blur', handleAmountBlur);
+    input.addEventListener('keydown', handleAmountKeydown);  // 添加鍵盤事件監聽器
 
     const deleteButton = item.querySelector('.delete-button');
     deleteButton.addEventListener('click', () => deleteCurrencyItem(item));
@@ -249,7 +252,7 @@ function deleteCurrencyItem(item) {
     }
 }
 
-// 更新刪除按鈕狀態
+// 更新刪除狀態
 function updateDeleteButtons() {
     const deleteButtons = document.querySelectorAll('.delete-button');
     const isDisabled = currencyList.children.length <= 1;
@@ -264,47 +267,81 @@ function handleAmountInput(event) {
     const input = event.target;
     const cursorPosition = input.selectionStart;
     const oldValue = input.value;
-    let newValue = oldValue.replace(/,/g, '');
     
-    // 只允許數字和一個小數點
-    newValue = newValue.replace(/[^\d.]/g, '');
-    const parts = newValue.split('.');
-    if (parts.length > 2) {
-        parts.pop();
-        newValue = parts.join('.');
+    // 移除任何非法字元（作為第二道防線）
+    const newValue = oldValue.replace(/[^0-9.+\-*/() ]/g, '');
+    
+    // 如果有非法字元，恢復原值
+    if (newValue !== oldValue) {
+        input.value = oldValue;
+        input.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
+        return;
     }
-
-    if (newValue !== '') {
-        const amount = parseFloat(newValue);
-        if (!isNaN(amount)) {
-            lastEditedAmount = amount;
+    
+    // 移除千分位逗號
+    let cleanValue = newValue.replace(/,/g, '');
+    
+    // 檢查是否包含運算符
+    if (/[+\-*/]/.test(cleanValue)) {
+        // 允許輸入運算符和數字
+        if (!/^[\d.+\-*/\s()]+$/.test(cleanValue)) {
+            input.value = oldValue;
+            input.setSelectionRange(cursorPosition, cursorPosition);
+            return;
+        }
+        
+        // 保持當前輸入框的算式
+        input.value = cleanValue;
+        
+        // 嘗試計算結果
+        const result = evaluateExpression(cleanValue);
+        
+        if (result !== null) {
+            // 更新所有其他貨幣的金額
+            lastEditedAmount = result;
             lastEditedCurrency = input.dataset.currency;
-            input.classList.add('last-edited');
             
-            // 添加 active-input 類到當前輸入項目
+            // 更新其他貨幣的金額
             document.querySelectorAll('.currency-item').forEach(item => {
-                if (item.contains(input)) {
-                    item.classList.add('active-input');
-                } else {
-                    item.classList.remove('active-input');
+                const currency = item.dataset.currency;
+                if (currency !== input.dataset.currency) {
+                    const convertedAmount = convert(result, input.dataset.currency, currency);
+                    const currencyInput = item.querySelector('.amount-input');
+                    currencyInput.value = formatConversionResult(convertedAmount);
                 }
             });
             
-            document.querySelectorAll('.amount-input').forEach(inp => {
-                if (inp !== input) inp.classList.remove('last-edited');
-            });
-            newValue = formatUserInput(newValue);
-            updateAllAmounts(amount, input.dataset.currency);
-            saveLastInput(); // 保存用戶的輸入
+            saveLastInput();
         }
+    } else {
+        // 原有的數字處理邏輯
+        if (cleanValue !== '') {
+            const amount = parseFloat(cleanValue);
+            if (!isNaN(amount)) {
+                lastEditedAmount = amount;
+                lastEditedCurrency = input.dataset.currency;
+                updateAllAmounts(amount, input.dataset.currency);
+                saveLastInput();
+            }
+        }
+        input.value = cleanValue;
     }
-
-    input.value = newValue;
-
-    // 調整光標位置
-    const addedCommas = (newValue.match(/,/g) || []).length - (oldValue.match(/,/g) || []).length;
-    const newPosition = cursorPosition + addedCommas;
-    input.setSelectionRange(newPosition, newPosition);
+    
+    input.setSelectionRange(cursorPosition, cursorPosition);
+    
+    // 更新輸入框狀態
+    input.classList.add('last-edited');
+    document.querySelectorAll('.currency-item').forEach(item => {
+        if (item.contains(input)) {
+            item.classList.add('active-input');
+        } else {
+            item.classList.remove('active-input');
+        }
+    });
+    
+    document.querySelectorAll('.amount-input').forEach(inp => {
+        if (inp !== input) inp.classList.remove('last-edited');
+    });
 }
 
 // 處理金額輸入框獲得焦點
@@ -325,6 +362,13 @@ function updateAllAmounts(amount, fromCurrency) {
     const items = document.querySelectorAll('.currency-item');
     items.forEach(item => {
         const currency = item.dataset.currency;
+        const input = item.querySelector('.amount-input');
+        
+        // 如果這個輸入框正在被編輯且包���運算符，保留其原始值
+        if (input.classList.contains('last-edited') && /[+\-*/]/.test(input.value)) {
+            return;
+        }
+        
         if (currency === fromCurrency) {
             updateCurrencyAmount(currency, amount);
         } else {
@@ -338,14 +382,95 @@ function updateAllAmounts(amount, fromCurrency) {
 // 處理金額輸入框失去焦點
 function handleAmountBlur(event) {
     const input = event.target;
-    const amount = parseFormattedNumber(input.value);
-    if (isNaN(amount) || amount === 0) {
-        input.value = formatConversionResult(0);
+    const currentValue = input.value;
+    
+    // 檢查是否包含運算符
+    if (/[+\-*/]/.test(currentValue)) {
+        const result = evaluateExpression(currentValue);
+        if (result !== null) {
+            // 使用計算結果更新顯示和值
+            lastEditedAmount = result;
+            input.value = formatConversionResult(result);
+            updateAllAmounts(result, input.dataset.currency);
+            saveLastInput();
+        } else {
+            // 使用上一個有效值
+            input.value = formatConversionResult(lastEditedAmount);
+            updateAllAmounts(lastEditedAmount, input.dataset.currency);
+        }
     } else {
-        input.value = formatConversionResult(amount);
+        // 原有的處理邏輯
+        const amount = parseFormattedNumber(currentValue);
+        if (isNaN(amount) || amount === 0) {
+            input.value = formatConversionResult(0);
+            lastEditedAmount = 0;
+        } else {
+            input.value = formatConversionResult(amount);
+            lastEditedAmount = amount;
+        }
+        updateAllAmounts(lastEditedAmount, input.dataset.currency);
     }
+    
     // 移除 active-input 類
     input.closest('.currency-item').classList.remove('active-input');
+}
+
+// 新增鍵盤事件處理函數
+function handleAmountKeydown(event) {
+    // 允許的按鍵：數字、小數點、運算符號、括號、方向鍵、刪除鍵等
+    const allowedKeys = [
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+        '.', '+', '-', '*', '/', '(', ')',
+        'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab',
+        'Home', 'End', 'Enter'
+    ];
+
+    // 允許 Ctrl+C, Ctrl+V, Ctrl+X, Ctrl+A
+    if (event.ctrlKey && ['c', 'v', 'x', 'a'].includes(event.key.toLowerCase())) {
+        return;
+    }
+
+    // 如果不是允許的按鍵，阻止輸入
+    if (!allowedKeys.includes(event.key)) {
+        event.preventDefault();
+        return;
+    }
+
+    // 特別處理小數點：確保不會有多個小數點
+    if (event.key === '.') {
+        const value = event.target.value;
+        const cursorPosition = event.target.selectionStart;
+        const selectedText = window.getSelection().toString();
+        
+        // 檢查是否已有小數點（排除選中的文字）
+        const valueWithoutSelection = selectedText ? 
+            value.slice(0, cursorPosition) + value.slice(cursorPosition + selectedText.length) :
+            value;
+            
+        if (valueWithoutSelection.includes('.')) {
+            event.preventDefault();
+            return;
+        }
+    }
+
+    // 特別處理運算符號：防止連續輸入運算符號
+    if (['+', '-', '*', '/'].includes(event.key)) {
+        const value = event.target.value;
+        const cursorPosition = event.target.selectionStart;
+        
+        // 檢查前一個字元是否為運算符號
+        const prevChar = value[cursorPosition - 1];
+        if (prevChar && ['+', '-', '*', '/'].includes(prevChar)) {
+            event.preventDefault();
+            return;
+        }
+    }
+
+    // 處理 Enter 鍵
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        event.target.blur();
+    }
 }
 
 // 貨幣轉換（確保這個函數存在並正確實現）
@@ -555,22 +680,133 @@ function toggleCurrencyInMain(code) {
     populateAllCurrencies(); // 重新填充列表，保持搜索狀態
 }
 
-// 新增处理用户输入的格式化函数
-function formatUserInput(num) {
-    // 移除除了数字和小数点以外的所有字符
-    let cleanNum = num.toString().replace(/[^\d.]/g, '');
-    
-    // 确保只有一个小数点
-    let parts = cleanNum.split('.');
-    if (parts.length > 2) {
-        parts = [parts[0], parts.slice(1).join('')];
+// 修改計算算式的函數
+function evaluateExpression(expression) {
+    try {
+        // 移除所有空格和千分位逗號
+        expression = expression.replace(/\s+/g, '').replace(/,/g, '');
+        
+        // 檢查是否為不完整的算式
+        if (/[+\-*/]$/.test(expression)) {
+            return null;
+        }
+        
+        // 檢查算式是否只包含數字和運算符
+        if (!/^[\d.+\-*/()]+$/.test(expression)) {
+            return null;
+        }
+        
+        // 將算式分解為數字和運算符
+        const tokens = expression.match(/(\d*\.?\d+)|[+\-*/()]/g);
+        if (!tokens) return null;
+        
+        // 使用堆疊來計算結果
+        const numbers = [];
+        const operators = [];
+        
+        function precedence(op) {
+            switch(op) {
+                case '+': case '-': return 1;
+                case '*': case '/': return 2;
+                default: return 0;
+            }
+        }
+        
+        function calculate(a, b, op) {
+            switch(op) {
+                case '+': return a + b;
+                case '-': return a - b;
+                case '*': return a * b;
+                case '/': return b === 0 ? null : a / b;
+                default: return null;
+            }
+        }
+        
+        function processOperator(op) {
+            while (operators.length > 0 && 
+                   precedence(operators[operators.length - 1]) >= precedence(op)) {
+                const b = numbers.pop();
+                const a = numbers.pop();
+                const operator = operators.pop();
+                const result = calculate(a, b, operator);
+                if (result === null) return null;
+                numbers.push(result);
+            }
+            operators.push(op);
+        }
+        
+        for (const token of tokens) {
+            if (/\d/.test(token)) {
+                numbers.push(parseFloat(token));
+            } else if (token === '(') {
+                operators.push(token);
+            } else if (token === ')') {
+                while (operators.length > 0 && operators[operators.length - 1] !== '(') {
+                    const b = numbers.pop();
+                    const a = numbers.pop();
+                    const operator = operators.pop();
+                    const result = calculate(a, b, operator);
+                    if (result === null) return null;
+                    numbers.push(result);
+                }
+                operators.pop(); // 移除 '('
+            } else {
+                processOperator(token);
+            }
+        }
+        
+        while (operators.length > 0) {
+            const b = numbers.pop();
+            const a = numbers.pop();
+            const operator = operators.pop();
+            const result = calculate(a, b, operator);
+            if (result === null) return null;
+            numbers.push(result);
+        }
+        
+        const result = numbers[0];
+        
+        // 檢查結果是否為有效數字
+        if (!isFinite(result) || isNaN(result)) {
+            return null;
+        }
+        
+        return result;
+    } catch (e) {
+        console.log('Evaluation error:', e);
+        return null;
     }
-    cleanNum = parts.join('.');
+}
 
-    // 添加千位分隔符到整数部分
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+// 修改格式化用戶輸入的函數
+function formatUserInput(num) {
+    // 如果輸入是字符串且包含運算符，直接返回
+    if (typeof num === 'string' && /[+\-*/]/.test(num)) {
+        return num;
+    }
+    
+    // 將輸入轉換為字符串
+    let str = num.toString();
+    
+    // 分離整數和小數部分
+    let [integerPart, decimalPart] = str.split('.');
+    
+    // 為整數部分添加千分位分隔符
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    
+    // 如果有小數部分，重新組合
+    return decimalPart ? `${integerPart}.${decimalPart}` : integerPart;
+}
 
-    return parts.join('.');
+// 修改解析格式化數字的函數
+function parseFormattedNumber(str) {
+    // 如果包含運算符，嘗試��算結果
+    if (/[+\-*/]/.test(str)) {
+        const result = evaluateExpression(str);
+        return result !== null ? result : NaN;
+    }
+    // 否則按原來的方式解析
+    return parseFloat(str.replace(/,/g, ''));
 }
 
 // 新增处理转换结果的格式化函数
@@ -622,11 +858,6 @@ function formatConversionResult(num) {
     }
 
     return result;
-}
-
-// 解析可能包含千分位分隔符的數字字符串
-function parseFormattedNumber(str) {
-    return parseFloat(str.replace(/,/g, ''));
 }
 
 // 保存數據到快取
@@ -698,7 +929,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     updateAllAmounts(lastEditedAmount, lastEditedCurrency);
 
     // 設置定時更新匯率
-    setInterval(updateExchangeRates, 60000); // 每分鐘更新一次
+    setInterval(updateExchangeRates, 60000); // 每分鐘更新次
 
     // 檢查當前是否為彈出視窗
     chrome.windows.getCurrent((window) => {
@@ -772,4 +1003,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         document.body.style.width = '100%';
         document.body.style.height = '100vh';
     }
+
+    document.querySelectorAll('.amount-input').forEach(input => {
+        input.addEventListener('keydown', handleAmountKeydown);
+    });
 });
