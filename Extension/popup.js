@@ -21,6 +21,82 @@ let fiatRates = {};  // 儲存法幣對 USD 的匯率
 let cryptoRates = {};  // 儲存加密貨幣對 BTC 的匯率
 let btcToUsd = 0;  // 儲存 BTC 對 USD 的匯率
 
+//多語系文本對象
+const translations = {
+    'en': {
+        'confirmDelete': 'Delete Currency',
+        'confirmDeleteMessage': 'Are you sure you want to delete {0} ({1})?',
+        'cancel': 'Cancel',
+        'confirm': 'Delete'
+    },
+    'zh-TW': {
+        'confirmDelete': '確認刪除',
+        'confirmDeleteMessage': '確定要刪除 {0} ({1}) 嗎？',
+        'cancel': '取消',
+        'confirm': '刪除'
+    },
+    'zh-CN': {
+        'confirmDelete': '确认删除',
+        'confirmDeleteMessage': '确定要删除 {0} ({1}) 吗？',
+        'cancel': '取消',
+        'confirm': '删除'
+    },
+    'es': {
+        'confirmDelete': 'Eliminar Moneda',
+        'confirmDeleteMessage': '¿Estás seguro de que quieres eliminar {0} ({1})?',
+        'cancel': 'Cancelar',
+        'confirm': 'Eliminar'
+    },
+    'ar': {
+        'confirmDelete': 'حذف العملة',
+        'confirmDeleteMessage': 'هل أنت متأكد أنك تريد حذف {0} ({1})؟',
+        'cancel': 'إلغاء',
+        'confirm': 'حذف'
+    },
+    'hi': {
+        'confirmDelete': 'मुद्रा हटाएं',
+        'confirmDeleteMessage': 'क्या आप वाकई {0} ({1}) को हटाना चाहते हैं?',
+        'cancel': 'रद्द करें',
+        'confirm': 'हटाएं'
+    },
+    'pt': {
+        'confirmDelete': 'Excluir Moeda',
+        'confirmDeleteMessage': 'Tem certeza de que deseja excluir {0} ({1})?',
+        'cancel': 'Cancelar',
+        'confirm': 'Excluir'
+    },
+    'bn': {
+        'confirmDelete': 'মুদ্রা মুছুন',
+        'confirmDeleteMessage': 'আপনি কি নিশ্চিত যে আপনি {0} ({1}) মুছতে চান?',
+        'cancel': 'বাতিল',
+        'confirm': 'মুছুন'
+    },
+    'ru': {
+        'confirmDelete': 'Удалить валюту',
+        'confirmDeleteMessage': 'Вы уверены, что хотите удалить {0} ({1})?',
+        'cancel': 'Отмена',
+        'confirm': 'Удалить'
+    },
+    'ja': {
+        'confirmDelete': '通貨を削除',
+        'confirmDeleteMessage': '{0} ({1}) を削除してもよろしいですか？',
+        'cancel': 'キャンセル',
+        'confirm': '削除'
+    },
+    'de': {
+        'confirmDelete': 'Währung löschen',
+        'confirmDeleteMessage': 'Sind Sie sicher, dass Sie {0} ({1}) löschen möchten?',
+        'cancel': 'Abbrechen',
+        'confirm': 'Löschen'
+    },
+    'fr': {
+        'confirmDelete': 'Supprimer la devise',
+        'confirmDeleteMessage': 'Êtes-vous sûr de vouloir supprimer {0} ({1}) ?',
+        'cancel': 'Annuler',
+        'confirm': 'Supprimer'
+    }
+};
+
 //取得用戶語言設定
 async function getUserLanguage() {
     return new Promise((resolve) => {
@@ -260,13 +336,85 @@ function updateCurrencyAmount(currency, amount) {
     item.classList.remove('skeleton');
 }
 
+// 獲取翻譯文本
+function getTranslation(key, lang = currentLanguage) {
+    return translations[lang]?.[key] || translations['en'][key];
+}
+
+// 格式化字符串，用參數替換 {0}, {1} 等佔位符
+function formatString(str, ...args) {
+    return str.replace(/{(\d+)}/g, (match, index) => {
+        return typeof args[index] !== 'undefined' ? args[index] : match;
+    });
+}
+
+// 顯示確認對話框
+function showConfirmDialog(title, message, onConfirm) {
+    const dialog = document.getElementById('confirm-dialog');
+    const titleElement = document.getElementById('confirm-title');
+    const messageElement = document.getElementById('confirm-message');
+    const confirmButton = document.getElementById('confirm-button');
+    const cancelButton = document.getElementById('cancel-button');
+    
+    // 設置標題和消息
+    titleElement.textContent = title;
+    messageElement.textContent = message;
+    
+    // 設置按鈕文本
+    confirmButton.textContent = getTranslation('confirm');
+    cancelButton.textContent = getTranslation('cancel');
+    
+    // 綁定事件
+    const handleConfirm = () => {
+        dialog.classList.remove('show');
+        onConfirm();
+        cleanup();
+    };
+    
+    const handleCancel = () => {
+        dialog.classList.remove('show');
+        cleanup();
+    };
+    
+    const handleOutsideClick = (e) => {
+        if (e.target === dialog) {
+            dialog.classList.remove('show');
+            cleanup();
+        }
+    };
+    
+    // 清理函數
+    const cleanup = () => {
+        confirmButton.removeEventListener('click', handleConfirm);
+        cancelButton.removeEventListener('click', handleCancel);
+        dialog.removeEventListener('click', handleOutsideClick);
+    };
+    
+    // 添加事件監聽器
+    confirmButton.addEventListener('click', handleConfirm);
+    cancelButton.addEventListener('click', handleCancel);
+    dialog.addEventListener('click', handleOutsideClick);
+    
+    // 顯示對話框
+    dialog.classList.add('show');
+}
+
 // 刪除貨幣項目
 function deleteCurrencyItem(item) {
     if (currencyList.children.length > 1) {
-        item.remove();
-        saveOrder();
-        updateDeleteButtons();
-        updateExchangeRates(); // 重新計算匯率
+        const currency = item.dataset.currency;
+        const currencyName = getCountryName(currency, currentLanguage);
+        
+        // 使用自定義對話框
+        const title = getTranslation('confirmDelete');
+        const message = formatString(getTranslation('confirmDeleteMessage'), currency, currencyName);
+        
+        showConfirmDialog(title, message, () => {
+            item.remove();
+            saveOrder();
+            updateDeleteButtons();
+            updateExchangeRates(); // 重新計算匯率
+        });
     }
 }
 

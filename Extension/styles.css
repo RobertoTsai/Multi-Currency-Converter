@@ -444,3 +444,92 @@ body.popup-window .content-wrapper {
 .currency-item.skeleton .currency-symbol {
     opacity: 0.5;
 }
+
+/* 添加确认对话框样式 */
+.confirm-modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
+    align-items: center;
+    justify-content: center;
+    display: none; /* 預設隱藏 */
+}
+
+.confirm-modal.show {
+    display: flex; /* 當添加 show 類時顯示 */
+}
+
+.confirm-dialog-content {
+    width: 85%;
+    max-width: 240px;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.2s;
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.confirm-dialog-content h3 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.confirm-dialog-content p {
+    margin: 0 0 12px 0;
+    font-size: 13px;
+    color: var(--secondary-text-color);
+    line-height: 1.4;
+}
+
+.dialog-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.secondary-button, .primary-button {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 50px;
+}
+
+.secondary-button {
+    background-color: transparent;
+    color: var(--secondary-text-color);
+    border: 1px solid var(--border-color);
+}
+
+.primary-button {
+    background-color: var(--accent-color);
+    color: var(--background-color);
+    border: none;
+}
+
+.secondary-button:hover {
+    background-color: var(--hover-color);
+    border-color: var(--accent-color);
+}
+
+.primary-button:hover {
+    filter: brightness(1.1);
+}
+
+.secondary-button:active, .primary-button:active {
+    transform: scale(0.98);
+}

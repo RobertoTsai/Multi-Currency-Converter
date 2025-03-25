@@ -6,7 +6,16 @@
         "names": {
           "en": "United States dollar",
           "zh-TW": "美元",
-          "zh-CN": "美元"
+          "zh-CN": "美元",
+          "es": "Dólar estadounidense",
+          "ar": "دولار أمريكي",
+          "hi": "अमेरिकी डॉलर",
+          "pt": "Dólar americano",
+          "bn": "মার্কিন ডলার",
+          "ru": "Доллар США",
+          "ja": "アメリカドル",
+          "de": "US-Dollar",
+          "fr": "Dollar américain"
         }
       },
       "EUR": {
@@ -15,7 +24,16 @@
         "names": {
           "en": "Euro",
           "zh-TW": "歐元",
-          "zh-CN": "欧元"
+          "zh-CN": "欧元",
+          "es": "Euro",
+          "ar": "يورو",
+          "hi": "यूरो",
+          "pt": "Euro",
+          "bn": "ইউরো",
+          "ru": "Евро",
+          "ja": "ユーロ",
+          "de": "Euro",
+          "fr": "Euro"
         }
       },
       "GBP": {
@@ -24,7 +42,16 @@
         "names": {
           "en": "Pound sterling",
           "zh-TW": "英鎊",
-          "zh-CN": "英镑"
+          "zh-CN": "英镑",
+          "es": "Libra esterlina",
+          "ar": "جنيه إسترليني",
+          "hi": "पाउंड स्टर्लिंग",
+          "pt": "Libra esterlina",
+          "bn": "পাউন্ড স্টার্লিং",
+          "ru": "Фунт стерлингов",
+          "ja": "英ポンド",
+          "de": "Britisches Pfund",
+          "fr": "Livre sterling"
         }
       },
       "JPY": {
