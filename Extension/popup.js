@@ -7,7 +7,7 @@ const allCurrenciesList = document.getElementById('all-currencies');
 const closeModalButton = document.getElementById('close-modal');
 
 const defaultCurrencies = ['USD', 'EUR', 'JPY', 'TWD', 'BTC', 'ETH'];
-const CACHE_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
+const CACHE_DURATION = 15 * 60 * 1000; // 15分鐘的毫秒數
 const CURRENCY_INFO_CACHE_DURATION = 7 * 24 * 60 * 60 * 1000; // 7天的毫秒數
 let currentLanguage = 'en'; 
 let allCurrencies = {};
@@ -156,35 +156,53 @@ async function initCurrencyList() {
         
         let currencies = savedOrder.length > 0 ? savedOrder : defaultCurrencies;
         
-        // 先顯示幣別列表，使用骨架屏效果
-        currencies.forEach(currency => {
-            const item = addCurrencyItem(currency);
-            item.classList.add('skeleton'); // 添加骨架屏類
-        });
-        
         // 嘗試使用快取的匯率
         const cachedRates = await getFromCache('exchangeRates');
-        if (cachedRates && !isCacheExpired(cachedRates.timestamp)) {
+        const hasValidCache = cachedRates && !isCacheEmpty(cachedRates.data);
+        
+        // 如果有有效的快取（即使已過期），先使用它
+        if (hasValidCache) {
             fiatRates = cachedRates.data.fiatRates;
             cryptoRates = cachedRates.data.cryptoRates;
             btcToUsd = cachedRates.data.btcToUsd;
-            updateAllAmounts(lastEditedAmount, lastEditedCurrency);
-        }
-        
-        // 非同步獲取最新匯率
-        updateExchangeRates().then(() => {
-            // 更新金額並移除骨架屏效果
-            updateAllAmounts(lastEditedAmount, lastEditedCurrency);
-            document.querySelectorAll('.currency-item').forEach(item => {
-                item.classList.remove('skeleton');
+            
+            // 正常顯示貨幣列表（無骨架屏）
+            currencies.forEach(currency => {
+                addCurrencyItem(currency);
             });
-        });
+            
+            // 更新所有金額
+            updateAllAmounts(lastEditedAmount, lastEditedCurrency);
+            
+            // 如果快取已過期，在背景更新匯率
+            if (isCacheExpired(cachedRates.timestamp)) {
+                updateExchangeRates(false); // 不顯示載入動畫
+            }
+        } else {
+            // 如果沒有有效的快取，顯示骨架屏並等待匯率更新
+            currencies.forEach(currency => {
+                const item = addCurrencyItem(currency);
+                item.classList.add('skeleton'); // 添加骨架屏類
+            });
+            
+            // 獲取最新匯率並更新UI
+            await updateExchangeRates(true); // 顯示載入動畫
+        }
         
         //console.log('Currency list initialized');
     } catch (error) {
         //console.error('Error initializing currency list:', error);
         showError('Failed to initialize currency list. Please try again.');
     }
+}
+
+// 檢查快取是否為空
+function isCacheEmpty(cacheData) {
+    return !cacheData || 
+           !cacheData.fiatRates || 
+           !cacheData.cryptoRates || 
+           Object.keys(cacheData.fiatRates).length === 0 || 
+           Object.keys(cacheData.cryptoRates).length === 0;
 }
 
 // 添加貨幣項目
@@ -573,8 +591,8 @@ function isCurrencyAvailable(currency) {
     return isFiat(currency) || isCrypto(currency);
 }
 
-// 更新匯率
-async function updateExchangeRates() {
+// 更新匯率，增加參數控制是否顯示載入動畫
+async function updateExchangeRates(showLoadingAnimation = true) {
     try {
         // 獲取法定貨幣匯率
         const fiatResponse = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
@@ -618,6 +636,13 @@ async function updateExchangeRates() {
 
         // 重新填充所有貨幣列表
         populateAllCurrencies();
+        
+        // 如果需要顯示載入動畫，則移除骨架屏效果
+        if (showLoadingAnimation) {
+            document.querySelectorAll('.currency-item.skeleton').forEach(item => {
+                item.classList.remove('skeleton');
+            });
+        }
 
     } catch (error) {
         //console.error('Failed to update exchange rates:', error);
@@ -937,7 +962,7 @@ async function getFromCache(key) {
     });
 }
 
-// 檢查快取是否過期（這裡設置為 1 小時）
+// 檢查快取是否過期（這裡設置為 15 分鐘）
 function isCacheExpired(timestamp, duration = CACHE_DURATION) {
     return Date.now() - timestamp > duration;
 }
