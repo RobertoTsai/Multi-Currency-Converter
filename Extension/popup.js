@@ -269,7 +269,7 @@ function handleAmountInput(event) {
     const oldValue = input.value;
     
     // 移除任何非法字元（作為第二道防線）
-    const newValue = oldValue.replace(/[^0-9.+\-*/() ]/g, '');
+    const newValue = oldValue.replace(/[^0-9.+\-*/(), ]/g, '');
     
     // 如果有非法字元，恢復原值
     if (newValue !== oldValue) {
@@ -297,15 +297,18 @@ function handleAmountInput(event) {
         const result = evaluateExpression(cleanValue);
         
         if (result !== null) {
+            // 將計算結果四捨五入到兩位小數
+            const roundedResult = Math.round(result * 100) / 100;
+            
             // 更新所有其他貨幣的金額
-            lastEditedAmount = result;
+            lastEditedAmount = roundedResult;
             lastEditedCurrency = input.dataset.currency;
             
             // 更新其他貨幣的金額
             document.querySelectorAll('.currency-item').forEach(item => {
                 const currency = item.dataset.currency;
                 if (currency !== input.dataset.currency) {
-                    const convertedAmount = convert(result, input.dataset.currency, currency);
+                    const convertedAmount = convert(roundedResult, input.dataset.currency, currency);
                     const currencyInput = item.querySelector('.amount-input');
                     currencyInput.value = formatConversionResult(convertedAmount);
                 }
@@ -314,14 +317,24 @@ function handleAmountInput(event) {
             saveLastInput();
         }
     } else {
-        // 原有的數字處理邏輯
+        // 數字處理邏輯
         if (cleanValue !== '') {
             const amount = parseFloat(cleanValue);
             if (!isNaN(amount)) {
+                // 先更新所有金額，確保使用正確的數值
                 lastEditedAmount = amount;
                 lastEditedCurrency = input.dataset.currency;
                 updateAllAmounts(amount, input.dataset.currency);
                 saveLastInput();
+                
+                // 然後格式化當前輸入框的顯示
+                const formattedValue = formatNumberWithCommas(cleanValue);
+                input.value = formattedValue;
+                
+                // 調整光標位置
+                const newCursorPos = adjustCursorPosition(cleanValue, formattedValue, cursorPosition);
+                input.setSelectionRange(newCursorPos, newCursorPos);
+                return;
             }
         }
         input.value = cleanValue;
@@ -344,12 +357,52 @@ function handleAmountInput(event) {
     });
 }
 
+// 新增函數：格式化數字，添加千分位逗號
+function formatNumberWithCommas(numStr) {
+    // 如果包含小數點，分別處理整數和小數部分
+    if (numStr.includes('.')) {
+        const [intPart, decPart] = numStr.split('.');
+        return intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '.' + decPart;
+    }
+    // 只有整數部分
+    return numStr.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+// 修正：調整光標位置以考慮新增的逗號
+function adjustCursorPosition(oldValue, newValue, oldPosition) {
+    // 移除所有逗號，以便比較純數字
+    const cleanOldValue = oldValue.replace(/,/g, '');
+    
+    // 計算游標前的數字部分
+    const beforeCursor = cleanOldValue.substring(0, oldPosition);
+    
+    // 在新值中找到相應位置
+    // 首先格式化游標前的部分
+    const formattedBeforeCursor = formatNumberWithCommas(beforeCursor);
+    
+    // 游標應該放在格式化後的"游標前部分"的長度位置
+    return formattedBeforeCursor.length;
+}
+
+// 新增函數：計算字符串中逗號的數量
+function countCommas(str) {
+    return (str.match(/,/g) || []).length;
+}
+
 // 處理金額輸入框獲得焦點
 function handleAmountFocus(event) {
-    event.target.select();
+    const input = event.target;
+    const currentValue = input.value;
+    
+    // 保存原始值，用於檢測是否有變更
+    input.dataset.originalValue = currentValue;
+    
+    // 選中全部內容
+    input.select();
+    
     // 添加 active-input 類到當前輸入項目
     document.querySelectorAll('.currency-item').forEach(item => {
-        if (item.contains(event.target)) {
+        if (item.contains(input)) {
             item.classList.add('active-input');
         } else {
             item.classList.remove('active-input');
@@ -357,41 +410,31 @@ function handleAmountFocus(event) {
     });
 }
 
-// 更新所有金額
-function updateAllAmounts(amount, fromCurrency) {
-    const items = document.querySelectorAll('.currency-item');
-    items.forEach(item => {
-        const currency = item.dataset.currency;
-        const input = item.querySelector('.amount-input');
-        
-        // 如果這個輸入框正在被編輯且包���運算符，保留其原始值
-        if (input.classList.contains('last-edited') && /[+\-*/]/.test(input.value)) {
-            return;
-        }
-        
-        if (currency === fromCurrency) {
-            updateCurrencyAmount(currency, amount);
-        } else {
-            const convertedAmount = convert(amount, fromCurrency, currency);
-            updateCurrencyAmount(currency, convertedAmount);
-        }
-    });
-    updateDeleteButtons();
-}
-
 // 處理金額輸入框失去焦點
 function handleAmountBlur(event) {
     const input = event.target;
     const currentValue = input.value;
+    const originalValue = input.dataset.originalValue || '';
+    
+    // 檢查值是否有變更
+    if (currentValue === originalValue) {
+        // 如果值沒有變更，不進行任何操作
+        input.closest('.currency-item').classList.remove('active-input');
+        return;
+    }
     
     // 檢查是否包含運算符
     if (/[+\-*/]/.test(currentValue)) {
         const result = evaluateExpression(currentValue);
         if (result !== null) {
+            // 將計算結果四捨五入到兩位小數
+            const roundedResult = Math.round(result * 100) / 100;
+            
             // 使用計算結果更新顯示和值
-            lastEditedAmount = result;
-            input.value = formatConversionResult(result);
-            updateAllAmounts(result, input.dataset.currency);
+            lastEditedAmount = roundedResult;
+            lastEditedCurrency = input.dataset.currency;
+            input.value = formatConversionResult(roundedResult);
+            updateAllAmounts(roundedResult, input.dataset.currency);
             saveLastInput();
         } else {
             // 使用上一個有效值
@@ -407,12 +450,19 @@ function handleAmountBlur(event) {
         } else {
             input.value = formatConversionResult(amount);
             lastEditedAmount = amount;
+            lastEditedCurrency = input.dataset.currency;
         }
         updateAllAmounts(lastEditedAmount, input.dataset.currency);
+        saveLastInput();
     }
     
     // 移除 active-input 類
     input.closest('.currency-item').classList.remove('active-input');
+    
+    // 更新所有輸入框的 last-edited 狀態
+    document.querySelectorAll('.amount-input').forEach(inp => {
+        inp.classList.toggle('last-edited', inp === input);
+    });
 }
 
 // 新增鍵盤事件處理函數
@@ -800,7 +850,7 @@ function formatUserInput(num) {
 
 // 修改解析格式化數字的函數
 function parseFormattedNumber(str) {
-    // 如果包含運算符，嘗試��算結果
+    // 如果包含運算符，嘗試計算結果
     if (/[+\-*/]/.test(str)) {
         const result = evaluateExpression(str);
         return result !== null ? result : NaN;
@@ -1008,3 +1058,25 @@ document.addEventListener('DOMContentLoaded', async function() {
         input.addEventListener('keydown', handleAmountKeydown);
     });
 });
+
+// 更新所有金額
+function updateAllAmounts(amount, fromCurrency) {
+    const items = document.querySelectorAll('.currency-item');
+    items.forEach(item => {
+        const currency = item.dataset.currency;
+        const input = item.querySelector('.amount-input');
+        
+        // 如果這個輸入框正在被編輯且包含運算符，保留其原始值
+        if (input.classList.contains('last-edited') && /[+\-*/]/.test(input.value)) {
+            return;
+        }
+        
+        if (currency === fromCurrency) {
+            updateCurrencyAmount(currency, amount);
+        } else {
+            const convertedAmount = convert(amount, fromCurrency, currency);
+            updateCurrencyAmount(currency, convertedAmount);
+        }
+    });
+    updateDeleteButtons();
+}
