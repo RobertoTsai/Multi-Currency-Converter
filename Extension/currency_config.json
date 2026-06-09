@@ -1,453 +1,896 @@
 {
-    "fiat": {
-      "USD": {
-        "symbol": "$",
-        "icon": "🇺🇸",
-        "names": {
-          "en": "United States dollar",
-          "zh-TW": "美元",
-          "zh-CN": "美元",
-          "es": "Dólar estadounidense",
-          "ar": "دولار أمريكي",
-          "hi": "अमेरिकी डॉलर",
-          "pt": "Dólar americano",
-          "bn": "মার্কিন ডলার",
-          "ru": "Доллар США",
-          "ja": "アメリカドル",
-          "de": "US-Dollar",
-          "fr": "Dollar américain"
-        }
-      },
-      "EUR": {
-        "symbol": "€",
-        "icon": "🇪🇺",
-        "names": {
-          "en": "Euro",
-          "zh-TW": "歐元",
-          "zh-CN": "欧元",
-          "es": "Euro",
-          "ar": "يورو",
-          "hi": "यूरो",
-          "pt": "Euro",
-          "bn": "ইউরো",
-          "ru": "Евро",
-          "ja": "ユーロ",
-          "de": "Euro",
-          "fr": "Euro"
-        }
-      },
-      "GBP": {
-        "symbol": "£",
-        "icon": "🇬🇧",
-        "names": {
-          "en": "Pound sterling",
-          "zh-TW": "英鎊",
-          "zh-CN": "英镑",
-          "es": "Libra esterlina",
-          "ar": "جنيه إسترليني",
-          "hi": "पाउंड स्टर्लिंग",
-          "pt": "Libra esterlina",
-          "bn": "পাউন্ড স্টার্লিং",
-          "ru": "Фунт стерлингов",
-          "ja": "英ポンド",
-          "de": "Britisches Pfund",
-          "fr": "Livre sterling"
-        }
-      },
-      "JPY": {
-        "symbol": "¥",
-        "icon": "🇯🇵",
-        "names": {
-          "en": "Japanese yen",
-          "zh-TW": "日圓",
-          "zh-CN": "日元"
-        }
-      },
-      "AUD": {
-        "symbol": "$",
-        "icon": "🇦🇺",
-        "names": {
-          "en": "Australian dollar",
-          "zh-TW": "澳元",
-          "zh-CN": "澳元"
-        }
-      },
-      "CAD": {
-        "symbol": "$",
-        "icon": "🇨🇦",
-        "names": {
-          "en": "Canadian dollar",
-          "zh-TW": "加拿大元",
-          "zh-CN": "加拿大元"
-        }
-      },
-      "CHF": {
-        "symbol": "Fr.",
-        "icon": "🇨🇭",
-        "names": {
-          "en": "Swiss franc",
-          "zh-TW": "瑞士法郎",
-          "zh-CN": "瑞士法郎"
-        }
-      },
-      "CNY": {
-        "symbol": "¥",
-        "icon": "🇨🇳",
-        "names": {
-          "en": "Chinese yuan",
-          "zh-TW": "人民幣",
-          "zh-CN": "人民币"
-        }
-      },
-      "SEK": {
-        "symbol": "kr",
-        "icon": "🇸🇪",
-        "names": {
-          "en": "Swedish krona",
-          "zh-TW": "瑞典克朗",
-          "zh-CN": "瑞典克朗"
-        }
-      },
-      "NZD": {
-        "symbol": "$",
-        "icon": "🇳🇿",
-        "names": {
-          "en": "New Zealand dollar",
-          "zh-TW": "紐西蘭元",
-          "zh-CN": "新西兰元"
-        }
-      },
-      "MXN": {
-        "symbol": "$",
-        "icon": "🇲🇽",
-        "names": {
-          "en": "Mexican peso",
-          "zh-TW": "墨西哥比索",
-          "zh-CN": "墨西哥比索"
-        }
-      },
-      "SGD": {
-        "symbol": "$",
-        "icon": "🇸🇬",
-        "names": {
-          "en": "Singapore dollar",
-          "zh-TW": "新加坡元",
-          "zh-CN": "新加坡元"
-        }
-      },
-      "HKD": {
-        "symbol": "$",
-        "icon": "🇭🇰",
-        "names": {
-          "en": "Hong Kong dollar",
-          "zh-TW": "港幣",
-          "zh-CN": "港币"
-        }
-      },
-      "NOK": {
-        "symbol": "kr",
-        "icon": "🇳🇴",
-        "names": {
-          "en": "Norwegian krone",
-          "zh-TW": "挪威克朗",
-          "zh-CN": "挪威克朗"
-        }
-      },
-      "KRW": {
-        "symbol": "₩",
-        "icon": "🇰🇷",
-        "names": {
-          "en": "South Korean won",
-          "zh-TW": "韓元",
-          "zh-CN": "韩元"
-        }
-      },
-      "TRY": {
-        "symbol": "₺",
-        "icon": "🇹🇷",
-        "names": {
-          "en": "Turkish lira",
-          "zh-TW": "土耳其里拉",
-          "zh-CN": "土耳其里拉"
-        }
-      },
-      "RUB": {
-        "symbol": "₽",
-        "icon": "🇷🇺",
-        "names": {
-          "en": "Russian ruble",
-          "zh-TW": "俄羅斯盧布",
-          "zh-CN": "俄罗斯卢布"
-        }
-      },
-      "INR": {
-        "symbol": "₹",
-        "icon": "🇮🇳",
-        "names": {
-          "en": "Indian rupee",
-          "zh-TW": "印度盧比",
-          "zh-CN": "印度卢比"
-        }
-      },
-      "BRL": {
-        "symbol": "R$",
-        "icon": "🇧🇷",
-        "names": {
-          "en": "Brazilian real",
-          "zh-TW": "巴西雷亞爾",
-          "zh-CN": "巴西雷亚尔"
-        }
-      },
-      "ZAR": {
-        "symbol": "R",
-        "icon": "🇿🇦",
-        "names": {
-          "en": "South African rand",
-          "zh-TW": "南非蘭特",
-          "zh-CN": "南非兰特"
-        }
-      },
-      "PHP": {
-        "symbol": "₱",
-        "icon": "🇵🇭",
-        "names": {
-          "en": "Philippine peso",
-          "zh-TW": "菲律賓比索",
-          "zh-CN": "菲律宾比索"
-        }
-      },
-      "CZK": {
-        "symbol": "Kč",
-        "icon": "🇨🇿",
-        "names": {
-          "en": "Czech koruna",
-          "zh-TW": "捷克克朗",
-          "zh-CN": "捷克克朗"
-        }
-      },
-      "IDR": {
-        "symbol": "Rp",
-        "icon": "🇮🇩",
-        "names": {
-          "en": "Indonesian rupiah",
-          "zh-TW": "印尼盾",
-          "zh-CN": "印尼盾"
-        }
-      },
-      "MYR": {
-        "symbol": "RM",
-        "icon": "🇲🇾",
-        "names": {
-          "en": "Malaysian ringgit",
-          "zh-TW": "馬來西亞林吉特",
-          "zh-CN": "马来西亚林吉特"
-        }
-      },
-      "HUF": {
-        "symbol": "Ft",
-        "icon": "🇭🇺",
-        "names": {
-          "en": "Hungarian forint",
-          "zh-TW": "匈牙利福林",
-          "zh-CN": "匈牙利福林"
-        }
-      },
-      "ISK": {
-        "symbol": "kr",
-        "icon": "🇮🇸",
-        "names": {
-          "en": "Icelandic króna",
-          "zh-TW": "冰島克朗",
-          "zh-CN": "冰岛克朗"
-        }
-      },
-      "HRK": {
-        "symbol": "kn",
-        "icon": "🇭🇷",
-        "names": {
-          "en": "Croatian kuna",
-          "zh-TW": "克羅地亞庫納",
-          "zh-CN": "克罗地亚库纳"
-        }
-      },
-      "BGN": {
-        "symbol": "лв",
-        "icon": "🇧🇬",
-        "names": {
-          "en": "Bulgarian lev",
-          "zh-TW": "保加利亞列弗",
-          "zh-CN": "保加利亚列弗"
-        }
-      },
-      "RON": {
-        "symbol": "lei",
-        "icon": "🇷🇴",
-        "names": {
-          "en": "Romanian leu",
-          "zh-TW": "羅馬尼亞列伊",
-          "zh-CN": "罗马尼亚列伊"
-        }
-      },
-      "DKK": {
-        "symbol": "kr",
-        "icon": "🇩🇰",
-        "names": {
-          "en": "Danish krone",
-          "zh-TW": "丹麥克朗",
-          "zh-CN": "丹麦克朗"
-        }
-      },
-      "THB": {
-        "symbol": "฿",
-        "icon": "🇹🇭",
-        "names": {
-          "en": "Thai baht",
-          "zh-TW": "泰銖",
-          "zh-CN": "泰铢"
-        }
-      },
-      "PLN": {
-        "symbol": "zł",
-        "icon": "🇵🇱",
-        "names": {
-          "en": "Polish złoty",
-          "zh-TW": "波蘭茲羅提",
-          "zh-CN": "波兰兹罗提"
-        }
-      },
-      "ILS": {
-        "symbol": "₪",
-        "icon": "🇮🇱",
-        "names": {
-          "en": "Israeli new shekel",
-          "zh-TW": "以色列新謝克爾",
-          "zh-CN": "以色列新谢克尔"
-        }
-      },
-      "AED": {
-        "symbol": "د.إ",
-        "icon": "🇦🇪",
-        "names": {
-          "en": "United Arab Emirates dirham",
-          "zh-TW": "阿聯酋迪拉姆",
-          "zh-CN": "阿联酋迪拉姆"
-        }
-      },
-      "ARS": {
-        "symbol": "$",
-        "icon": "🇦🇷",
-        "names": {
-          "en": "Argentine peso",
-          "zh-TW": "阿根廷比索",
-          "zh-CN": "阿根廷比索"
-        }
-      },
-      "CLP": {
-        "symbol": "$",
-        "icon": "🇨🇱",
-        "names": {
-          "en": "Chilean peso",
-          "zh-TW": "智利比索",
-          "zh-CN": "智利比索"
-        }
-      },
-      "COP": {
-        "symbol": "$",
-        "icon": "🇨🇴",
-        "names": {
-          "en": "Colombian peso",
-          "zh-TW": "哥倫比亞比索",
-          "zh-CN": "哥伦比亚比索"
-        }
-      },
-      "EGP": {
-        "symbol": "£",
-        "icon": "🇪🇬",
-        "names": {
-          "en": "Egyptian pound",
-          "zh-TW": "埃及鎊",
-          "zh-CN": "埃及镑"
-        }
-      },
-      "IRR": {
-        "symbol": "﷼",
-        "icon": "🇮🇷",
-        "names": {
-          "en": "Iranian rial",
-          "zh-TW": "伊朗里亞爾",
-          "zh-CN": "伊朗里亚尔"
-        }
-      },
-      "JOD": {
-        "symbol": "د.ا",
-        "icon": "🇯🇴",
-        "names": {
-          "en": "Jordanian dinar",
-          "zh-TW": "約旦第納爾",
-          "zh-CN": "约旦第纳尔"
-        }
-      },
-      "KWD": {
-        "symbol": "د.ك",
-        "icon": "🇰🇼",
-        "names": {
-          "en": "Kuwaiti dinar",
-          "zh-TW": "科威特第納爾",
-          "zh-CN": "科威特第纳尔"
-        }
-      },
-      "LBP": {
-        "symbol": "ل.ل",
-        "icon": "🇱🇧",
-        "names": {
-          "en": "Lebanese pound",
-          "zh-TW": "黎巴嫩鎊",
-          "zh-CN": "黎巴嫩镑"
-        }
-      },
-      "LKR": {
-        "symbol": "₨",
-        "icon": "🇱🇰",
-        "names": {
-          "en": "Sri Lankan rupee",
-          "zh-TW": "斯里蘭卡盧比",
-          "zh-CN": "斯里兰卡卢比"
-        }
-      },
-      "MAD": {
-        "symbol": "د.م.",
-        "icon": "🇲🇦",
-        "names": {
-          "en": "Moroccan dirham",
-          "zh-TW": "摩洛哥迪拉姆",
-          "zh-CN": "摩洛哥迪拉姆"
-        }
-      },
-      "NGN": {
-        "symbol": "₦",
-        "icon": "🇳🇬",
-        "names": {
-          "en": "Nigerian naira",
-          "zh-TW": "奈及利亞奈拉",
-          "zh-CN": "尼日利亚奈拉"
-        }
-      },
-      "OMR": {
-        "symbol": "ر.ع.",
-        "icon": "🇴🇲",
-        "names": {
-          "en": "Omani rial",
-          "zh-TW": "阿曼里亞爾",
-          "zh-CN": "阿曼里亚尔"
-        }
-      },
-      "PEN": {
+  "fiat": {
+    "USD": {
+      "symbol": "$",
+      "icon": "🇺🇸",
+      "names": {
+        "en": "United States dollar",
+        "zh-TW": "美元",
+        "zh-CN": "美元",
+        "es": "dólar estadounidense",
+        "ar": "دولار أمريكي",
+        "hi": "अमेरिकी डॉलर",
+        "pt": "dólar americano",
+        "bn": "মার্কিন ডলার",
+        "ru": "доллар США",
+        "ja": "米ドル",
+        "de": "US-Dollar",
+        "fr": "dollar des États-Unis",
+        "ko": "미국 달러"
+      }
+    },
+    "EUR": {
+      "symbol": "€",
+      "icon": "🇪🇺",
+      "names": {
+        "en": "Euro",
+        "zh-TW": "歐元",
+        "zh-CN": "欧元",
+        "es": "euro",
+        "ar": "يورو",
+        "hi": "यूरो",
+        "pt": "euro",
+        "bn": "ইউরো",
+        "ru": "евро",
+        "ja": "ユーロ",
+        "de": "Euro",
+        "fr": "euro",
+        "ko": "유로"
+      }
+    },
+    "GBP": {
+      "symbol": "£",
+      "icon": "🇬🇧",
+      "names": {
+        "en": "British pound",
+        "zh-TW": "英鎊",
+        "zh-CN": "英镑",
+        "es": "libra esterlina británica",
+        "ar": "جنيه إسترليني",
+        "hi": "ब्रिटिश पाउंड",
+        "pt": "libra esterlina britânica",
+        "bn": "ব্রিটিশ পাউন্ড",
+        "ru": "британский фунт",
+        "ja": "英ポンド",
+        "de": "Britisches Pfund",
+        "fr": "livre sterling",
+        "ko": "영국 파운드"
+      }
+    },
+    "JPY": {
+      "symbol": "¥",
+      "icon": "🇯🇵",
+      "names": {
+        "en": "Japanese yen",
+        "zh-TW": "日圓",
+        "zh-CN": "日元",
+        "es": "yen japonés",
+        "ar": "ين ياباني",
+        "hi": "जापानी येन",
+        "pt": "iene japonês",
+        "bn": "জাপানি ইয়েন",
+        "ru": "японская иена",
+        "ja": "日本円",
+        "de": "Japanischer Yen",
+        "fr": "yen japonais",
+        "ko": "일본 엔"
+      }
+    },
+    "AUD": {
+      "symbol": "$",
+      "icon": "🇦🇺",
+      "names": {
+        "en": "Australian dollar",
+        "zh-TW": "澳幣",
+        "zh-CN": "澳元",
+        "es": "dólar australiano",
+        "ar": "دولار أسترالي",
+        "hi": "ऑस्ट्रेलियाई डॉलर",
+        "pt": "dólar australiano",
+        "bn": "অস্ট্রেলিয়ান ডলার",
+        "ru": "австралийский доллар",
+        "ja": "オーストラリア ドル",
+        "de": "Australischer Dollar",
+        "fr": "dollar australien",
+        "ko": "호주 달러"
+      }
+    },
+    "CAD": {
+      "symbol": "$",
+      "icon": "🇨🇦",
+      "names": {
+        "en": "Canadian dollar",
+        "zh-TW": "加拿大元",
+        "zh-CN": "加拿大元",
+        "es": "dólar canadiense",
+        "ar": "دولار كندي",
+        "hi": "कनाडाई डॉलर",
+        "pt": "dólar canadense",
+        "bn": "কানাডিয়ান ডলার",
+        "ru": "канадский доллар",
+        "ja": "カナダ ドル",
+        "de": "Kanadischer Dollar",
+        "fr": "dollar canadien",
+        "ko": "캐나다 달러"
+      }
+    },
+    "CHF": {
+      "symbol": "Fr.",
+      "icon": "🇨🇭",
+      "names": {
+        "en": "Swiss franc",
+        "zh-TW": "瑞士法郎",
+        "zh-CN": "瑞士法郎",
+        "es": "franco suizo",
+        "ar": "فرنك سويسري",
+        "hi": "स्विस फ़्रैंक",
+        "pt": "franco suíço",
+        "bn": "সুইস ফ্রাঁ",
+        "ru": "швейцарский франк",
+        "ja": "スイス フラン",
+        "de": "Schweizer Franken",
+        "fr": "franc suisse",
+        "ko": "스위스 프랑"
+      }
+    },
+    "CNY": {
+      "symbol": "¥",
+      "icon": "🇨🇳",
+      "names": {
+        "en": "Chinese yuan",
+        "zh-TW": "人民幣",
+        "zh-CN": "人民币",
+        "es": "yuan chino",
+        "ar": "يوان صيني",
+        "hi": "चीनी युआन",
+        "pt": "yuan chinês",
+        "bn": "চীনা ইউয়ান",
+        "ru": "китайский юань",
+        "ja": "中国人民元",
+        "de": "Renminbi Yuan",
+        "fr": "yuan renminbi chinois",
+        "ko": "중국 위안"
+      }
+    },
+    "SEK": {
+      "symbol": "kr",
+      "icon": "🇸🇪",
+      "names": {
+        "en": "Swedish krona",
+        "zh-TW": "瑞典克朗",
+        "zh-CN": "瑞典克朗",
+        "es": "corona sueca",
+        "ar": "كرونة سويدية",
+        "hi": "स्वीडिश क्रोना",
+        "pt": "coroa sueca",
+        "bn": "সুইডিশ ক্রোনা",
+        "ru": "шведская крона",
+        "ja": "スウェーデン クローナ",
+        "de": "Schwedische Krone",
+        "fr": "couronne suédoise",
+        "ko": "스웨덴 크로나"
+      }
+    },
+    "NZD": {
+      "symbol": "$",
+      "icon": "🇳🇿",
+      "names": {
+        "en": "New Zealand dollar",
+        "zh-TW": "紐西蘭元",
+        "zh-CN": "新西兰元",
+        "es": "dólar neozelandés",
+        "ar": "دولار نيوزيلندي",
+        "hi": "न्यूज़ीलैंड डॉलर",
+        "pt": "dólar neozelandês",
+        "bn": "নিউজিল্যান্ড ডলার",
+        "ru": "новозеландский доллар",
+        "ja": "ニュージーランド ドル",
+        "de": "Neuseeland-Dollar",
+        "fr": "dollar néo-zélandais",
+        "ko": "뉴질랜드 달러"
+      }
+    },
+    "MXN": {
+      "symbol": "$",
+      "icon": "🇲🇽",
+      "names": {
+        "en": "Mexican peso",
+        "zh-TW": "墨西哥比索",
+        "zh-CN": "墨西哥比索",
+        "es": "peso mexicano",
+        "ar": "بيزو مكسيكي",
+        "hi": "मैक्सिकन पेसो",
+        "pt": "peso mexicano",
+        "bn": "মেক্সিকান পেসো",
+        "ru": "мексиканское песо",
+        "ja": "メキシコ ペソ",
+        "de": "Mexikanischer Peso",
+        "fr": "peso mexicain",
+        "ko": "멕시코 페소"
+      }
+    },
+    "SGD": {
+      "symbol": "$",
+      "icon": "🇸🇬",
+      "names": {
+        "en": "Singapore dollar",
+        "zh-TW": "新加坡元",
+        "zh-CN": "新加坡元",
+        "es": "dólar singapurense",
+        "ar": "دولار سنغافوري",
+        "hi": "सिंगापुर डॉलर",
+        "pt": "dólar singapurense",
+        "bn": "সিঙ্গাপুর ডলার",
+        "ru": "сингапурский доллар",
+        "ja": "シンガポール ドル",
+        "de": "Singapur-Dollar",
+        "fr": "dollar de Singapour",
+        "ko": "싱가포르 달러"
+      }
+    },
+    "HKD": {
+      "symbol": "$",
+      "icon": "🇭🇰",
+      "names": {
+        "en": "Hong Kong dollar",
+        "zh-TW": "港幣",
+        "zh-CN": "港币",
+        "es": "dólar hongkonés",
+        "ar": "دولار هونغ كونغ",
+        "hi": "हाँगकाँग डॉलर",
+        "pt": "dólar de Hong Kong",
+        "bn": "হংকং ডলার",
+        "ru": "гонконгский доллар",
+        "ja": "香港ドル",
+        "de": "Hongkong-Dollar",
+        "fr": "dollar de Hong Kong",
+        "ko": "홍콩 달러"
+      }
+    },
+    "NOK": {
+      "symbol": "kr",
+      "icon": "🇳🇴",
+      "names": {
+        "en": "Norwegian krone",
+        "zh-TW": "挪威克朗",
+        "zh-CN": "挪威克朗",
+        "es": "corona noruega",
+        "ar": "كرونة نرويجية",
+        "hi": "नॉर्वेजियन क्रोन",
+        "pt": "coroa norueguesa",
+        "bn": "নরওয়েজিয়ান ক্রোন",
+        "ru": "норвежская крона",
+        "ja": "ノルウェー クローネ",
+        "de": "Norwegische Krone",
+        "fr": "couronne norvégienne",
+        "ko": "노르웨이 크로네"
+      }
+    },
+    "KRW": {
+      "symbol": "₩",
+      "icon": "🇰🇷",
+      "names": {
+        "en": "South Korean won",
+        "zh-TW": "韓元",
+        "zh-CN": "韩元",
+        "es": "won surcoreano",
+        "ar": "وون كوري جنوبي",
+        "hi": "दक्षिण कोरियाई वॉन",
+        "pt": "won sul-coreano",
+        "bn": "দক্ষিণ কোরিয়ান ওন",
+        "ru": "южнокорейская вона",
+        "ja": "韓国ウォン",
+        "de": "Südkoreanischer Won",
+        "fr": "won sud-coréen",
+        "ko": "대한민국 원"
+      }
+    },
+    "TRY": {
+      "symbol": "₺",
+      "icon": "🇹🇷",
+      "names": {
+        "en": "Turkish lira",
+        "zh-TW": "土耳其里拉",
+        "zh-CN": "土耳其里拉",
+        "es": "lira turca",
+        "ar": "ليرة تركية",
+        "hi": "तुर्की लीरा",
+        "pt": "lira turca",
+        "bn": "তুর্কি লিরা",
+        "ru": "турецкая лира",
+        "ja": "トルコ リラ",
+        "de": "Türkische Lira",
+        "fr": "livre turque",
+        "ko": "터키 리라"
+      }
+    },
+    "RUB": {
+      "symbol": "₽",
+      "icon": "🇷🇺",
+      "names": {
+        "en": "Russian ruble",
+        "zh-TW": "俄羅斯盧布",
+        "zh-CN": "俄罗斯卢布",
+        "es": "rublo ruso",
+        "ar": "روبل روسي",
+        "hi": "रूसी रूबल",
+        "pt": "rublo russo",
+        "bn": "রুশ রুবল",
+        "ru": "российский рубль",
+        "ja": "ロシア ルーブル",
+        "de": "Russischer Rubel",
+        "fr": "rouble russe",
+        "ko": "러시아 루블"
+      }
+    },
+    "INR": {
+      "symbol": "₹",
+      "icon": "🇮🇳",
+      "names": {
+        "en": "Indian rupee",
+        "zh-TW": "印度盧比",
+        "zh-CN": "印度卢比",
+        "es": "rupia india",
+        "ar": "روبية هندية",
+        "hi": "भारतीय रुपया",
+        "pt": "rúpia indiana",
+        "bn": "ভারতীয় রুপি",
+        "ru": "индийская рупия",
+        "ja": "インド ルピー",
+        "de": "Indische Rupie",
+        "fr": "roupie indienne",
+        "ko": "인도 루피"
+      }
+    },
+    "BRL": {
+      "symbol": "R$",
+      "icon": "🇧🇷",
+      "names": {
+        "en": "Brazilian real",
+        "zh-TW": "巴西里亞爾",
+        "zh-CN": "巴西雷亚尔",
+        "es": "real brasileño",
+        "ar": "ريال برازيلي",
+        "hi": "ब्राज़ीली रियाल",
+        "pt": "real brasileiro",
+        "bn": "ব্রাজিলিয়ান রিয়াল",
+        "ru": "бразильский реал",
+        "ja": "ブラジル レアル",
+        "de": "Brasilianischer Real",
+        "fr": "réal brésilien",
+        "ko": "브라질 레알"
+      }
+    },
+    "ZAR": {
+      "symbol": "R",
+      "icon": "🇿🇦",
+      "names": {
+        "en": "South African rand",
+        "zh-TW": "南非蘭特",
+        "zh-CN": "南非兰特",
+        "es": "rand sudafricano",
+        "ar": "راند جنوب أفريقي",
+        "hi": "दक्षिण अफ़्रीकी रैंड",
+        "pt": "rand sul-africano",
+        "bn": "দক্ষিণ আফ্রিকান র‍্যান্ড",
+        "ru": "южноафриканский рэнд",
+        "ja": "南アフリカ ランド",
+        "de": "Südafrikanischer Rand",
+        "fr": "rand sud-africain",
+        "ko": "남아프리카 랜드"
+      }
+    },
+    "PHP": {
+      "symbol": "₱",
+      "icon": "🇵🇭",
+      "names": {
+        "en": "Philippine peso",
+        "zh-TW": "菲律賓披索",
+        "zh-CN": "菲律宾比索",
+        "es": "peso filipino",
+        "ar": "بيزو فلبيني",
+        "hi": "फ़िलिपीनी पेसो",
+        "pt": "peso filipino",
+        "bn": "ফিলিপাইন পেসো",
+        "ru": "филиппинское песо",
+        "ja": "フィリピン ペソ",
+        "de": "Philippinischer Peso",
+        "fr": "peso philippin",
+        "ko": "필리핀 페소"
+      }
+    },
+    "CZK": {
+      "symbol": "Kč",
+      "icon": "🇨🇿",
+      "names": {
+        "en": "Czech koruna",
+        "zh-TW": "捷克克朗",
+        "zh-CN": "捷克克朗",
+        "es": "corona checa",
+        "ar": "كرونة تشيكية",
+        "hi": "चेक कोरुना",
+        "pt": "coroa tcheca",
+        "bn": "চেক কোরুনা",
+        "ru": "чешская крона",
+        "ja": "チェコ コルナ",
+        "de": "Tschechische Krone",
+        "fr": "couronne tchèque",
+        "ko": "체코 코루나"
+      }
+    },
+    "IDR": {
+      "symbol": "Rp",
+      "icon": "🇮🇩",
+      "names": {
+        "en": "Indonesian rupiah",
+        "zh-TW": "印尼盾",
+        "zh-CN": "印尼盾",
+        "es": "rupia indonesia",
+        "ar": "روبية إندونيسية",
+        "hi": "इंडोनेशियाई रुपिया",
+        "pt": "rupia indonésia",
+        "bn": "ইন্দোনেশিয়ান রুপিয়াহ",
+        "ru": "индонезийская рупия",
+        "ja": "インドネシア ルピア",
+        "de": "Indonesische Rupiah",
+        "fr": "roupie indonésienne",
+        "ko": "인도네시아 루피아"
+      }
+    },
+    "MYR": {
+      "symbol": "RM",
+      "icon": "🇲🇾",
+      "names": {
+        "en": "Malaysian ringgit",
+        "zh-TW": "馬來西亞令吉",
+        "zh-CN": "马来西亚林吉特",
+        "es": "ringgit malasio",
+        "ar": "رينغيت ماليزي",
+        "hi": "मलेशियाई रिंगित",
+        "pt": "ringgit malaio",
+        "bn": "মালয়েশিয়ান রিঙ্গিত",
+        "ru": "малайзийский ринггит",
+        "ja": "マレーシア リンギット",
+        "de": "Malaysischer Ringgit",
+        "fr": "ringgit malais",
+        "ko": "말레이시아 링깃"
+      }
+    },
+    "HUF": {
+      "symbol": "Ft",
+      "icon": "🇭🇺",
+      "names": {
+        "en": "Hungarian forint",
+        "zh-TW": "匈牙利福林",
+        "zh-CN": "匈牙利福林",
+        "es": "forinto húngaro",
+        "ar": "فورينت مجري",
+        "hi": "हंगेरियन फ़ोरिंट",
+        "pt": "forint húngaro",
+        "bn": "হাঙ্গেরিয়ান ফোরিন্ট",
+        "ru": "венгерский форинт",
+        "ja": "ハンガリー フォリント",
+        "de": "Ungarischer Forint",
+        "fr": "forint hongrois",
+        "ko": "헝가리 포린트"
+      }
+    },
+    "ISK": {
+      "symbol": "kr",
+      "icon": "🇮🇸",
+      "names": {
+        "en": "Icelandic króna",
+        "zh-TW": "冰島克朗",
+        "zh-CN": "冰岛克朗",
+        "es": "corona islandesa",
+        "ar": "كرونة أيسلندية",
+        "hi": "आइसलैंडिक क्रोना",
+        "pt": "coroa islandesa",
+        "bn": "আইসল্যান্ডিক ক্রোনা",
+        "ru": "исландская крона",
+        "ja": "アイスランド クローナ",
+        "de": "Isländische Krone",
+        "fr": "couronne islandaise",
+        "ko": "아이슬란드 크로나"
+      }
+    },
+    "HRK": {
+      "symbol": "kn",
+      "icon": "🇭🇷",
+      "names": {
+        "en": "Croatian kuna",
+        "zh-TW": "克羅埃西亞庫納",
+        "zh-CN": "克罗地亚库纳",
+        "es": "kuna croata",
+        "ar": "كونا كرواتية",
+        "hi": "क्रोएशियाई कुना",
+        "pt": "kuna croata",
+        "bn": "ক্রোয়েশিয়ান কুনা",
+        "ru": "хорватская куна",
+        "ja": "クロアチア クーナ",
+        "de": "Kroatische Kuna",
+        "fr": "kuna croate",
+        "ko": "크로아티아 쿠나"
+      }
+    },
+    "BGN": {
+      "symbol": "лв",
+      "icon": "🇧🇬",
+      "names": {
+        "en": "Bulgarian lev",
+        "zh-TW": "保加利亞列弗",
+        "zh-CN": "保加利亚列弗",
+        "es": "lev búlgaro",
+        "ar": "ليف بلغاري",
+        "hi": "बल्गेरियाई लेव",
+        "pt": "lev búlgaro",
+        "bn": "বুলগেরীয় লেভ",
+        "ru": "болгарский лев",
+        "ja": "ブルガリア レフ",
+        "de": "Bulgarischer Lew",
+        "fr": "lev bulgare",
+        "ko": "불가리아 레프"
+      }
+    },
+    "RON": {
+      "symbol": "lei",
+      "icon": "🇷🇴",
+      "names": {
+        "en": "Romanian leu",
+        "zh-TW": "羅馬尼亞列伊",
+        "zh-CN": "罗马尼亚列伊",
+        "es": "leu rumano",
+        "ar": "ليو روماني",
+        "hi": "रोमानियाई ल्यू",
+        "pt": "leu romeno",
+        "bn": "রোমানিয়ান লিউ",
+        "ru": "румынский лей",
+        "ja": "ルーマニア レウ",
+        "de": "Rumänischer Leu",
+        "fr": "leu roumain",
+        "ko": "루마니아 레우"
+      }
+    },
+    "DKK": {
+      "symbol": "kr",
+      "icon": "🇩🇰",
+      "names": {
+        "en": "Danish krone",
+        "zh-TW": "丹麥克朗",
+        "zh-CN": "丹麦克朗",
+        "es": "corona danesa",
+        "ar": "كرونة دنماركية",
+        "hi": "डैनिश क्रोन",
+        "pt": "coroa dinamarquesa",
+        "bn": "ড্যানিশ ক্রোন",
+        "ru": "датская крона",
+        "ja": "デンマーク クローネ",
+        "de": "Dänische Krone",
+        "fr": "couronne danoise",
+        "ko": "덴마크 크로네"
+      }
+    },
+    "THB": {
+      "symbol": "฿",
+      "icon": "🇹🇭",
+      "names": {
+        "en": "Thai baht",
+        "zh-TW": "泰銖",
+        "zh-CN": "泰铢",
+        "es": "baht tailandés",
+        "ar": "بات تايلاندي",
+        "hi": "थाई बाट",
+        "pt": "baht tailandês",
+        "bn": "থাই বাত",
+        "ru": "тайский бат",
+        "ja": "タイ バーツ",
+        "de": "Thailändischer Baht",
+        "fr": "baht thaïlandais",
+        "ko": "태국 바트"
+      }
+    },
+    "PLN": {
+      "symbol": "zł",
+      "icon": "🇵🇱",
+      "names": {
+        "en": "Polish zloty",
+        "zh-TW": "波蘭茲羅提",
+        "zh-CN": "波兰兹罗提",
+        "es": "esloty polaco",
+        "ar": "زلوتي بولندي",
+        "hi": "पोलिश ज़्लॉटी",
+        "pt": "złoty polonês",
+        "bn": "পোলিশ জ্লোটি",
+        "ru": "польский злотый",
+        "ja": "ポーランド ズウォティ",
+        "de": "Polnischer Złoty",
+        "fr": "zloty polonais",
+        "ko": "폴란드 즈워티"
+      }
+    },
+    "ILS": {
+      "symbol": "₪",
+      "icon": "🇮🇱",
+      "names": {
+        "en": "Israeli new shekel",
+        "zh-TW": "以色列新謝克爾",
+        "zh-CN": "以色列新谢克尔",
+        "es": "nuevo séquel israelí",
+        "ar": "شيكل إسرائيلي جديد",
+        "hi": "इज़राइली न्यू शेकेल",
+        "pt": "novo shekel israelense",
+        "bn": "ইসরায়েলি নতুন শেকেল",
+        "ru": "израильский новый шекель",
+        "ja": "イスラエル新シェケル",
+        "de": "Israelischer Neuer Schekel",
+        "fr": "nouveau shekel israélien",
+        "ko": "이스라엘 신 셰켈"
+      }
+    },
+    "AED": {
+      "symbol": "د.إ",
+      "icon": "🇦🇪",
+      "names": {
+        "en": "United Arab Emirates dirham",
+        "zh-TW": "阿聯酋迪拉姆",
+        "zh-CN": "阿联酋迪拉姆",
+        "es": "dírham de los Emiratos Árabes Unidos",
+        "ar": "درهم إماراتي",
+        "hi": "संयुक्त अरब अमीरात दिरहाम",
+        "pt": "dirham dos Emirados Árabes Unidos",
+        "bn": "সংযুক্ত আরব আমিরাত দিরহাম",
+        "ru": "дирхам ОАЭ",
+        "ja": "アラブ首長国連邦ディルハム",
+        "de": "VAE-Dirham",
+        "fr": "dirham des Émirats arabes unis",
+        "ko": "아랍에미리트 디르함"
+      }
+    },
+    "ARS": {
+      "symbol": "$",
+      "icon": "🇦🇷",
+      "names": {
+        "en": "Argentine peso",
+        "zh-TW": "阿根廷披索",
+        "zh-CN": "阿根廷比索",
+        "es": "peso argentino",
+        "ar": "بيزو أرجنتيني",
+        "hi": "अर्जेंटीनी पेसो",
+        "pt": "peso argentino",
+        "bn": "আর্জেন্টাইন পেসো",
+        "ru": "аргентинское песо",
+        "ja": "アルゼンチン ペソ",
+        "de": "Argentinischer Peso",
+        "fr": "peso argentin",
+        "ko": "아르헨티나 페소"
+      }
+    },
+    "CLP": {
+      "symbol": "$",
+      "icon": "🇨🇱",
+      "names": {
+        "en": "Chilean peso",
+        "zh-TW": "智利披索",
+        "zh-CN": "智利比索",
+        "es": "peso chileno",
+        "ar": "بيزو تشيلي",
+        "hi": "चिली पेसो",
+        "pt": "peso chileno",
+        "bn": "চিলিয়ান পেসো",
+        "ru": "чилийское песо",
+        "ja": "チリ ペソ",
+        "de": "Chilenischer Peso",
+        "fr": "peso chilien",
+        "ko": "칠레 페소"
+      }
+    },
+    "COP": {
+      "symbol": "$",
+      "icon": "🇨🇴",
+      "names": {
+        "en": "Colombian peso",
+        "zh-TW": "哥倫比亞披索",
+        "zh-CN": "哥伦比亚比索",
+        "es": "peso colombiano",
+        "ar": "بيزو كولومبي",
+        "hi": "कोलंबियाई पेसो",
+        "pt": "peso colombiano",
+        "bn": "কলম্বিয়ান পেসো",
+        "ru": "колумбийское песо",
+        "ja": "コロンビア ペソ",
+        "de": "Kolumbianischer Peso",
+        "fr": "peso colombien",
+        "ko": "콜롬비아 페소"
+      }
+    },
+    "EGP": {
+      "symbol": "£",
+      "icon": "🇪🇬",
+      "names": {
+        "en": "Egyptian pound",
+        "zh-TW": "埃及鎊",
+        "zh-CN": "埃及镑",
+        "es": "libra egipcia",
+        "ar": "جنيه مصري",
+        "hi": "मिस्र पाउंड",
+        "pt": "libra egípcia",
+        "bn": "মিশরীয় পাউন্ড",
+        "ru": "египетский фунт",
+        "ja": "エジプト ポンド",
+        "de": "Ägyptisches Pfund",
+        "fr": "livre égyptienne",
+        "ko": "이집트 파운드"
+      }
+    },
+    "IRR": {
+      "symbol": "﷼",
+      "icon": "🇮🇷",
+      "names": {
+        "en": "Iranian rial",
+        "zh-TW": "伊朗里亞爾",
+        "zh-CN": "伊朗里亚尔",
+        "es": "rial iraní",
+        "ar": "ريال إيراني",
+        "hi": "ईरानी रियाल",
+        "pt": "rial iraniano",
+        "bn": "ইরানি রিয়াল",
+        "ru": "иранский риал",
+        "ja": "イラン リアル",
+        "de": "Iranischer Rial",
+        "fr": "rial iranien",
+        "ko": "이란 리알"
+      }
+    },
+    "JOD": {
+      "symbol": "د.ا",
+      "icon": "🇯🇴",
+      "names": {
+        "en": "Jordanian dinar",
+        "zh-TW": "約旦第納爾",
+        "zh-CN": "约旦第纳尔",
+        "es": "dinar jordano",
+        "ar": "دينار أردني",
+        "hi": "जॉर्डनियन दिनार",
+        "pt": "dinar jordaniano",
+        "bn": "জর্ডানিয়ান দিনার",
+        "ru": "иорданский динар",
+        "ja": "ヨルダン ディナール",
+        "de": "Jordanischer Dinar",
+        "fr": "dinar jordanien",
+        "ko": "요르단 디나르"
+      }
+    },
+    "KWD": {
+      "symbol": "د.ك",
+      "icon": "🇰🇼",
+      "names": {
+        "en": "Kuwaiti dinar",
+        "zh-TW": "科威特第納爾",
+        "zh-CN": "科威特第纳尔",
+        "es": "dinar kuwaití",
+        "ar": "دينار كويتي",
+        "hi": "कुवैती दिनार",
+        "pt": "dinar kuwaitiano",
+        "bn": "কুয়েতি দিনার",
+        "ru": "кувейтский динар",
+        "ja": "クウェート ディナール",
+        "de": "Kuwait-Dinar",
+        "fr": "dinar koweïtien",
+        "ko": "쿠웨이트 디나르"
+      }
+    },
+    "LBP": {
+      "symbol": "ل.ل",
+      "icon": "🇱🇧",
+      "names": {
+        "en": "Lebanese pound",
+        "zh-TW": "黎巴嫩鎊",
+        "zh-CN": "黎巴嫩镑",
+        "es": "libra libanesa",
+        "ar": "ليرة لبنانية",
+        "hi": "लेबनानी पाउंड",
+        "pt": "libra libanesa",
+        "bn": "লেবানিজ পাউন্ড",
+        "ru": "ливанский фунт",
+        "ja": "レバノン ポンド",
+        "de": "Libanesisches Pfund",
+        "fr": "livre libanaise",
+        "ko": "레바논 파운드"
+      }
+    },
+    "LKR": {
+      "symbol": "₨",
+      "icon": "🇱🇰",
+      "names": {
+        "en": "Sri Lankan rupee",
+        "zh-TW": "斯里蘭卡盧比",
+        "zh-CN": "斯里兰卡卢比",
+        "es": "rupia de Sri Lanka",
+        "ar": "روبية سريلانكية",
+        "hi": "श्रीलंकाई रुपया",
+        "pt": "rúpia cingalesa",
+        "bn": "শ্রীলঙ্কান রুপি",
+        "ru": "шриланкийская рупия",
+        "ja": "スリランカ ルピー",
+        "de": "Sri-Lanka-Rupie",
+        "fr": "roupie srilankaise",
+        "ko": "스리랑카 루피"
+      }
+    },
+    "MAD": {
+      "symbol": "د.م.",
+      "icon": "🇲🇦",
+      "names": {
+        "en": "Moroccan dirham",
+        "zh-TW": "摩洛哥迪拉姆",
+        "zh-CN": "摩洛哥迪拉姆",
+        "es": "dírham marroquí",
+        "ar": "درهم مغربي",
+        "hi": "मोरक्कन दिरहम",
+        "pt": "dirham marroquino",
+        "bn": "মরোক্কান দিরহাম",
+        "ru": "марокканский дирхам",
+        "ja": "モロッコ ディルハム",
+        "de": "Marokkanischer Dirham",
+        "fr": "dirham marocain",
+        "ko": "모로코 디르함"
+      }
+    },
+    "NGN": {
+      "symbol": "₦",
+      "icon": "🇳🇬",
+      "names": {
+        "en": "Nigerian naira",
+        "zh-TW": "奈及利亞奈拉",
+        "zh-CN": "尼日利亚奈拉",
+        "es": "naira nigeriana",
+        "ar": "نايرا نيجيري",
+        "hi": "नाइजीरियाई नायरा",
+        "pt": "naira nigeriana",
+        "bn": "নাইজেরিয়ান নাইরা",
+        "ru": "нигерийская найра",
+        "ja": "ナイジェリア ナイラ",
+        "de": "Nigerianischer Naira",
+        "fr": "naira nigérian",
+        "ko": "나이지리아 나이라"
+      }
+    },
+    "OMR": {
+      "symbol": "ر.ع.",
+      "icon": "🇴🇲",
+      "names": {
+        "en": "Omani rial",
+        "zh-TW": "阿曼里亞爾",
+        "zh-CN": "阿曼里亚尔",
+        "es": "rial omaní",
+        "ar": "ريال عماني",
+        "hi": "ओमानी रियाल",
+        "pt": "rial omanense",
+        "bn": "ওমানি রিয়াল",
+        "ru": "оманский риал",
+        "ja": "オマーン リアル",
+        "de": "Omanischer Rial",
+        "fr": "rial omanais",
+        "ko": "오만 리알"
+      }
+    },
+    "PEN": {
       "symbol": "S/.",
       "icon": "🇵🇪",
       "names": {
         "en": "Peruvian sol",
         "zh-TW": "秘魯索爾",
-        "zh-CN": "秘鲁索尔"
+        "zh-CN": "秘鲁索尔",
+        "es": "sol peruano",
+        "ar": "سول بيروفي",
+        "hi": "पेरूवियन सोल",
+        "pt": "sol peruano",
+        "bn": "পেরুভিয়ান সোল",
+        "ru": "перуанский соль",
+        "ja": "ペルー ソル",
+        "de": "Peruanischer Sol",
+        "fr": "sol péruvien",
+        "ko": "페루 솔"
       }
     },
     "PKR": {
@@ -456,7 +899,17 @@
       "names": {
         "en": "Pakistani rupee",
         "zh-TW": "巴基斯坦盧比",
-        "zh-CN": "巴基斯坦卢比"
+        "zh-CN": "巴基斯坦卢比",
+        "es": "rupia pakistaní",
+        "ar": "روبية باكستانية",
+        "hi": "पाकिस्तानी रुपया",
+        "pt": "rúpia paquistanesa",
+        "bn": "পাকিস্তানি রুপি",
+        "ru": "пакистанская рупия",
+        "ja": "パキスタン ルピー",
+        "de": "Pakistanische Rupie",
+        "fr": "roupie pakistanaise",
+        "ko": "파키스탄 루피"
       }
     },
     "QAR": {
@@ -465,7 +918,17 @@
       "names": {
         "en": "Qatari riyal",
         "zh-TW": "卡達里亞爾",
-        "zh-CN": "卡塔尔里亚尔"
+        "zh-CN": "卡塔尔里亚尔",
+        "es": "rial catarí",
+        "ar": "ريال قطري",
+        "hi": "क़तरी रियाल",
+        "pt": "rial catariano",
+        "bn": "কাতারি রিয়াল",
+        "ru": "катарский риал",
+        "ja": "カタール リアル",
+        "de": "Katar-Riyal",
+        "fr": "rial qatari",
+        "ko": "카타르 리얄"
       }
     },
     "SAR": {
@@ -473,8 +936,18 @@
       "icon": "🇸🇦",
       "names": {
         "en": "Saudi riyal",
-        "zh-TW": "沙特里亞爾",
-        "zh-CN": "沙特里亚尔"
+        "zh-TW": "沙烏地里亞爾",
+        "zh-CN": "沙特里亚尔",
+        "es": "rial saudí",
+        "ar": "ريال سعودي",
+        "hi": "सऊदी रियाल",
+        "pt": "rial saudita",
+        "bn": "সৌদি রিয়াল",
+        "ru": "саудовский риял",
+        "ja": "サウジ リヤル",
+        "de": "Saudi-Riyal",
+        "fr": "rial saoudien",
+        "ko": "사우디 리얄"
       }
     },
     "TWD": {
@@ -483,7 +956,17 @@
       "names": {
         "en": "New Taiwan dollar",
         "zh-TW": "新台幣",
-        "zh-CN": "新台币"
+        "zh-CN": "新台币",
+        "es": "nuevo dólar taiwanés",
+        "ar": "دولار تايواني جديد",
+        "hi": "नया ताइवान डॉलर",
+        "pt": "novo dólar taiwanês",
+        "bn": "নতুন তাইওয়ান ডলার",
+        "ru": "новый тайваньский доллар",
+        "ja": "新台湾ドル",
+        "de": "Neuer Taiwan-Dollar",
+        "fr": "nouveau dollar taïwanais",
+        "ko": "신대만 달러"
       }
     },
     "UAH": {
@@ -492,7 +975,17 @@
       "names": {
         "en": "Ukrainian hryvnia",
         "zh-TW": "烏克蘭格里夫納",
-        "zh-CN": "乌克兰格里夫纳"
+        "zh-CN": "乌克兰格里夫纳",
+        "es": "grivna ucraniana",
+        "ar": "هريفنيا أوكرانية",
+        "hi": "यूक्रेनी रिव्निया",
+        "pt": "hryvnia ucraniana",
+        "bn": "ইউক্রেনীয় হৃভনিয়া",
+        "ru": "украинская гривна",
+        "ja": "ウクライナ フリヴニャ",
+        "de": "Ukrainische Hrywnja",
+        "fr": "hryvnia ukrainienne",
+        "ko": "우크라이나 흐리우냐"
       }
     },
     "VEF": {
@@ -501,16 +994,36 @@
       "names": {
         "en": "Venezuelan bolívar",
         "zh-TW": "委內瑞拉玻利瓦",
-        "zh-CN": "委内瑞拉玻利瓦"
+        "zh-CN": "委内瑞拉玻利瓦",
+        "es": "bolívar venezolano",
+        "ar": "بوليفار فنزويلي",
+        "hi": "वेनेज़ुएलन बोलिवार",
+        "pt": "bolívar venezuelano",
+        "bn": "ভেনিজুয়েলান বলিভার",
+        "ru": "венесуэльский боливар",
+        "ja": "ベネズエラ ボリバル",
+        "de": "Venezolanischer Bolívar",
+        "fr": "bolivar vénézuélien",
+        "ko": "베네수엘라 볼리바르"
       }
     },
     "VND": {
       "symbol": "₫",
       "icon": "🇻🇳",
       "names": {
-        "en": "Vietnamese đồng",
+        "en": "Vietnamese dong",
         "zh-TW": "越南盾",
-        "zh-CN": "越南盾"
+        "zh-CN": "越南盾",
+        "es": "dong vietnamita",
+        "ar": "دونج فيتنامي",
+        "hi": "वियतनामी डोंग",
+        "pt": "dong vietnamita",
+        "bn": "ভিয়েতনামি ডং",
+        "ru": "вьетнамский донг",
+        "ja": "ベトナム ドン",
+        "de": "Vietnamesischer Dong",
+        "fr": "dông vietnamien",
+        "ko": "베트남 동"
       }
     },
     "XAF": {
@@ -519,7 +1032,17 @@
       "names": {
         "en": "Central African CFA franc",
         "zh-TW": "中非法郎",
-        "zh-CN": "中非法郎"
+        "zh-CN": "中非法郎",
+        "es": "franco CFA de África Central",
+        "ar": "فرنك وسط أفريقي",
+        "hi": "मध्य अफ़्रीकी CFA फ़्रैंक",
+        "pt": "franco CFA da África Central",
+        "bn": "মধ্য আফ্রিকান CFA ফ্রাঁ",
+        "ru": "франк КФА BEAC",
+        "ja": "中央アフリカ CFA フラン",
+        "de": "CFA-Franc (BEAC)",
+        "fr": "franc CFA (BEAC)",
+        "ko": "중앙아프리카 CFA 프랑"
       }
     },
     "XCD": {
@@ -528,7 +1051,17 @@
       "names": {
         "en": "East Caribbean dollar",
         "zh-TW": "東加勒比元",
-        "zh-CN": "东加勒比元"
+        "zh-CN": "东加勒比元",
+        "es": "dólar del Caribe Oriental",
+        "ar": "دولار شرق الكاريبي",
+        "hi": "पूर्वी कैरिबियाई डॉलर",
+        "pt": "dólar do Caribe Oriental",
+        "bn": "পূর্ব ক্যারিবিয়ান ডলার",
+        "ru": "восточно-карибский доллар",
+        "ja": "東カリブ ドル",
+        "de": "Ostkaribischer Dollar",
+        "fr": "dollar des Caraïbes orientales",
+        "ko": "동카리브 달러"
       }
     },
     "XOF": {
@@ -537,7 +1070,17 @@
       "names": {
         "en": "West African CFA franc",
         "zh-TW": "西非法郎",
-        "zh-CN": "西非法郎"
+        "zh-CN": "西非法郎",
+        "es": "franco CFA de África Occidental",
+        "ar": "فرنك غرب أفريقي",
+        "hi": "पश्चिम अफ़्रीकी CFA फ़्रैंक",
+        "pt": "franco CFA da África Ocidental",
+        "bn": "পশ্চিম আফ্রিকান CFA ফ্রাঁ",
+        "ru": "франк КФА BCEAO",
+        "ja": "西アフリカ CFA フラン",
+        "de": "CFA-Franc (BCEAO)",
+        "fr": "franc CFA (BCEAO)",
+        "ko": "서아프리카 CFA 프랑"
       }
     },
     "XPF": {
@@ -546,7 +1089,17 @@
       "names": {
         "en": "CFP franc",
         "zh-TW": "太平洋法郎",
-        "zh-CN": "太平洋法郎"
+        "zh-CN": "太平洋法郎",
+        "es": "franco CFP",
+        "ar": "فرنك سي إف بي",
+        "hi": "CFP फ़्रैंक",
+        "pt": "franco CFP",
+        "bn": "CFP ফ্রাঁ",
+        "ru": "франк КФП",
+        "ja": "CFP フラン",
+        "de": "CFP-Franc",
+        "fr": "franc CFP",
+        "ko": "CFP 프랑"
       }
     },
     "AFN": {
@@ -554,8 +1107,18 @@
       "icon": "🇦🇫",
       "names": {
         "en": "Afghan afghani",
-        "zh-TW": "阿富汗阿富汗尼",
-        "zh-CN": "阿富汗阿富汗尼"
+        "zh-TW": "阿富汗尼",
+        "zh-CN": "阿富汗尼",
+        "es": "afgani afgano",
+        "ar": "أفغاني أفغانستاني",
+        "hi": "अफ़गान अफ़गानी",
+        "pt": "afegane afegão",
+        "bn": "আফগান আফগানি",
+        "ru": "афгани",
+        "ja": "アフガニスタン アフガニ",
+        "de": "Afghanischer Afghani",
+        "fr": "afghani afghan",
+        "ko": "아프가니스탄 아프가니"
       }
     },
     "ALL": {
@@ -564,7 +1127,17 @@
       "names": {
         "en": "Albanian lek",
         "zh-TW": "阿爾巴尼亞列克",
-        "zh-CN": "阿尔巴尼亚列克"
+        "zh-CN": "阿尔巴尼亚列克",
+        "es": "lek albanés",
+        "ar": "ليك ألباني",
+        "hi": "अल्बानियाई लेक",
+        "pt": "lek albanês",
+        "bn": "আলবেনিয়ান লেক",
+        "ru": "албанский лек",
+        "ja": "アルバニア レク",
+        "de": "Albanischer Lek",
+        "fr": "lek albanais",
+        "ko": "알바니아 레크"
       }
     },
     "AMD": {
@@ -573,7 +1146,17 @@
       "names": {
         "en": "Armenian dram",
         "zh-TW": "亞美尼亞德拉姆",
-        "zh-CN": "亚美尼亚德拉姆"
+        "zh-CN": "亚美尼亚德拉姆",
+        "es": "dram armenio",
+        "ar": "درام أرميني",
+        "hi": "आर्मेनियाई द्राम",
+        "pt": "dram armênio",
+        "bn": "আর্মেনিয়ান দ্রাম",
+        "ru": "армянский драм",
+        "ja": "アルメニア ドラム",
+        "de": "Armenischer Dram",
+        "fr": "dram arménien",
+        "ko": "아르메니아 드람"
       }
     },
     "AOA": {
@@ -582,7 +1165,17 @@
       "names": {
         "en": "Angolan kwanza",
         "zh-TW": "安哥拉寬扎",
-        "zh-CN": "安哥拉宽扎"
+        "zh-CN": "安哥拉宽扎",
+        "es": "kwanza angoleño",
+        "ar": "كوانزا أنغولي",
+        "hi": "अंगोली क्वांज़ा",
+        "pt": "kwanza angolano",
+        "bn": "অ্যাঙ্গোলান কোয়ানজা",
+        "ru": "ангольская кванза",
+        "ja": "アンゴラ クワンザ",
+        "de": "Angolanischer Kwanza",
+        "fr": "kwanza angolais",
+        "ko": "앙골라 콴자"
       }
     },
     "AWG": {
@@ -591,7 +1184,17 @@
       "names": {
         "en": "Aruban florin",
         "zh-TW": "阿魯巴弗羅林",
-        "zh-CN": "阿鲁巴弗罗林"
+        "zh-CN": "阿鲁巴弗罗林",
+        "es": "florín arubeño",
+        "ar": "فلورن أروبي",
+        "hi": "अरूबाई फ़्लोरिन",
+        "pt": "florim arubano",
+        "bn": "আরুবান ফ্লোরিন",
+        "ru": "арубанский флорин",
+        "ja": "アルバ フロリン",
+        "de": "Aruba-Florin",
+        "fr": "florin arubais",
+        "ko": "아루바 플로린"
       }
     },
     "AZN": {
@@ -599,26 +1202,57 @@
       "icon": "🇦🇿",
       "names": {
         "en": "Azerbaijani manat",
-        "zh-TW": "阿塞拜疆馬納特",
-        "zh-CN": "阿塞拜疆马纳特"
+        "zh-TW": "亞塞拜然馬納特",
+        "zh-CN": "阿塞拜疆马纳特",
+        "es": "manat azerbaiyano",
+        "ar": "مانات أذربيجاني",
+        "hi": "अज़रबैजानी मनात",
+        "pt": "manat azeri",
+        "bn": "আজারবাইজান মানাত",
+        "ru": "азербайджанский манат",
+        "ja": "アゼルバイジャン マナト",
+        "de": "Aserbaidschan-Manat",
+        "fr": "manat azéri",
+        "ko": "아제르바이잔 마나트"
       }
     },
     "BAM": {
       "symbol": "KM",
       "icon": "🇧🇦",
       "names": {
-        "en": "Bosnia and Herzegovina convertible mark",
-        "zh-TW": "波斯尼亞和黑塞哥維那可兌換馬克",
-        "zh-CN": "波斯尼亚和黑塞哥维那可兑换马克"
+        "en": "Bosnia-Herzegovina convertible mark",
+        "zh-TW": "波士尼亞-赫塞哥維納可兌換馬克",
+        "zh-CN": "波斯尼亚和黑塞哥维那可兑换马克",
+        "es": "marco convertible de Bosnia-Herzegovina",
+        "ar": "مارك البوسنة والهرسك قابل للتحويل",
+        "hi": "बोस्निया-हर्ज़ेगोविना परिवर्तनीय मार्क",
+        "pt": "marco conversível da Bósnia-Herzegovina",
+        "bn": "বসনিয়া ও হার্জেগোভিনার কনভার্টিবল মার্ক",
+        "ru": "конвертируемая марка Боснии и Герцеговины",
+        "ja": "ボスニア・ヘルツェゴビナ 兌換マルク",
+        "de": "Bosnien und Herzegowina Konvertierbare Mark",
+        "fr": "mark convertible bosniaque",
+        "ko": "보스니아-헤르체고비나 태환 마르크"
       }
     },
+
     "BBD": {
       "symbol": "$",
       "icon": "🇧🇧",
       "names": {
         "en": "Barbadian dollar",
-        "zh-TW": "巴巴多斯元",
-        "zh-CN": "巴巴多斯元"
+        "zh-TW": "巴貝多元",
+        "zh-CN": "巴巴多斯元",
+        "es": "dólar barbadense",
+        "ar": "دولار بربادوسي",
+        "hi": "बारबेडियन डॉलर",
+        "pt": "dólar barbadense",
+        "bn": "বার্বাডিয়ান ডলার",
+        "ru": "барбадосский доллар",
+        "ja": "バルバドス ドル",
+        "de": "Barbados-Dollar",
+        "fr": "dollar barbadien",
+        "ko": "바베이도스 달러"
       }
     },
     "BDT": {
@@ -627,7 +1261,17 @@
       "names": {
         "en": "Bangladeshi taka",
         "zh-TW": "孟加拉塔卡",
-        "zh-CN": "孟加拉塔卡"
+        "zh-CN": "孟加拉塔卡",
+        "es": "taka bangladesí",
+        "ar": "تاكا بنغلاديشي",
+        "hi": "बांग्लादेशी टका",
+        "pt": "taka bengali",
+        "bn": "বাংলাদেশি টাকা",
+        "ru": "бангладешская така",
+        "ja": "バングラデシュ タカ",
+        "de": "Bangladesch-Taka",
+        "fr": "taka bangladeshi",
+        "ko": "방글라데시 타카"
       }
     },
     "BIF": {
@@ -635,17 +1279,37 @@
       "icon": "🇧🇮",
       "names": {
         "en": "Burundian franc",
-        "zh-TW": "布隆迪法郎",
-        "zh-CN": "布隆迪法郎"
+        "zh-TW": "蒲隆地法郎",
+        "zh-CN": "布隆迪法郎",
+        "es": "franco burundés",
+        "ar": "فرنك بوروندي",
+        "hi": "बुरुंडी फ़्रैंक",
+        "pt": "franco burundês",
+        "bn": "বুরুন্ডিয়ান ফ্রাঁ",
+        "ru": "бурундийский франк",
+        "ja": "ブルンジ フラン",
+        "de": "Burundi-Franc",
+        "fr": "franc burundais",
+        "ko": "부룬디 프랑"
       }
     },
     "BMD": {
       "symbol": "$",
       "icon": "🇧🇲",
       "names": {
-        "en": "Bermudian dollar",
-        "zh-TW": "百慕大元",
-        "zh-CN": "百慕大元"
+        "en": "Bermudan dollar",
+        "zh-TW": "百慕達元",
+        "zh-CN": "百慕大元",
+        "es": "dólar bermudeño",
+        "ar": "دولار برمودي",
+        "hi": "बर्मूडन डॉलर",
+        "pt": "dólar bermudense",
+        "bn": "বারমুডান ডলার",
+        "ru": "бермудский доллар",
+        "ja": "バミューダ ドル",
+        "de": "Bermuda-Dollar",
+        "fr": "dollar bermudien",
+        "ko": "버뮤다 달러"
       }
     },
     "BND": {
@@ -654,7 +1318,17 @@
       "names": {
         "en": "Brunei dollar",
         "zh-TW": "汶萊元",
-        "zh-CN": "文莱元"
+        "zh-CN": "文莱元",
+        "es": "dólar bruneano",
+        "ar": "دولار بروناي",
+        "hi": "ब्रूनेई डॉलर",
+        "pt": "dólar bruneano",
+        "bn": "ব্রুনেই ডলার",
+        "ru": "брунейский доллар",
+        "ja": "ブルネイ ドル",
+        "de": "Brunei-Dollar",
+        "fr": "dollar brunéien",
+        "ko": "브루나이 달러"
       }
     },
     "BOB": {
@@ -663,7 +1337,17 @@
       "names": {
         "en": "Bolivian boliviano",
         "zh-TW": "玻利維亞諾",
-        "zh-CN": "玻利维亚诺"
+        "zh-CN": "玻利维亚诺",
+        "es": "boliviano",
+        "ar": "بوليفيانو بوليفي",
+        "hi": "बोलीवियाई बोलिवियानो",
+        "pt": "boliviano",
+        "bn": "বলিভিয়ান বলিভিয়ানো",
+        "ru": "боливийский боливиано",
+        "ja": "ボリビア ボリビアーノ",
+        "de": "Bolivianischer Boliviano",
+        "fr": "boliviano bolivien",
+        "ko": "볼리비아노"
       }
     },
     "BSD": {
@@ -672,7 +1356,17 @@
       "names": {
         "en": "Bahamian dollar",
         "zh-TW": "巴哈馬元",
-        "zh-CN": "巴哈马元"
+        "zh-CN": "巴哈马元",
+        "es": "dólar bahameño",
+        "ar": "دولار باهامي",
+        "hi": "बहामाई डॉलर",
+        "pt": "dólar bahamense",
+        "bn": "বাহামিয়ান ডলার",
+        "ru": "багамский доллар",
+        "ja": "バハマ ドル",
+        "de": "Bahama-Dollar",
+        "fr": "dollar bahaméen",
+        "ko": "바하마 달러"
       }
     },
     "BTN": {
@@ -681,16 +1375,36 @@
       "names": {
         "en": "Bhutanese ngultrum",
         "zh-TW": "不丹努爾特魯姆",
-        "zh-CN": "不丹努尔特鲁姆"
+        "zh-CN": "不丹努尔特鲁姆",
+        "es": "ngultrum butanés",
+        "ar": "نولتوم بوتاني",
+        "hi": "भूटानी न्गुलत्रम",
+        "pt": "ngultrum butanês",
+        "bn": "ভুটানি এনগুলট্রাম",
+        "ru": "бутанский нгултрум",
+        "ja": "ブータン ヌルタム",
+        "de": "Bhutan-Ngultrum",
+        "fr": "ngultrum bouthanais",
+        "ko": "부탄 눌트럼"
       }
     },
     "BWP": {
       "symbol": "P",
       "icon": "🇧🇼",
       "names": {
-        "en": "Botswana pula",
-        "zh-TW": "博茨瓦納普拉",
-        "zh-CN": "博茨瓦纳普拉"
+        "en": "Botswanan pula",
+        "zh-TW": "波札那普拉",
+        "zh-CN": "博茨瓦纳普拉",
+        "es": "pula botsuano",
+        "ar": "بولا بوتسواني",
+        "hi": "बोत्सवानाई पुला",
+        "pt": "pula botswano",
+        "bn": "বতসোয়ানান পুলা",
+        "ru": "ботсванская пула",
+        "ja": "ボツワナ プラ",
+        "de": "Botswanischer Pula",
+        "fr": "pula botswanais",
+        "ko": "보츠와나 풀라"
       }
     },
     "BYN": {
@@ -699,7 +1413,17 @@
       "names": {
         "en": "Belarusian ruble",
         "zh-TW": "白俄羅斯盧布",
-        "zh-CN": "白俄罗斯卢布"
+        "zh-CN": "白俄罗斯卢布",
+        "es": "rublo bielorruso",
+        "ar": "روبل بيلاروسي",
+        "hi": "बेलारूसी रूबल",
+        "pt": "rublo bielorrusso",
+        "bn": "বেলারুশিয়ান রুবল",
+        "ru": "белорусский рубль",
+        "ja": "ベラルーシ ルーブル",
+        "de": "Belarussischer Rubel",
+        "fr": "rouble biélorusse",
+        "ko": "벨라루스 루블"
       }
     },
     "BZD": {
@@ -707,8 +1431,18 @@
       "icon": "🇧🇿",
       "names": {
         "en": "Belize dollar",
-        "zh-TW": "伯利茲元",
-        "zh-CN": "伯利兹元"
+        "zh-TW": "貝里斯元",
+        "zh-CN": "伯利兹元",
+        "es": "dólar beliceño",
+        "ar": "دولار بليزي",
+        "hi": "बेलीज़ डॉलर",
+        "pt": "dólar belizenho",
+        "bn": "বেলিজ ডলার",
+        "ru": "белизский доллар",
+        "ja": "ベリーズ ドル",
+        "de": "Belize-Dollar",
+        "fr": "dollar bélizéen",
+        "ko": "벨리즈 달러"
       }
     },
     "CDF": {
@@ -717,7 +1451,17 @@
       "names": {
         "en": "Congolese franc",
         "zh-TW": "剛果法郎",
-        "zh-CN": "刚果法郎"
+        "zh-CN": "刚果法郎",
+        "es": "franco congoleño",
+        "ar": "فرنك كونغولي",
+        "hi": "कांगो फ़्रैंक",
+        "pt": "franco congolês",
+        "bn": "কঙ্গোলীয় ফ্রাঁ",
+        "ru": "конголезский франк",
+        "ja": "コンゴ フラン",
+        "de": "Kongo-Franc",
+        "fr": "franc congolais",
+        "ko": "콩고 프랑"
       }
     },
     "CRC": {
@@ -725,8 +1469,18 @@
       "icon": "🇨🇷",
       "names": {
         "en": "Costa Rican colón",
-        "zh-TW": "哥斯達黎加科朗",
-        "zh-CN": "哥斯达黎加科朗"
+        "zh-TW": "哥斯大黎加科朗",
+        "zh-CN": "哥斯达黎加科朗",
+        "es": "colón costarricense",
+        "ar": "كولن كوستاريكي",
+        "hi": "कोस्टा रिकन कोलोन",
+        "pt": "colón costarriquenho",
+        "bn": "কোস্টা রিকান কোলোন",
+        "ru": "костариканский колон",
+        "ja": "コスタリカ コロン",
+        "de": "Costa-Rica-Colón",
+        "fr": "colón costaricain",
+        "ko": "코스타리카 콜론"
       }
     },
     "CUC": {
@@ -734,8 +1488,18 @@
       "icon": "🇨🇺",
       "names": {
         "en": "Cuban convertible peso",
-        "zh-TW": "古巴可兌換比索",
-        "zh-CN": "古巴可兑换比索"
+        "zh-TW": "古巴可兌換披索",
+        "zh-CN": "古巴可兑换比索",
+        "es": "peso cubano convertible",
+        "ar": "بيزو كوبي قابل للتحويل",
+        "hi": "क्यूबाई परिवर्तनीय पेसो",
+        "pt": "peso cubano conversível",
+        "bn": "কিউবান কনভার্টিবল পেসো",
+        "ru": "кубинское конвертируемое песо",
+        "ja": "キューバ 兌換ペソ",
+        "de": "Kubanischer Konvertibler Peso",
+        "fr": "peso cubain convertible",
+        "ko": "쿠바 태환 페소"
       }
     },
     "CUP": {
@@ -743,8 +1507,18 @@
       "icon": "🇨🇺",
       "names": {
         "en": "Cuban peso",
-        "zh-TW": "古巴比索",
-        "zh-CN": "古巴比索"
+        "zh-TW": "古巴披索",
+        "zh-CN": "古巴比索",
+        "es": "peso cubano",
+        "ar": "بيزو كوبي",
+        "hi": "क्यूबाई पेसो",
+        "pt": "peso cubano",
+        "bn": "কিউবান পেসো",
+        "ru": "кубинское песо",
+        "ja": "キューバ ペソ",
+        "de": "Kubanischer Peso",
+        "fr": "peso cubain",
+        "ko": "쿠바 페소"
       }
     },
     "CVE": {
@@ -752,8 +1526,18 @@
       "icon": "🇨🇻",
       "names": {
         "en": "Cape Verdean escudo",
-        "zh-TW": "佛得角埃斯庫多",
-        "zh-CN": "佛得角埃斯库多"
+        "zh-TW": "維德角埃斯庫多",
+        "zh-CN": "佛得角埃斯库多",
+        "es": "escudo caboverdiano",
+        "ar": "إسكودو الرأس الأخضر",
+        "hi": "केप वर्डियन एस्कूडो",
+        "pt": "escudo cabo-verdiano",
+        "bn": "কেপ ভার্দিয়ান এসকুডো",
+        "ru": "эскудо Кабо-Верде",
+        "ja": "カーボベルデ エスクード",
+        "de": "Cabo-Verde-Escudo",
+        "fr": "escudo cap-verdien",
+        "ko": "카보베르데 에스쿠도"
       }
     },
     "DJF": {
@@ -761,8 +1545,18 @@
       "icon": "🇩🇯",
       "names": {
         "en": "Djiboutian franc",
-        "zh-TW": "吉布提法郎",
-        "zh-CN": "吉布提法郎"
+        "zh-TW": "吉布地法郎",
+        "zh-CN": "吉布提法郎",
+        "es": "franco yibutiano",
+        "ar": "فرنك جيبوتي",
+        "hi": "जिबूती फ़्रैंक",
+        "pt": "franco jibutiano",
+        "bn": "জিবুতিয়ান ফ্রাঁ",
+        "ru": "джибутийский франк",
+        "ja": "ジブチ フラン",
+        "de": "Dschibuti-Franc",
+        "fr": "franc djiboutien",
+        "ko": "지부티 프랑"
       }
     },
     "DOP": {
@@ -770,8 +1564,18 @@
       "icon": "🇩🇴",
       "names": {
         "en": "Dominican peso",
-        "zh-TW": "多明尼加比索",
-        "zh-CN": "多米尼加比索"
+        "zh-TW": "多明尼加披索",
+        "zh-CN": "多米尼加比索",
+        "es": "peso dominicano",
+        "ar": "بيزو دومينيكي",
+        "hi": "डोमिनिकन पेसो",
+        "pt": "peso dominicano",
+        "bn": "ডোমিনিকান পেসো",
+        "ru": "доминиканское песо",
+        "ja": "ドミニカ共和国 ペソ",
+        "de": "Dominikanischer Peso",
+        "fr": "peso dominicain",
+        "ko": "도미니카 페소"
       }
     },
     "DZD": {
@@ -780,7 +1584,17 @@
       "names": {
         "en": "Algerian dinar",
         "zh-TW": "阿爾及利亞第納爾",
-        "zh-CN": "阿尔及利亚第纳尔"
+        "zh-CN": "阿尔及利亚第纳尔",
+        "es": "dinar argelino",
+        "ar": "دينار جزائري",
+        "hi": "अल्जीरियाई दिनार",
+        "pt": "dinar argelino",
+        "bn": "আলজেরিয়ান দিনার",
+        "ru": "алжирский динар",
+        "ja": "アルジェリア ディナール",
+        "de": "Algerischer Dinar",
+        "fr": "dinar algérien",
+        "ko": "알제리 디나르"
       }
     },
     "ERN": {
@@ -788,8 +1602,18 @@
       "icon": "🇪🇷",
       "names": {
         "en": "Eritrean nakfa",
-        "zh-TW": "厄立特里亞納克法",
-        "zh-CN": "厄立特里亚纳克法"
+        "zh-TW": "厄利垂亞納克法",
+        "zh-CN": "厄立特里亚纳克法",
+        "es": "nakfa eritreo",
+        "ar": "ناكفا إريتري",
+        "hi": "इरीट्रियन नाक्फ़ा",
+        "pt": "nakfa eritreia",
+        "bn": "ইরিত্রিয়ান নাকফা",
+        "ru": "эритрейская накфа",
+        "ja": "エリトリア ナクファ",
+        "de": "Eritreischer Nakfa",
+        "fr": "nafka érythréen",
+        "ko": "에리트레아 낙파"
       }
     },
     "ETB": {
@@ -797,17 +1621,37 @@
       "icon": "🇪🇹",
       "names": {
         "en": "Ethiopian birr",
-        "zh-TW": "埃塞俄比亞比爾",
-        "zh-CN": "埃塞俄比亚比尔"
+        "zh-TW": "衣索比亞比爾",
+        "zh-CN": "埃塞俄比亚比尔",
+        "es": "birr etíope",
+        "ar": "بير إثيوبي",
+        "hi": "इथियोपियाई बिर",
+        "pt": "birr etíope",
+        "bn": "ইথিওপিয়ান বির",
+        "ru": "эфиопский быр",
+        "ja": "エチオピア ブル",
+        "de": "Äthiopischer Birr",
+        "fr": "birr éthiopien",
+        "ko": "에티오피아 비르"
       }
     },
     "FJD": {
       "symbol": "$",
       "icon": "🇫🇯",
       "names": {
-        "en": "Fiji dollar",
+        "en": "Fijian dollar",
         "zh-TW": "斐濟元",
-        "zh-CN": "斐济元"
+        "zh-CN": "斐济元",
+        "es": "dólar fiyiano",
+        "ar": "دولار فيجي",
+        "hi": "फ़िजीयन डॉलर",
+        "pt": "dólar fijiano",
+        "bn": "ফিজিয়ান ডলার",
+        "ru": "доллар Фиджи",
+        "ja": "フィジー ドル",
+        "de": "Fidschi-Dollar",
+        "fr": "dollar fidjien",
+        "ko": "피지 달러"
       }
     },
     "FKP": {
@@ -816,7 +1660,17 @@
       "names": {
         "en": "Falkland Islands pound",
         "zh-TW": "福克蘭群島鎊",
-        "zh-CN": "福克兰群岛镑"
+        "zh-CN": "福克兰群岛镑",
+        "es": "libra malvinense",
+        "ar": "جنيه جزر فوكلاند",
+        "hi": "फ़ॉकलैंड द्वीप पाउंड",
+        "pt": "libra das Ilhas Malvinas",
+        "bn": "ফকল্যান্ড দ্বীপপুঞ্জ পাউন্ড",
+        "ru": "фунт Фолклендских островов",
+        "ja": "フォークランド（マルビナス）諸島 ポンド",
+        "de": "Falkland-Pfund",
+        "fr": "livre des îles Malouines",
+        "ko": "포클랜드 제도 파운드"
       }
     },
     "GEL": {
@@ -824,8 +1678,18 @@
       "icon": "🇬🇪",
       "names": {
         "en": "Georgian lari",
-        "zh-TW": "格魯吉亞拉里",
-        "zh-CN": "格鲁吉亚拉里"
+        "zh-TW": "喬治亞拉里",
+        "zh-CN": "格鲁吉亚拉里",
+        "es": "lari georgiano",
+        "ar": "لاري جورجي",
+        "hi": "जॉर्जियन लारी",
+        "pt": "lari georgiano",
+        "bn": "জর্জিয়ান লারি",
+        "ru": "грузинский лари",
+        "ja": "ジョージア ラリ",
+        "de": "Georgischer Lari",
+        "fr": "lari géorgien",
+        "ko": "조지아 라리"
       }
     },
     "GHS": {
@@ -833,8 +1697,18 @@
       "icon": "🇬🇭",
       "names": {
         "en": "Ghanaian cedi",
-        "zh-TW": "加納塞地",
-        "zh-CN": "加纳塞地"
+        "zh-TW": "迦納塞地",
+        "zh-CN": "加纳塞地",
+        "es": "cedi ghanés",
+        "ar": "سيدي غاني",
+        "hi": "घाना सेडी",
+        "pt": "cedi ganês",
+        "bn": "ঘানাইয়ান সেডি",
+        "ru": "ганский седи",
+        "ja": "ガーナ セディ",
+        "de": "Ghanaischer Cedi",
+        "fr": "cédi ghanéen",
+        "ko": "가나 세디"
       }
     },
     "GIP": {
@@ -843,7 +1717,17 @@
       "names": {
         "en": "Gibraltar pound",
         "zh-TW": "直布羅陀鎊",
-        "zh-CN": "直布罗陀镑"
+        "zh-CN": "直布罗陀镑",
+        "es": "libra gibraltareña",
+        "ar": "جنيه جبل طارق",
+        "hi": "जिब्राल्टर पाउंड",
+        "pt": "libra de Gibraltar",
+        "bn": "জিব্রাল্টার পাউন্ড",
+        "ru": "гибралтарский фунт",
+        "ja": "ジブラルタル ポンド",
+        "de": "Gibraltar-Pfund",
+        "fr": "livre de Gibraltar",
+        "ko": "지브롤터 파운드"
       }
     },
     "GMD": {
@@ -851,8 +1735,18 @@
       "icon": "🇬🇲",
       "names": {
         "en": "Gambian dalasi",
-        "zh-TW": "岡比亞達拉西",
-        "zh-CN": "冈比亚达拉西"
+        "zh-TW": "甘比亞達拉西",
+        "zh-CN": "冈比亚达拉西",
+        "es": "dalasi gambiano",
+        "ar": "دالاسي غامبي",
+        "hi": "गैम्बियन डलासी",
+        "pt": "dalasi gambiano",
+        "bn": "গাম্বিয়ান ডালাসি",
+        "ru": "гамбийский даласи",
+        "ja": "ガンビア ダラシ",
+        "de": "Gambia-Dalasi",
+        "fr": "dalasi gambien",
+        "ko": "감비아 달라시"
       }
     },
     "GNF": {
@@ -861,7 +1755,17 @@
       "names": {
         "en": "Guinean franc",
         "zh-TW": "幾內亞法郎",
-        "zh-CN": "几内亚法郎"
+        "zh-CN": "几内亚法郎",
+        "es": "franco guineano",
+        "ar": "فرنك غيني",
+        "hi": "गिनीयन फ़्रैंक",
+        "pt": "franco guineense",
+        "bn": "গিনিয়ান ফ্রাঁ",
+        "ru": "гвинейский франк",
+        "ja": "ギニア フラン",
+        "de": "Guinea-Franc",
+        "fr": "franc guinéen",
+        "ko": "기니 프랑"
       }
     },
     "GTQ": {
@@ -870,16 +1774,36 @@
       "names": {
         "en": "Guatemalan quetzal",
         "zh-TW": "瓜地馬拉格查爾",
-        "zh-CN": "危地马拉格查尔"
+        "zh-CN": "危地马拉格查尔",
+        "es": "quetzal guatemalteco",
+        "ar": "كيتزال غواتيمالي",
+        "hi": "ग्वाटेमाला क्वेटज़ाल",
+        "pt": "quetzal guatemalteco",
+        "bn": "গুয়াতেমালান কেতসাল",
+        "ru": "гватемальский кетсаль",
+        "ja": "グアテマラ ケツァル",
+        "de": "Guatemaltekischer Quetzal",
+        "fr": "quetzal guatémaltèque",
+        "ko": "과테말라 케트살"
       }
     },
     "GYD": {
       "symbol": "$",
       "icon": "🇬🇾",
       "names": {
-        "en": "Guyanese dollar",
-        "zh-TW": "圭亞那元",
-        "zh-CN": "圭亚那元"
+        "en": "Guyanaese dollar",
+        "zh-TW": "蓋亞那元",
+        "zh-CN": "圭亚那元",
+        "es": "dólar guyanés",
+        "ar": "دولار غياني",
+        "hi": "गयानीज़ डॉलर",
+        "pt": "dólar guianense",
+        "bn": "গায়ানিজ ডলার",
+        "ru": "гайанский доллар",
+        "ja": "ガイアナ ドル",
+        "de": "Guyana-Dollar",
+        "fr": "dollar du Guyana",
+        "ko": "가이아나 달러"
       }
     },
     "HNL": {
@@ -887,8 +1811,18 @@
       "icon": "🇭🇳",
       "names": {
         "en": "Honduran lempira",
-        "zh-TW": "洪都拉斯倫皮拉",
-        "zh-CN": "洪都拉斯伦皮拉"
+        "zh-TW": "宏都拉斯倫皮拉",
+        "zh-CN": "洪都拉斯伦皮拉",
+        "es": "lempira hondureño",
+        "ar": "لمبيرا هندوراسي",
+        "hi": "होंडूरन लेम्पिरा",
+        "pt": "lempira hondurenha",
+        "bn": "হন্ডুরান লেম্পিরা",
+        "ru": "гондурасская лемпира",
+        "ja": "ホンジュラス レンピラ",
+        "de": "Honduranische Lempira",
+        "fr": "lempira hondurien",
+        "ko": "온두라스 렘피라"
       }
     },
     "HTG": {
@@ -897,7 +1831,17 @@
       "names": {
         "en": "Haitian gourde",
         "zh-TW": "海地古德",
-        "zh-CN": "海地古德"
+        "zh-CN": "海地古德",
+        "es": "gourde haitiano",
+        "ar": "غورد هايتي",
+        "hi": "हैतियाई गोरडे",
+        "pt": "gourde haitiano",
+        "bn": "হাইতিয়ান গুর্দে",
+        "ru": "гаитянский гурд",
+        "ja": "ハイチ グールド",
+        "de": "Haitianische Gourde",
+        "fr": "gourde haïtienne",
+        "ko": "아이티 구르드"
       }
     },
     "IQD": {
@@ -906,7 +1850,17 @@
       "names": {
         "en": "Iraqi dinar",
         "zh-TW": "伊拉克第納爾",
-        "zh-CN": "伊拉克第纳尔"
+        "zh-CN": "伊拉克第纳尔",
+        "es": "dinar iraquí",
+        "ar": "دينار عراقي",
+        "hi": "इराक़ी दिनार",
+        "pt": "dinar iraquiano",
+        "bn": "ইরাকি দিনার",
+        "ru": "иракский динар",
+        "ja": "イラク ディナール",
+        "de": "Irakischer Dinar",
+        "fr": "dinar irakien",
+        "ko": "이라크 디나르"
       }
     },
     "JMD": {
@@ -915,7 +1869,17 @@
       "names": {
         "en": "Jamaican dollar",
         "zh-TW": "牙買加元",
-        "zh-CN": "牙买加元"
+        "zh-CN": "牙买加元",
+        "es": "dólar jamaicano",
+        "ar": "دولار جامايكي",
+        "hi": "जमैका डॉलर",
+        "pt": "dólar jamaicano",
+        "bn": "জামাইকান ডলার",
+        "ru": "ямайский доллар",
+        "ja": "ジャマイカ ドル",
+        "de": "Jamaika-Dollar",
+        "fr": "dollar jamaïcain",
+        "ko": "자메이카 달러"
       }
     },
     "KES": {
@@ -923,17 +1887,37 @@
       "icon": "🇰🇪",
       "names": {
         "en": "Kenyan shilling",
-        "zh-TW": "肯尼亞先令",
-        "zh-CN": "肯尼亚先令"
+        "zh-TW": "肯亞先令",
+        "zh-CN": "肯尼亚先令",
+        "es": "chelín keniano",
+        "ar": "شلن كيني",
+        "hi": "केन्याई शिलिंग",
+        "pt": "xelim queniano",
+        "bn": "কেনিয়ান শিলিং",
+        "ru": "кенийский шиллинг",
+        "ja": "ケニア シリング",
+        "de": "Kenia-Schilling",
+        "fr": "shilling kényan",
+        "ko": "케냐 실링"
       }
     },
     "KGS": {
       "symbol": "с",
       "icon": "🇰🇬",
       "names": {
-        "en": "Kyrgyzstani som",
+        "en": "Kyrgystani som",
         "zh-TW": "吉爾吉斯索姆",
-        "zh-CN": "吉尔吉斯索姆"
+        "zh-CN": "吉尔吉斯索姆",
+        "es": "som kirguís",
+        "ar": "سوم قيرغستاني",
+        "hi": "किर्गिस्तानी सोम",
+        "pt": "som quirguiz",
+        "bn": "কিরগিজস্তানি সোম",
+        "ru": "киргизский сом",
+        "ja": "キルギス ソム",
+        "de": "Kirgisischer Som",
+        "fr": "som kirghize",
+        "ko": "키르기스스탄 솜"
       }
     },
     "KHR": {
@@ -942,7 +1926,17 @@
       "names": {
         "en": "Cambodian riel",
         "zh-TW": "柬埔寨瑞爾",
-        "zh-CN": "柬埔寨瑞尔"
+        "zh-CN": "柬埔寨瑞尔",
+        "es": "riel camboyano",
+        "ar": "ريال كمبودي",
+        "hi": "कंबोडियाई रिएल",
+        "pt": "riel cambojano",
+        "bn": "কম্বোডিয়ান রিয়েল",
+        "ru": "камбоджийский риель",
+        "ja": "カンボジア リエル",
+        "de": "Kambodschanischer Riel",
+        "fr": "riel cambodgien",
+        "ko": "캄보디아 리엘"
       }
     },
     "KMF": {
@@ -950,8 +1944,18 @@
       "icon": "🇰🇲",
       "names": {
         "en": "Comorian franc",
-        "zh-TW": "科摩羅法郎",
-        "zh-CN": "科摩罗法郎"
+        "zh-TW": "葛摩法郎",
+        "zh-CN": "科摩罗法郎",
+        "es": "franco comorense",
+        "ar": "فرنك قمري",
+        "hi": "कोमोरो फ़्रैंक",
+        "pt": "franco comorense",
+        "bn": "কমোরিয়ান ফ্রাঁ",
+        "ru": "коморский франк",
+        "ja": "コモロ フラン",
+        "de": "Komoren-Franc",
+        "fr": "franc comorien",
+        "ko": "코모로 프랑"
       }
     },
     "KPW": {
@@ -959,8 +1963,18 @@
       "icon": "🇰🇵",
       "names": {
         "en": "North Korean won",
-        "zh-TW": "朝鮮圓",
-        "zh-CN": "朝鲜元"
+        "zh-TW": "北韓圓",
+        "zh-CN": "朝鲜元",
+        "es": "won norcoreano",
+        "ar": "وون كوري شمالي",
+        "hi": "उत्तर कोरियाई वॉन",
+        "pt": "won norte-coreano",
+        "bn": "উত্তর কোরিয়ান ওন",
+        "ru": "северокорейская вона",
+        "ja": "北朝鮮ウォン",
+        "de": "Nordkoreanischer Won",
+        "fr": "won nord-coréen",
+        "ko": "조선민주주의인민공화국 원"
       }
     },
     "KYD": {
@@ -969,7 +1983,17 @@
       "names": {
         "en": "Cayman Islands dollar",
         "zh-TW": "開曼群島元",
-        "zh-CN": "开曼群岛元"
+        "zh-CN": "开曼群岛元",
+        "es": "dólar de las Islas Caimán",
+        "ar": "دولار جزر كايمان",
+        "hi": "केमैन द्वीपसमूह डॉलर",
+        "pt": "dólar das Ilhas Cayman",
+        "bn": "কেম্যান দ্বীপপুঞ্জ ডলার",
+        "ru": "доллар Каймановых островов",
+        "ja": "ケイマン諸島 ドル",
+        "de": "Kaiman-Dollar",
+        "fr": "dollar des îles Caïmans",
+        "ko": "케이맨 제도 달러"
       }
     },
     "KZT": {
@@ -978,16 +2002,36 @@
       "names": {
         "en": "Kazakhstani tenge",
         "zh-TW": "哈薩克坦吉",
-        "zh-CN": "哈萨克坦吉"
+        "zh-CN": "哈萨克坦吉",
+        "es": "tenge kazajo",
+        "ar": "تينغ كازاخستاني",
+        "hi": "कज़ाखस्तानी टेंग",
+        "pt": "tenge cazaque",
+        "bn": "কাজাখস্তানি টেঙ্গে",
+        "ru": "казахстанский тенге",
+        "ja": "カザフスタン テンゲ",
+        "de": "Kasachischer Tenge",
+        "fr": "tenge kazakh",
+        "ko": "카자흐스탄 텡게"
       }
     },
     "LAK": {
       "symbol": "₭",
       "icon": "🇱🇦",
       "names": {
-        "en": "Lao kip",
-        "zh-TW": "老撾基普",
-        "zh-CN": "老挝基普"
+        "en": "Laotian kip",
+        "zh-TW": "寮國基普",
+        "zh-CN": "老挝基普",
+        "es": "kip laosiano",
+        "ar": "كيب لاوسي",
+        "hi": "लाओशियन किप",
+        "pt": "kip laosiano",
+        "bn": "লাওশিয়ান কিপ",
+        "ru": "лаосский кип",
+        "ja": "ラオス キープ",
+        "de": "Laotischer Kip",
+        "fr": "kip laotien",
+        "ko": "라오스 킵"
       }
     },
     "LRD": {
@@ -995,8 +2039,18 @@
       "icon": "🇱🇷",
       "names": {
         "en": "Liberian dollar",
-        "zh-TW": "利比里亞元",
-        "zh-CN": "利比里亚元"
+        "zh-TW": "賴比瑞亞元",
+        "zh-CN": "利比里亚元",
+        "es": "dólar liberiano",
+        "ar": "دولار ليبيري",
+        "hi": "लाइबेरियाई डॉलर",
+        "pt": "dólar liberiano",
+        "bn": "লাইবেরিয়ান ডলার",
+        "ru": "либерийский доллар",
+        "ja": "リベリア ドル",
+        "de": "Liberianischer Dollar",
+        "fr": "dollar libérien",
+        "ko": "라이베리아 달러"
       }
     },
     "LSL": {
@@ -1004,8 +2058,18 @@
       "icon": "🇱🇸",
       "names": {
         "en": "Lesotho loti",
-        "zh-TW": "萊索托洛蒂",
-        "zh-CN": "莱索托洛蒂"
+        "zh-TW": "賴索托洛蒂",
+        "zh-CN": "莱索托洛蒂",
+        "es": "loti lesotense",
+        "ar": "لوتي ليسوتو",
+        "hi": "लेसोथो लोटी",
+        "pt": "loti do Lesoto",
+        "bn": "লেসোথো লোটি",
+        "ru": "лесотский лоти",
+        "ja": "レソト ロティ",
+        "de": "Lesotho-Loti",
+        "fr": "loti lesothan",
+        "ko": "레소토 로티"
       }
     },
     "LYD": {
@@ -1014,7 +2078,17 @@
       "names": {
         "en": "Libyan dinar",
         "zh-TW": "利比亞第納爾",
-        "zh-CN": "利比亚第纳尔"
+        "zh-CN": "利比亚第纳尔",
+        "es": "dinar libio",
+        "ar": "دينار ليبي",
+        "hi": "लीबियाई दिनार",
+        "pt": "dinar líbio",
+        "bn": "লিবিয়ান দিনার",
+        "ru": "ливийский динар",
+        "ja": "リビア ディナール",
+        "de": "Libyscher Dinar",
+        "fr": "dinar libyen",
+        "ko": "리비아 디나르"
       }
     },
     "MDL": {
@@ -1023,7 +2097,17 @@
       "names": {
         "en": "Moldovan leu",
         "zh-TW": "摩爾多瓦列伊",
-        "zh-CN": "摩尔多瓦列伊"
+        "zh-CN": "摩尔多瓦列伊",
+        "es": "leu moldavo",
+        "ar": "ليو مولدوفي",
+        "hi": "मोल्डोवन ल्यू",
+        "pt": "leu moldavo",
+        "bn": "মলডোভান লেউ",
+        "ru": "молдавский лей",
+        "ja": "モルドバ レイ",
+        "de": "Moldau-Leu",
+        "fr": "leu moldave",
+        "ko": "몰도바 레우"
       }
     },
     "MGA": {
@@ -1032,7 +2116,17 @@
       "names": {
         "en": "Malagasy ariary",
         "zh-TW": "馬達加斯加阿里亞里",
-        "zh-CN": "马达加斯加阿里亚里"
+        "zh-CN": "马达加斯加阿里亚里",
+        "es": "ariary malgache",
+        "ar": "أرياري مدغشقري",
+        "hi": "मालागासी एरियारी",
+        "pt": "ariary malgaxe",
+        "bn": "মালাগাসি আরিয়ারি",
+        "ru": "малагасийский ариари",
+        "ja": "マダガスカル アリアリ",
+        "de": "Madagaskar-Ariary",
+        "fr": "ariary malgache",
+        "ko": "마다가스카르 아리아리"
       }
     },
     "MKD": {
@@ -1040,8 +2134,18 @@
       "icon": "🇲🇰",
       "names": {
         "en": "Macedonian denar",
-        "zh-TW": "馬其頓第納爾",
-        "zh-CN": "马其顿第纳尔"
+        "zh-TW": "北馬其頓第納爾",
+        "zh-CN": "马其顿第纳尔",
+        "es": "dinar macedonio",
+        "ar": "دينار مقدوني",
+        "hi": "मैसिडोनियन दिनार",
+        "pt": "denar macedônio",
+        "bn": "ম্যাসেডোনীয় দিনার",
+        "ru": "македонский денар",
+        "ja": "マケドニア デナル",
+        "de": "Mazedonischer Denar",
+        "fr": "denar macédonien",
+        "ko": "북마케도니아 디나르"
       }
     },
     "MMK": {
@@ -1049,17 +2153,37 @@
       "icon": "🇲🇲",
       "names": {
         "en": "Myanmar kyat",
-        "zh-TW": "緬甸緬元",
-        "zh-CN": "缅甸缅元"
+        "zh-TW": "緬甸元",
+        "zh-CN": "缅甸元",
+        "es": "kyat birmano",
+        "ar": "كيات ميانمار",
+        "hi": "म्यांमार क्यात",
+        "pt": "kyat mianmarense",
+        "bn": "মায়ানমার কিয়াত",
+        "ru": "мьянманский кьят",
+        "ja": "ミャンマー チャット",
+        "de": "Myanmar-Kyat",
+        "fr": "kyat myanmarais",
+        "ko": "미얀마 차트"
       }
     },
     "MNT": {
       "symbol": "₮",
       "icon": "🇲🇳",
       "names": {
-        "en": "Mongolian tögrög",
+        "en": "Mongolian tugrik",
         "zh-TW": "蒙古圖格里克",
-        "zh-CN": "蒙古图格里克"
+        "zh-CN": "蒙古图格里克",
+        "es": "tugrik mongol",
+        "ar": "توغروغ منغولي",
+        "hi": "मंगोलियाई टुग्रिक",
+        "pt": "tugrik mongol",
+        "bn": "মঙ্গোলিয়ান তুগরিক",
+        "ru": "монгольский тугрик",
+        "ja": "モンゴル トゥグルグ",
+        "de": "Mongolischer Tögrög",
+        "fr": "tugrik mongol",
+        "ko": "몽골 투그릭"
       }
     },
     "MOP": {
@@ -1068,7 +2192,17 @@
       "names": {
         "en": "Macanese pataca",
         "zh-TW": "澳門元",
-        "zh-CN": "澳门元"
+        "zh-CN": "澳门元",
+        "es": "pataca macaense",
+        "ar": "باتاكا ماكاوية",
+        "hi": "मकानेज़ पाटाका",
+        "pt": "pataca macaense",
+        "bn": "ম্যাকানিজ পাটাকা",
+        "ru": "патака Макао",
+        "ja": "マカオ パタカ",
+        "de": "Macau-Pataca",
+        "fr": "pataca macanaise",
+        "ko": "마카오 파타카"
       }
     },
     "MRU": {
@@ -1076,8 +2210,18 @@
       "icon": "🇲🇷",
       "names": {
         "en": "Mauritanian ouguiya",
-        "zh-TW": "毛里塔尼亞烏吉亞",
-        "zh-CN": "毛里塔尼亚乌吉亚"
+        "zh-TW": "茅利塔尼亞烏吉亞",
+        "zh-CN": "毛里塔尼亚乌吉亚",
+        "es": "uguiya mauritano",
+        "ar": "أوقية موريتانية",
+        "hi": "मॉरिटानियन ओगुइया",
+        "pt": "ouguiya mauritano",
+        "bn": "মৌরিতানিয়ান ওউগুইয়া",
+        "ru": "мавританская угия",
+        "ja": "モーリタニア ウギア",
+        "de": "Mauretanischer Ouguiya",
+        "fr": "ouguiya mauritanien",
+        "ko": "모리타니 우기야"
       }
     },
     "MUR": {
@@ -1085,8 +2229,18 @@
       "icon": "🇲🇺",
       "names": {
         "en": "Mauritian rupee",
-        "zh-TW": "毛里求斯盧比",
-        "zh-CN": "毛里求斯卢比"
+        "zh-TW": "模里西斯盧比",
+        "zh-CN": "毛里求斯卢比",
+        "es": "rupia mauriciana",
+        "ar": "روبية موريشيوسية",
+        "hi": "मॉरीशियन रुपया",
+        "pt": "rúpia mauriciana",
+        "bn": "মরিশিয়ান রুপি",
+        "ru": "маврикийская рупия",
+        "ja": "モーリシャス ルピー",
+        "de": "Mauritius-Rupie",
+        "fr": "roupie mauricienne",
+        "ko": "모리셔스 루피"
       }
     },
     "MVR": {
@@ -1094,8 +2248,18 @@
       "icon": "🇲🇻",
       "names": {
         "en": "Maldivian rufiyaa",
-        "zh-TW": "馬爾代夫拉菲亞",
-        "zh-CN": "马尔代夫拉菲亚"
+        "zh-TW": "馬爾地夫盧菲亞",
+        "zh-CN": "马尔代夫拉菲亚",
+        "es": "rufiya maldiva",
+        "ar": "روفيه مالديفية",
+        "hi": "मालदीवी रुफ़िया",
+        "pt": "rufiyaa maldiva",
+        "bn": "মালদিভিয়ান রুফিয়া",
+        "ru": "мальдивская руфия",
+        "ja": "モルディブ ルフィヤ",
+        "de": "Malediven-Rufiyaa",
+        "fr": "rufiyaa maldivienne",
+        "ko": "몰디브 루피야"
       }
     },
     "MWK": {
@@ -1103,8 +2267,18 @@
       "icon": "🇲🇼",
       "names": {
         "en": "Malawian kwacha",
-        "zh-TW": "馬拉維克瓦查",
-        "zh-CN": "马拉维克瓦查"
+        "zh-TW": "馬拉威克瓦查",
+        "zh-CN": "马拉维克瓦查",
+        "es": "kwacha malauí",
+        "ar": "كواشا مالاوي",
+        "hi": "मलावी क्वाचा",
+        "pt": "kwacha malawiana",
+        "bn": "মালাউইয়ান কওয়াচা",
+        "ru": "малавийская квача",
+        "ja": "マラウイ クワチャ",
+        "de": "Malawi-Kwacha",
+        "fr": "kwacha malawite",
+        "ko": "말라위 콰차"
       }
     },
     "MZN": {
@@ -1112,8 +2286,18 @@
       "icon": "🇲🇿",
       "names": {
         "en": "Mozambican metical",
-        "zh-TW": "莫桑比克梅蒂卡爾",
-        "zh-CN": "莫桑比克梅蒂卡尔"
+        "zh-TW": "莫三比克梅蒂卡爾",
+        "zh-CN": "莫桑比克梅蒂卡尔",
+        "es": "metical mozambiqueño",
+        "ar": "ميتيكال موزمبيقي",
+        "hi": "मोज़ाम्बिकन मेटिकल",
+        "pt": "metical moçambicano",
+        "bn": "মোজাম্বিকীয় মেটিক্যাল",
+        "ru": "мозамбикский метикал",
+        "ja": "モザンビーク メティカル",
+        "de": "Mosambikanischer Metical",
+        "fr": "metical mozambicain",
+        "ko": "모잠비크 메티칼"
       }
     },
     "NAD": {
@@ -1122,7 +2306,17 @@
       "names": {
         "en": "Namibian dollar",
         "zh-TW": "納米比亞元",
-        "zh-CN": "纳米比亚元"
+        "zh-CN": "纳米比亚元",
+        "es": "dólar namibio",
+        "ar": "دولار ناميبي",
+        "hi": "नामीबियाई डॉलर",
+        "pt": "dólar namibiano",
+        "bn": "নামিবিয়ান ডলার",
+        "ru": "намибийский доллар",
+        "ja": "ナミビア ドル",
+        "de": "Namibia-Dollar",
+        "fr": "dollar namibien",
+        "ko": "나미비아 달러"
       }
     },
     "NIO": {
@@ -1131,7 +2325,17 @@
       "names": {
         "en": "Nicaraguan córdoba",
         "zh-TW": "尼加拉瓜科多巴",
-        "zh-CN": "尼加拉瓜科多巴"
+        "zh-CN": "尼加拉瓜科多巴",
+        "es": "córdoba nicaragüense",
+        "ar": "قرطبة نيكاراغوية",
+        "hi": "निकारागुआन कॉर्डोबा",
+        "pt": "córdoba nicaraguense",
+        "bn": "নিকারাগুয়ান কর্ডোবা",
+        "ru": "никарагуанская кордоба",
+        "ja": "ニカラグア コルドバ",
+        "de": "Nicaragua-Córdoba",
+        "fr": "córdoba nicaraguayen",
+        "ko": "니카라과 코르도바"
       }
     },
     "NPR": {
@@ -1140,7 +2344,17 @@
       "names": {
         "en": "Nepalese rupee",
         "zh-TW": "尼泊爾盧比",
-        "zh-CN": "尼泊尔卢比"
+        "zh-CN": "尼泊尔卢比",
+        "es": "rupia nepalí",
+        "ar": "روبية نيبالية",
+        "hi": "नेपाली रुपया",
+        "pt": "rúpia nepalesa",
+        "bn": "নেপালি রুপি",
+        "ru": "непальская рупия",
+        "ja": "ネパール ルピー",
+        "de": "Nepalesische Rupie",
+        "fr": "roupie népalaise",
+        "ko": "네팔 루피"
       }
     },
     "PAB": {
@@ -1149,7 +2363,17 @@
       "names": {
         "en": "Panamanian balboa",
         "zh-TW": "巴拿馬巴波亞",
-        "zh-CN": "巴拿马巴波亚"
+        "zh-CN": "巴拿马巴波亚",
+        "es": "balboa panameño",
+        "ar": "بالبوا بنمي",
+        "hi": "पनामाई बाल्बोआ",
+        "pt": "balboa panamenho",
+        "bn": "পানামানিয়ান বালবোয়া",
+        "ru": "панамский бальбоа",
+        "ja": "パナマ バルボア",
+        "de": "Panamaischer Balboa",
+        "fr": "balboa panaméen",
+        "ko": "파나마 발보아"
       }
     },
     "PGK": {
@@ -1157,17 +2381,37 @@
       "icon": "🇵🇬",
       "names": {
         "en": "Papua New Guinean kina",
-        "zh-TW": "巴布亞新幾內亞基那",
-        "zh-CN": "巴布亚新几内亚基那"
+        "zh-TW": "巴布亞紐幾內亞基那",
+        "zh-CN": "巴布亚新几内亚基那",
+        "es": "kina de Papúa Nueva Guinea",
+        "ar": "كينا بابوا غينيا الجديدة",
+        "hi": "पापुआ न्यू गिनीयन किना",
+        "pt": "kina papuásia",
+        "bn": "পাপুয়া নিউ গিনিয়ান কিনা",
+        "ru": "кина Папуа – Новой Гвинеи",
+        "ja": "パプアニューギニア キナ",
+        "de": "Papua-Neuguinea-Kina",
+        "fr": "kina papouasien",
+        "ko": "파푸아뉴기니 키나"
       }
     },
     "PYG": {
       "symbol": "₲",
       "icon": "🇵🇾",
       "names": {
-        "en": "Paraguayan guaraní",
+        "en": "Paraguayan guarani",
         "zh-TW": "巴拉圭瓜拉尼",
-        "zh-CN": "巴拉圭瓜拉尼"
+        "zh-CN": "巴拉圭瓜拉尼",
+        "es": "guaraní paraguayo",
+        "ar": "غواراني باراغواي",
+        "hi": "पराग्वियन गुआरानी",
+        "pt": "guarani paraguaio",
+        "bn": "প্যারাগুয়ান গুয়ারানি",
+        "ru": "парагвайский гуарани",
+        "ja": "パラグアイ グアラニー",
+        "de": "Paraguayischer Guaraní",
+        "fr": "guaraní paraguayen",
+        "ko": "파라과이 과라니"
       }
     },
     "RSD": {
@@ -1176,7 +2420,17 @@
       "names": {
         "en": "Serbian dinar",
         "zh-TW": "塞爾維亞第納爾",
-        "zh-CN": "塞尔维亚第纳尔"
+        "zh-CN": "塞尔维亚第纳尔",
+        "es": "dinar serbio",
+        "ar": "دينار صربي",
+        "hi": "सर्बियाई दिनार",
+        "pt": "dinar sérvio",
+        "bn": "সার্বিয়ান দিনার",
+        "ru": "сербский динар",
+        "ja": "セルビア ディナール",
+        "de": "Serbischer Dinar",
+        "fr": "dinar serbe",
+        "ko": "세르비아 디나르"
       }
     },
     "RWF": {
@@ -1184,8 +2438,18 @@
       "icon": "🇷🇼",
       "names": {
         "en": "Rwandan franc",
-        "zh-TW": "盧旺達法郎",
-        "zh-CN": "卢旺达法郎"
+        "zh-TW": "盧安達法郎",
+        "zh-CN": "卢旺达法郎",
+        "es": "franco ruandés",
+        "ar": "فرنك رواندي",
+        "hi": "रवांडाई फ़्रैंक",
+        "pt": "franco ruandês",
+        "bn": "রুয়ান্ডান ফ্রাঁ",
+        "ru": "руандийский франк",
+        "ja": "ルワンダ フラン",
+        "de": "Ruanda-Franc",
+        "fr": "franc rwandais",
+        "ko": "르완다 프랑"
       }
     },
     "SBD": {
@@ -1193,8 +2457,18 @@
       "icon": "🇸🇧",
       "names": {
         "en": "Solomon Islands dollar",
-        "zh-TW": "所羅門群島元",
-        "zh-CN": "所罗门群岛元"
+        "zh-TW": "索羅門群島元",
+        "zh-CN": "所罗门群岛元",
+        "es": "dólar de las Islas Salomón",
+        "ar": "دولار جزر سليمان",
+        "hi": "सोलोमन द्वीपसमूह डॉलर",
+        "pt": "dólar das Ilhas Salomão",
+        "bn": "সলোমন দ্বীপপুঞ্জ ডলার",
+        "ru": "доллар Соломоновых островов",
+        "ja": "ソロモン諸島 ドル",
+        "de": "Salomonen-Dollar",
+        "fr": "dollar des Îles Salomon",
+        "ko": "솔로몬 제도 달러"
       }
     },
     "SCR": {
@@ -1202,8 +2476,18 @@
       "icon": "🇸🇨",
       "names": {
         "en": "Seychellois rupee",
-        "zh-TW": "塞舌爾盧比",
-        "zh-CN": "塞舌尔卢比"
+        "zh-TW": "塞席爾盧比",
+        "zh-CN": "塞舌尔卢比",
+        "es": "rupia seychellense",
+        "ar": "روبية سيشلية",
+        "hi": "सेशेल्स रुपया",
+        "pt": "rúpia seichelense",
+        "bn": "সেশেলোয়া রুপি",
+        "ru": "сейшельская рупия",
+        "ja": "セーシェル ルピー",
+        "de": "Seychellen-Rupie",
+        "fr": "roupie des Seychelles",
+        "ko": "세이셸 루피"
       }
     },
     "SDG": {
@@ -1212,7 +2496,17 @@
       "names": {
         "en": "Sudanese pound",
         "zh-TW": "蘇丹鎊",
-        "zh-CN": "苏丹镑"
+        "zh-CN": "苏丹镑",
+        "es": "libra sudanesa",
+        "ar": "جنيه سوداني",
+        "hi": "सूडानी पाउंड",
+        "pt": "libra sudanesa",
+        "bn": "সুদানি পাউন্ড",
+        "ru": "суданский фунт",
+        "ja": "スーダン ポンド",
+        "de": "Sudanesisches Pfund",
+        "fr": "livre soudanaise",
+        "ko": "수단 파운드"
       }
     },
     "SHP": {
@@ -1221,7 +2515,17 @@
       "names": {
         "en": "Saint Helena pound",
         "zh-TW": "聖赫勒拿鎊",
-        "zh-CN": "圣赫勒拿镑"
+        "zh-CN": "圣赫勒拿镑",
+        "es": "libra de Santa Elena",
+        "ar": "جنيه سانت هيلينا",
+        "hi": "सेंट हेलेना पाउंड",
+        "pt": "libra de Santa Helena",
+        "bn": "সেন্ট হেলেনা পাউন্ড",
+        "ru": "фунт острова Святой Елены",
+        "ja": "セントヘレナ ポンド",
+        "de": "St. Helena-Pfund",
+        "fr": "livre de Sainte-Hélène",
+        "ko": "세인트헬레나 파운드"
       }
     },
     "SLL": {
@@ -1229,8 +2533,18 @@
       "icon": "🇸🇱",
       "names": {
         "en": "Sierra Leonean leone",
-        "zh-TW": "塞拉利昂利昂",
-        "zh-CN": "塞拉利昂利昂"
+        "zh-TW": "獅子山利昂",
+        "zh-CN": "塞拉利昂利昂",
+        "es": "leone sierraleonés",
+        "ar": "ليون سيراليوني",
+        "hi": "सिएरा लियोनियन लियोन",
+        "pt": "leone de Serra Leoa",
+        "bn": "সিয়েরা লিওনিয়ান লিওন",
+        "ru": "леоне Сьерра-Леоне",
+        "ja": "シエラレオネ レオン",
+        "de": "Sierra-leonischer Leone",
+        "fr": "leone sierra-léonais",
+        "ko": "시에라리온 리온"
       }
     },
     "SOS": {
@@ -1238,8 +2552,18 @@
       "icon": "🇸🇴",
       "names": {
         "en": "Somali shilling",
-        "zh-TW": "索馬里先令",
-        "zh-CN": "索马里先令"
+        "zh-TW": "索馬利亞先令",
+        "zh-CN": "索马里先令",
+        "es": "chelín somalí",
+        "ar": "شلن صومالي",
+        "hi": "सोमाली शिलिंग",
+        "pt": "xelim somali",
+        "bn": "সোমালি শিলিং",
+        "ru": "сомалийский шиллинг",
+        "ja": "ソマリア シリング",
+        "de": "Somalia-Schilling",
+        "fr": "shilling somalien",
+        "ko": "소말리아 실링"
       }
     },
     "SRD": {
@@ -1247,8 +2571,18 @@
       "icon": "🇸🇷",
       "names": {
         "en": "Surinamese dollar",
-        "zh-TW": "蘇里南元",
-        "zh-CN": "苏里南元"
+        "zh-TW": "蘇利南元",
+        "zh-CN": "苏里南元",
+        "es": "dólar surinamés",
+        "ar": "دولار سورينامي",
+        "hi": "सूरीनामी डॉलर",
+        "pt": "dólar surinamês",
+        "bn": "সুরিনামিজ ডলার",
+        "ru": "суринамский доллар",
+        "ja": "スリナム ドル",
+        "de": "Suriname-Dollar",
+        "fr": "dollar surinamien",
+        "ko": "수리남 달러"
       }
     },
     "SSP": {
@@ -1257,16 +2591,36 @@
       "names": {
         "en": "South Sudanese pound",
         "zh-TW": "南蘇丹鎊",
-        "zh-CN": "南苏丹镑"
+        "zh-CN": "南苏丹镑",
+        "es": "libra sursudanesa",
+        "ar": "جنيه جنوب سوداني",
+        "hi": "दक्षिण सूडानी पाउंड",
+        "pt": "libra sul-sudanesa",
+        "bn": "দক্ষিণ সুদানি পাউন্ড",
+        "ru": "южносуданский фунт",
+        "ja": "南スーダン ポンド",
+        "de": "Südsudanesisches Pfund",
+        "fr": "livre sud-soudanaise",
+        "ko": "남수단 파운드"
       }
     },
     "STN": {
       "symbol": "Db",
       "icon": "🇸🇹",
       "names": {
-        "en": "São Tomé and Príncipe dobra",
+        "en": "São Tomé & Príncipe dobra",
         "zh-TW": "聖多美和普林西比多布拉",
-        "zh-CN": "圣多美和普林西比多布拉"
+        "zh-CN": "圣多美和普林西比多布拉",
+        "es": "dobra de Santo Tomé y Príncipe",
+        "ar": "دوبرا ساو تومي وبرينسيبي",
+        "hi": "साओ टोमे और प्रिंसिपे डोबरा",
+        "pt": "dobra de São Tomé e Príncipe",
+        "bn": "সাঁও টোমে ও প্রিন্সিপে ডোবরা",
+        "ru": "добра Сан-Томе и Принсипи",
+        "ja": "サントメ・プリンシペ ドブラ",
+        "de": "São-toméischer Dobra",
+        "fr": "dobra santoméen",
+        "ko": "상투메 프린시페 도브라"
       }
     },
     "SVC": {
@@ -1275,7 +2629,17 @@
       "names": {
         "en": "Salvadoran colón",
         "zh-TW": "薩爾瓦多科朗",
-        "zh-CN": "萨尔瓦多科朗"
+        "zh-CN": "萨尔瓦多科朗",
+        "es": "colón salvadoreño",
+        "ar": "كولون سلفادوري",
+        "hi": "सल्वाडोरन कोलोन",
+        "pt": "colón salvadorenho",
+        "bn": "এল সালভাদর কোলোন",
+        "ru": "сальвадорский колон",
+        "ja": "エルサルバドル コロン",
+        "de": "El-Salvador-Colón",
+        "fr": "colón salvadorien",
+        "ko": "엘살바도르 콜론"
       }
     },
     "SYP": {
@@ -1284,7 +2648,17 @@
       "names": {
         "en": "Syrian pound",
         "zh-TW": "敘利亞鎊",
-        "zh-CN": "叙利亚镑"
+        "zh-CN": "叙利亚镑",
+        "es": "libra siria",
+        "ar": "ليرة سورية",
+        "hi": "सीरियाई पाउंड",
+        "pt": "libra síria",
+        "bn": "সিরীয় পাউন্ড",
+        "ru": "сирийский фунт",
+        "ja": "シリア ポンド",
+        "de": "Syrisches Pfund",
+        "fr": "livre syrienne",
+        "ko": "시리아 파운드"
       }
     },
     "SZL": {
@@ -1292,8 +2666,18 @@
       "icon": "🇸🇿",
       "names": {
         "en": "Swazi lilangeni",
-        "zh-TW": "斯威士蘭里蘭吉尼",
-        "zh-CN": "斯威士兰里兰吉尼"
+        "zh-TW": "史瓦帝尼里蘭吉尼",
+        "zh-CN": "斯威士兰里兰吉尼",
+        "es": "lilangeni suazi",
+        "ar": "ليلانجيني سوازيلندي",
+        "hi": "स्वाज़ी लिलांगेनी",
+        "pt": "lilangeni suazi",
+        "bn": "সোয়াজি লিলাঙ্গেনি",
+        "ru": "свазилендский лилангени",
+        "ja": "スワジランド リランゲニ",
+        "de": "Swasiländischer Lilangeni",
+        "fr": "lilangeni swazi",
+        "ko": "에스와티니 릴랑게니"
       }
     },
     "TJS": {
@@ -1301,8 +2685,18 @@
       "icon": "🇹🇯",
       "names": {
         "en": "Tajikistani somoni",
-        "zh-TW": "塔吉克斯坦索莫尼",
-        "zh-CN": "塔吉克斯坦索莫尼"
+        "zh-TW": "塔吉克索莫尼",
+        "zh-CN": "塔吉克斯坦索莫尼",
+        "es": "somoni tayiko",
+        "ar": "سوموني طاجيكستاني",
+        "hi": "ताजिकिस्तानी सोमोनी",
+        "pt": "somoni tajique",
+        "bn": "তাজিকিস্তানি সোমোনি",
+        "ru": "таджикский сомони",
+        "ja": "タジキスタン ソモニ",
+        "de": "Tadschikistan-Somoni",
+        "fr": "somoni tadjik",
+        "ko": "타지키스탄 소모니"
       }
     },
     "TMT": {
@@ -1310,8 +2704,18 @@
       "icon": "🇹🇲",
       "names": {
         "en": "Turkmenistan manat",
-        "zh-TW": "土庫曼斯坦馬納特",
-        "zh-CN": "土库曼斯坦马纳特"
+        "zh-TW": "土庫曼馬納特",
+        "zh-CN": "土库曼斯坦马纳特",
+        "es": "manat turcomano",
+        "ar": "مانات تركمانستاني",
+        "hi": "तुर्कमेनिस्तान मनात",
+        "pt": "manat turcomeno",
+        "bn": "তুর্কমেনিস্তানি মানাত",
+        "ru": "туркменский манат",
+        "ja": "トルクメニスタン マナト",
+        "de": "Turkmenistan-Manat",
+        "fr": "manat turkmène",
+        "ko": "투르크메니스탄 마나트"
       }
     },
     "TND": {
@@ -1319,8 +2723,18 @@
       "icon": "🇹🇳",
       "names": {
         "en": "Tunisian dinar",
-        "zh-TW": "突尼斯第納爾",
-        "zh-CN": "突尼斯第纳尔"
+        "zh-TW": "突尼西亞第納爾",
+        "zh-CN": "突尼斯第纳尔",
+        "es": "dinar tunecino",
+        "ar": "دينار تونسي",
+        "hi": "ट्यूनीशियाई दिनार",
+        "pt": "dinar tunisino",
+        "bn": "তিউনিসিয়ান দিনার",
+        "ru": "тунисский динар",
+        "ja": "チュニジア ディナール",
+        "de": "Tunesischer Dinar",
+        "fr": "dinar tunisien",
+        "ko": "튀니지 디나르"
       }
     },
     "TOP": {
@@ -1328,17 +2742,37 @@
       "icon": "🇹🇴",
       "names": {
         "en": "Tongan paʻanga",
-        "zh-TW": "湯加潘加",
-        "zh-CN": "汤加潘加"
+        "zh-TW": "東加潘加",
+        "zh-CN": "汤加潘加",
+        "es": "paanga tongano",
+        "ar": "بانغا تونغي",
+        "hi": "टोंगन पाआंगा",
+        "pt": "paʻanga tonganesa",
+        "bn": "টোঙ্গান পাʻআঙ্গা",
+        "ru": "тонганская паанга",
+        "ja": "トンガ パアンガ",
+        "de": "Tongaischer Paʻanga",
+        "fr": "pa’anga tongan",
+        "ko": "통가 파앙가"
       }
     },
     "TTD": {
       "symbol": "TT$",
       "icon": "🇹🇹",
       "names": {
-        "en": "Trinidad and Tobago dollar",
-        "zh-TW": "特立尼達和多巴哥元",
-        "zh-CN": "特立尼达和多巴哥元"
+        "en": "Trinidad & Tobago dollar",
+        "zh-TW": "千里達及托巴哥元",
+        "zh-CN": "特立尼达和多巴哥元",
+        "es": "dólar de Trinidad y Tobago",
+        "ar": "دولار ترينيداد وتوباغو",
+        "hi": "त्रिनिदाद और टोबैगो डॉलर",
+        "pt": "dólar de Trinidad e Tobago",
+        "bn": "ত্রিনিদাদ ও টোবাগো ডলার",
+        "ru": "доллар Тринидада и Тобаго",
+        "ja": "トリニダード・トバゴ ドル",
+        "de": "Trinidad-und-Tobago-Dollar",
+        "fr": "dollar de Trinité-et-Tobago",
+        "ko": "트리니다드 토바고 달러"
       }
     },
     "TZS": {
@@ -1346,8 +2780,18 @@
       "icon": "🇹🇿",
       "names": {
         "en": "Tanzanian shilling",
-        "zh-TW": "坦桑尼亞先令",
-        "zh-CN": "坦桑尼亚先令"
+        "zh-TW": "坦尚尼亞先令",
+        "zh-CN": "坦桑尼亚先令",
+        "es": "chelín tanzano",
+        "ar": "شلن تنزاني",
+        "hi": "तंज़ानियाई शिलिंग",
+        "pt": "xelim tanzaniano",
+        "bn": "তানজানিয়ান শিলিং",
+        "ru": "танзанийский шиллинг",
+        "ja": "タンザニア シリング",
+        "de": "Tansania-Schilling",
+        "fr": "shilling tanzanien",
+        "ko": "탄자니아 실링"
       }
     },
     "UGX": {
@@ -1356,7 +2800,17 @@
       "names": {
         "en": "Ugandan shilling",
         "zh-TW": "烏干達先令",
-        "zh-CN": "乌干达先令"
+        "zh-CN": "乌干达先令",
+        "es": "chelín ugandés",
+        "ar": "شلن أوغندي",
+        "hi": "युगांडाई शिलिंग",
+        "pt": "xelim ugandense",
+        "bn": "উগান্ডান শিলিং",
+        "ru": "угандийский шиллинг",
+        "ja": "ウガンダ シリング",
+        "de": "Uganda-Schilling",
+        "fr": "shilling ougandais",
+        "ko": "우간다 실링"
       }
     },
     "UYU": {
@@ -1364,8 +2818,18 @@
       "icon": "🇺🇾",
       "names": {
         "en": "Uruguayan peso",
-        "zh-TW": "烏拉圭比索",
-        "zh-CN": "乌拉圭比索"
+        "zh-TW": "烏拉圭披索",
+        "zh-CN": "乌拉圭比索",
+        "es": "peso uruguayo",
+        "ar": "بيزو أوروغواي",
+        "hi": "उरुग्वे पेसो",
+        "pt": "peso uruguaio",
+        "bn": "উরুগুয়ান পেসো",
+        "ru": "уругвайское песо",
+        "ja": "ウルグアイ ペソ",
+        "de": "Uruguayischer Peso",
+        "fr": "peso uruguayen",
+        "ko": "우루과이 페소"
       }
     },
     "UZS": {
@@ -1373,17 +2837,37 @@
       "icon": "🇺🇿",
       "names": {
         "en": "Uzbekistani som",
-        "zh-TW": "烏茲別克斯坦索姆",
-        "zh-CN": "乌兹别克斯坦索姆"
+        "zh-TW": "烏茲別克索姆",
+        "zh-CN": "乌兹别克斯坦索姆",
+        "es": "som uzbeko",
+        "ar": "سوم أوزبكستاني",
+        "hi": "उज़्बेकिस्तानी सोम",
+        "pt": "som uzbeque",
+        "bn": "উজবেকিস্তানি সোম",
+        "ru": "узбекский сум",
+        "ja": "ウズベキスタン スム",
+        "de": "Usbekistan-Sum",
+        "fr": "sum ouzbek",
+        "ko": "우즈베키스탄 숨"
       }
     },
     "VES": {
       "symbol": "Bs.S",
       "icon": "🇻🇪",
       "names": {
-        "en": "Venezuelan bolívar soberano",
-        "zh-TW": "委內瑞拉主權玻利瓦爾",
-        "zh-CN": "委内瑞拉主权玻利瓦尔"
+        "en": "Venezuelan bolívar",
+        "zh-TW": "委內瑞拉玻利瓦",
+        "zh-CN": "委内瑞拉玻利瓦",
+        "es": "bolívar venezolano",
+        "ar": "بوليفار فنزويلي",
+        "hi": "वेनेज़ुएलन बोलिवार",
+        "pt": "bolívar venezuelano",
+        "bn": "ভেনিজুয়েলান বলিভার",
+        "ru": "венесуэльский боливар",
+        "ja": "ベネズエラ ボリバル",
+        "de": "Venezolanischer Bolívar",
+        "fr": "bolivar vénézuélien",
+        "ko": "베네수엘라 볼리바르"
       }
     },
     "VUV": {
@@ -1391,8 +2875,18 @@
       "icon": "🇻🇺",
       "names": {
         "en": "Vanuatu vatu",
-        "zh-TW": "瓦努阿圖瓦圖",
-        "zh-CN": "瓦努阿图瓦图"
+        "zh-TW": "萬那杜瓦圖",
+        "zh-CN": "瓦努阿图瓦图",
+        "es": "vatu vanuatuense",
+        "ar": "فاتو فانواتي",
+        "hi": "वानुअतु वातू",
+        "pt": "vatu de Vanuatu",
+        "bn": "ভানুয়াতু ভাতু",
+        "ru": "вануатский вату",
+        "ja": "バヌアツ バツ",
+        "de": "Vanuatu-Vatu",
+        "fr": "vatu vanuatais",
+        "ko": "바누아투 바투"
       }
     },
     "WST": {
@@ -1401,7 +2895,17 @@
       "names": {
         "en": "Samoan tala",
         "zh-TW": "薩摩亞塔拉",
-        "zh-CN": "萨摩亚塔拉"
+        "zh-CN": "萨摩亚塔拉",
+        "es": "tala samoano",
+        "ar": "تالا ساموي",
+        "hi": "समोअन ताला",
+        "pt": "tala samoano",
+        "bn": "সামোয়ান তালা",
+        "ru": "самоанская тала",
+        "ja": "サモア タラ",
+        "de": "Samoanischer Tala",
+        "fr": "tala samoan",
+        "ko": "사모아 탈라"
       }
     },
     "YER": {
@@ -1410,7 +2914,17 @@
       "names": {
         "en": "Yemeni rial",
         "zh-TW": "葉門里亞爾",
-        "zh-CN": "也门里亚尔"
+        "zh-CN": "也门里亚尔",
+        "es": "rial yemení",
+        "ar": "ريال يمني",
+        "hi": "यमनी रियाल",
+        "pt": "rial iemenita",
+        "bn": "ইয়েমেনি রিয়াল",
+        "ru": "йеменский риал",
+        "ja": "イエメン リアル",
+        "de": "Jemen-Rial",
+        "fr": "rial yéménite",
+        "ko": "예멘 리알"
       }
     },
     "ZMW": {
@@ -1418,8 +2932,18 @@
       "icon": "🇿🇲",
       "names": {
         "en": "Zambian kwacha",
-        "zh-TW": "贊比亞克瓦查",
-        "zh-CN": "赞比亚克瓦查"
+        "zh-TW": "尚比亞克瓦查",
+        "zh-CN": "赞比亚克瓦查",
+        "es": "kwacha zambiano",
+        "ar": "كواشا زامبي",
+        "hi": "ज़ाम्बियन क्वाचा",
+        "pt": "kwacha zambiano",
+        "bn": "জাম্বিয়ান কওয়াচা",
+        "ru": "замбийская квача",
+        "ja": "ザンビア クワチャ",
+        "de": "Sambia-Kwacha",
+        "fr": "kwacha zambien",
+        "ko": "잠비아 콰차"
       }
     },
     "ZWL": {
@@ -1428,7 +2952,17 @@
       "names": {
         "en": "Zimbabwean dollar",
         "zh-TW": "辛巴威元",
-        "zh-CN": "津巴布韦元"
+        "zh-CN": "津巴布韦元",
+        "es": "dólar zimbabuense",
+        "ar": "دولار زيمبابوي",
+        "hi": "ज़िम्बाब्वे डॉलर",
+        "pt": "dólar zimbabuense",
+        "bn": "জিম্বাবুয়ান ডলার",
+        "ru": "доллар Зимбабве",
+        "ja": "ジンバブエ ドル",
+        "de": "Simbabwe-Dollar",
+        "fr": "dollar zimbabwéen",
+        "ko": "짐바브웨 달러"
       }
     }
   },
@@ -1438,7 +2972,17 @@
       "names": {
         "en": "Bitcoin",
         "zh-TW": "比特幣",
-        "zh-CN": "比特币"
+        "zh-CN": "比特币",
+        "es": "Bitcoin",
+        "ar": "بيتكوين",
+        "hi": "बिटकॉइन",
+        "pt": "Bitcoin",
+        "bn": "বিটকয়েন",
+        "ru": "биткоин",
+        "ja": "ビットコイン",
+        "de": "Bitcoin",
+        "fr": "Bitcoin",
+        "ko": "비트코인"
       }
     },
     "ETH": {
@@ -1446,7 +2990,17 @@
       "names": {
         "en": "Ethereum",
         "zh-TW": "以太幣",
-        "zh-CN": "以太币"
+        "zh-CN": "以太币",
+        "es": "Ethereum",
+        "ar": "إيثريوم",
+        "hi": "एथेरियम",
+        "pt": "Ethereum",
+        "bn": "ইথেরিয়াম",
+        "ru": "эфириум",
+        "ja": "イーサリアム",
+        "de": "Ethereum",
+        "fr": "Ethereum",
+        "ko": "이더리움"
       }
     },
     "XRP": {
@@ -1454,7 +3008,17 @@
       "names": {
         "en": "XRP",
         "zh-TW": "瑞波幣",
-        "zh-CN": "瑞波币"
+        "zh-CN": "瑞波币",
+        "es": "XRP",
+        "ar": "XRP",
+        "hi": "XRP",
+        "pt": "XRP",
+        "bn": "XRP",
+        "ru": "XRP",
+        "ja": "XRP",
+        "de": "XRP",
+        "fr": "XRP",
+        "ko": "XRP"
       }
     },
     "LTC": {
@@ -1462,7 +3026,17 @@
       "names": {
         "en": "Litecoin",
         "zh-TW": "萊特幣",
-        "zh-CN": "莱特币"
+        "zh-CN": "莱特币",
+        "es": "Litecoin",
+        "ar": "لايتكوين",
+        "hi": "लाइटकॉइन",
+        "pt": "Litecoin",
+        "bn": "লাইটকয়েন",
+        "ru": "лайткоин",
+        "ja": "ライトコイン",
+        "de": "Litecoin",
+        "fr": "Litecoin",
+        "ko": "라이트코인"
       }
     },
     "BCH": {
@@ -1470,7 +3044,17 @@
       "names": {
         "en": "Bitcoin Cash",
         "zh-TW": "比特幣現金",
-        "zh-CN": "比特币现金"
+        "zh-CN": "比特币现金",
+        "es": "Bitcoin Cash",
+        "ar": "بيتكوين كاش",
+        "hi": "बिटकॉइन कैश",
+        "pt": "Bitcoin Cash",
+        "bn": "বিটকয়েন ক্যাশ",
+        "ru": "биткоин кэш",
+        "ja": "ビットコインキャッシュ",
+        "de": "Bitcoin Cash",
+        "fr": "Bitcoin Cash",
+        "ko": "비트코인 캐시"
       }
     },
     "BNB": {
@@ -1478,7 +3062,17 @@
       "names": {
         "en": "Binance Coin",
         "zh-TW": "幣安幣",
-        "zh-CN": "币安币"
+        "zh-CN": "币安币",
+        "es": "Binance Coin",
+        "ar": "عملة بينانس",
+        "hi": "बायनेन्स कॉइन",
+        "pt": "Binance Coin",
+        "bn": "বাইন্যান্স কয়েন",
+        "ru": "Binance Coin",
+        "ja": "バイナンスコイン",
+        "de": "Binance Coin",
+        "fr": "Binance Coin",
+        "ko": "바이낸스 코인"
       }
     },
     "EOS": {
@@ -1486,7 +3080,17 @@
       "names": {
         "en": "EOS",
         "zh-TW": "柚子幣 EOS",
-        "zh-CN": "柚子币 EOS"
+        "zh-CN": "柚子币 EOS",
+        "es": "EOS",
+        "ar": "EOS",
+        "hi": "EOS",
+        "pt": "EOS",
+        "bn": "EOS",
+        "ru": "EOS",
+        "ja": "EOS",
+        "de": "EOS",
+        "fr": "EOS",
+        "ko": "EOS"
       }
     },
     "XLM": {
@@ -1494,7 +3098,17 @@
       "names": {
         "en": "Lumens",
         "zh-TW": "恆星幣",
-        "zh-CN": "恒星币"
+        "zh-CN": "恒星币",
+        "es": "Lúmenes",
+        "ar": "لومنز",
+        "hi": "लूमेन्स",
+        "pt": "Lumens",
+        "bn": "লুমেন্স",
+        "ru": "люменс",
+        "ja": "ルーメンズ",
+        "de": "Lumens",
+        "fr": "Lumens",
+        "ko": "루멘스"
       }
     },
     "LINK": {
@@ -1502,7 +3116,17 @@
       "names": {
         "en": "Chainlink",
         "zh-TW": "LINK 幣",
-        "zh-CN": "LINK 币"
+        "zh-CN": "LINK 币",
+        "es": "Chainlink",
+        "ar": "تشين لينك",
+        "hi": "चेनलिंक",
+        "pt": "Chainlink",
+        "bn": "চেইনলিংক",
+        "ru": "Chainlink",
+        "ja": "チェーンリンク",
+        "de": "Chainlink",
+        "fr": "Chainlink",
+        "ko": "체인링크"
       }
     },
     "DOT": {
@@ -1510,7 +3134,17 @@
       "names": {
         "en": "Polkadot",
         "zh-TW": "波卡幣",
-        "zh-CN": "波卡币"
+        "zh-CN": "波卡币",
+        "es": "Polkadot",
+        "ar": "بولكادوت",
+        "hi": "पोलकाडॉट",
+        "pt": "Polkadot",
+        "bn": "পোলকাডট",
+        "ru": "Polkadot",
+        "ja": "ポルカドット",
+        "de": "Polkadot",
+        "fr": "Polkadot",
+        "ko": "폴카닷"
       }
     },
     "YFI": {
@@ -1518,7 +3152,17 @@
       "names": {
         "en": "Yearn.finance",
         "zh-TW": "YFI 幣",
-        "zh-CN": "YFI 币"
+        "zh-CN": "YFI 币",
+        "es": "Yearn.finance",
+        "ar": "Yearn.finance",
+        "hi": "Yearn.finance",
+        "pt": "Yearn.finance",
+        "bn": "Yearn.finance",
+        "ru": "Yearn.finance",
+        "ja": "Yearn.finance",
+        "de": "Yearn.finance",
+        "fr": "Yearn.finance",
+        "ko": "Yearn.finance"
       }
     }
   }
