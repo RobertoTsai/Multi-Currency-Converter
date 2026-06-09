@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Multi-Currency Converter",
-  "version": "1.2",
+  "version": "1.3",
   "description": "Instantly convert and compare multiple currencies with this fast, user-friendly Chrome extension.",
   "action": {
     "default_popup": "popup.html",
@@ -26,8 +26,14 @@
     "48": "images/icon48.png",
     "128": "images/icon128.png"
   },
-  "web_accessible_resources": [{
-    "resources": ["currency_config.json"],
-    "matches": ["<all_urls>"]
-  }]
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "currency_config.json"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
 }
