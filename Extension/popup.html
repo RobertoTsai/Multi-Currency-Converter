@@ -15,31 +15,72 @@
             <img src="images/icon128.png" alt="Multi-Currency Converter Icon" class="header-icon">
             <h1>Multi-Currency Converter</h1>
         </div>
-        <button id="popup-window" title="Popup window"><i class="fas fa-external-link-alt"></i></button>
+        <div class="header-actions">
+            <button id="open-settings" title="Settings" data-i18n-title="settings"><i class="fas fa-cog"></i></button>
+            <button id="popup-window" title="Popup window" data-i18n-title="popupWindow"><i class="fas fa-external-link-alt"></i></button>
+        </div>
     </div>
-    <div class="content-wrapper">
-        <ul id="currency-list"></ul>
+    <div id="main-view">
+        <div class="content-wrapper">
+            <ul id="currency-list"></ul>
+        </div>
+        <button id="add-currency">+</button>
     </div>
-    <button id="add-currency">+</button>
+    <div id="settings-view" style="display: none;">
+        <div class="settings-header">
+            <button id="back-button" title="Back" data-i18n-title="back"><i class="fas fa-arrow-left"></i></button>
+            <h2 data-i18n="settings">Settings</h2>
+        </div>
+        <div class="settings-content">
+            <div class="settings-group">
+                <label for="decimal-separator" data-i18n="decimalSeparatorLabel">Decimal Separator</label>
+                <select id="decimal-separator">
+                    <option value=".">.</option>
+                    <option value=",">,</option>
+                </select>
+            </div>
+            <div class="settings-group">
+                <label for="thousands-separator" data-i18n="thousandsSeparatorLabel">Thousands Separator</label>
+                <select id="thousands-separator">
+                    <option value=",">,</option>
+                    <option value=".">.</option>
+                    <option value=" " data-i18n="space">Space</option>
+                    <option value="" data-i18n="none">None</option>
+                </select>
+            </div>
+            <div class="settings-group">
+                <label for="language-select" data-i18n="languageLabel">Language</label>
+                <select id="language-select">
+                    <option value="en">English</option>
+                    <option value="zh-TW">繁體中文</option>
+                    <option value="zh-CN">簡體中文</option>
+                </select>
+            </div>
+            <div class="preview-group">
+                <span class="preview-label" data-i18n="previewLabel">Format Preview:</span>
+                <span id="format-preview">12,345.67</span>
+            </div>
+        </div>
+    </div>
     <div id="currency-modal">
         <div class="modal-content">
             <span id="close-modal">&times;</span>
             <div class="search-container">
-                <input type="text" id="currency-search" placeholder="Search currency...">
+                <input type="text" id="currency-search" placeholder="Search currency..." data-i18n-placeholder="searchPlaceholder">
                 <button id="clear-search">&times;</button>
             </div>
             <ul id="all-currencies"></ul>
-            <div id="no-results" class="no-results" style="display: none;">No matching results</div>
+            <div id="no-results" class="no-results" style="display: none;" data-i18n="noResults">No matching results</div>
         </div>
     </div>
     
     <div id="confirm-dialog" class="confirm-modal">
         <div class="confirm-dialog-content">
-            <h3 id="confirm-title">確認刪除</h3>
+            <h3 id="confirm-title" data-i18n="confirmDelete">確認刪除</h3>
             <p id="confirm-message"></p>
             <div class="dialog-buttons">
-                <button id="cancel-button" class="secondary-button">取消</button>
-                <button id="confirm-button" class="primary-button">確認</button>
+                <button id="cancel-button" class="secondary-button" data-i18n="cancel">取消</button>
+                <button id="confirm-button" class="primary-button" data-i18n="confirm">確認</button>
             </div>
         </div>
     </div>

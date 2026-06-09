@@ -5,11 +5,17 @@ const currencyModal = document.getElementById('currency-modal');
 const currencySearch = document.getElementById('currency-search');
 const allCurrenciesList = document.getElementById('all-currencies');
 const closeModalButton = document.getElementById('close-modal');
+const openSettingsButton = document.getElementById('open-settings');
+const backButton = document.getElementById('back-button');
+const mainView = document.getElementById('main-view');
+const settingsView = document.getElementById('settings-view');
 
 const defaultCurrencies = ['USD', 'EUR', 'JPY', 'TWD', 'BTC', 'ETH'];
 const CACHE_DURATION = 15 * 60 * 1000; // 15分鐘的毫秒數
 const CURRENCY_INFO_CACHE_DURATION = 7 * 24 * 60 * 60 * 1000; // 7天的毫秒數
 let currentLanguage = 'en'; 
+let currentDecimalSeparator = '.';
+let currentThousandsSeparator = ',';
 let allCurrencies = {};
 let lastEditedCurrency = 'USD';
 let lastEditedAmount = 100;
@@ -27,19 +33,55 @@ const translations = {
         'confirmDelete': 'Delete Currency',
         'confirmDeleteMessage': 'Are you sure you want to delete {0} ({1})?',
         'cancel': 'Cancel',
-        'confirm': 'Delete'
+        'confirm': 'Delete',
+        'settings': 'Settings',
+        'back': 'Back',
+        'decimalSeparatorLabel': 'Decimal Separator',
+        'thousandsSeparatorLabel': 'Thousands Separator',
+        'languageLabel': 'Language',
+        'previewLabel': 'Format Preview:',
+        'none': 'None',
+        'space': 'Space',
+        'delete': 'Delete',
+        'popupWindow': 'Popup window',
+        'searchPlaceholder': 'Search currency...',
+        'noResults': 'No matching results'
     },
     'zh-TW': {
         'confirmDelete': '確認刪除',
         'confirmDeleteMessage': '確定要刪除 {0} ({1}) 嗎？',
         'cancel': '取消',
-        'confirm': '刪除'
+        'confirm': '刪除',
+        'settings': '設定',
+        'back': '返回',
+        'decimalSeparatorLabel': '小數點格式',
+        'thousandsSeparatorLabel': '千分位設定',
+        'languageLabel': '語言設定',
+        'previewLabel': '格式預覽:',
+        'none': '無',
+        'space': '空格',
+        'delete': '刪除',
+        'popupWindow': '彈出視窗',
+        'searchPlaceholder': '搜尋貨幣...',
+        'noResults': '沒有找到相符的貨幣'
     },
     'zh-CN': {
         'confirmDelete': '确认删除',
         'confirmDeleteMessage': '确定要删除 {0} ({1}) 吗？',
         'cancel': '取消',
-        'confirm': '删除'
+        'confirm': '删除',
+        'settings': '设置',
+        'back': '返回',
+        'decimalSeparatorLabel': '小数点格式',
+        'thousandsSeparatorLabel': '千分位设置',
+        'languageLabel': '语言设置',
+        'previewLabel': '格式预览:',
+        'none': '无',
+        'space': '空格',
+        'delete': '删除',
+        'popupWindow': '弹出窗口',
+        'searchPlaceholder': '搜索货币...',
+        'noResults': '没有找到相符的货币'
     },
     'es': {
         'confirmDelete': 'Eliminar Moneda',
@@ -97,27 +139,232 @@ const translations = {
     }
 };
 
-//取得用戶語言設定
+//取得用戶語言設定 (向後相容)
 async function getUserLanguage() {
+    return currentLanguage;
+}
+
+// 加載用戶設定與多語系
+async function loadUserSettings() {
     return new Promise((resolve) => {
-        chrome.storage.sync.get('userLanguage', function(result) {
-            if (result.userLanguage) {
-                resolve(result.userLanguage);
+        chrome.storage.sync.get(['userSettings', 'userLanguage'], function(result) {
+            let migrated = false;
+            let settings = result.userSettings;
+
+            if (settings) {
+                currentDecimalSeparator = settings.decimalSeparator || '.';
+                currentThousandsSeparator = settings.thousandsSeparator !== undefined ? settings.thousandsSeparator : ',';
+                currentLanguage = settings.userLanguage || '';
             } else {
-                // 如果沒有設置，使用瀏覽器的語言
-                const browserLang = navigator.language || navigator.userLanguage;
-                if (browserLang.startsWith('zh')) {
-                    if (browserLang === 'zh-TW' || browserLang === 'zh-HK') {
-                        resolve('zh-TW');
-                    } else {
-                        resolve('zh-CN');
-                    }
+                currentDecimalSeparator = '.';
+                currentThousandsSeparator = ',';
+                currentLanguage = '';
+            }
+
+            // 處理向後相容性與遷移 (Migration to userSettings)
+            if (!currentLanguage) {
+                if (result.userLanguage) {
+                    currentLanguage = result.userLanguage;
+                    migrated = true;
                 } else {
-                    resolve('en');
+                    const browserLang = navigator.language || navigator.userLanguage;
+                    if (browserLang.startsWith('zh')) {
+                        if (browserLang === 'zh-TW' || browserLang === 'zh-HK') {
+                            currentLanguage = 'zh-TW';
+                        } else {
+                            currentLanguage = 'zh-CN';
+                        }
+                    } else {
+                        currentLanguage = 'en';
+                    }
+                    migrated = true;
                 }
             }
+
+            if (!settings || migrated) {
+                chrome.storage.sync.set({
+                    userSettings: {
+                        decimalSeparator: currentDecimalSeparator,
+                        thousandsSeparator: currentThousandsSeparator,
+                        userLanguage: currentLanguage
+                    }
+                });
+            }
+            resolve();
         });
     });
+}
+
+// 客製化數字格式化函數
+function formatCustomNumber(value, decimalSep, thousandsSep) {
+    const number = Number(value);
+    if (isNaN(number)) return "0" + decimalSep + "00";
+
+    // 處理負數符號
+    const isNegative = number < 0;
+    const absNumber = Math.abs(number);
+
+    let integerPart = "";
+    let decimalPart = "";
+
+    // 處理非常微小的數字
+    if (absNumber > 0 && absNumber < 0.01) {
+        let precision = 2;
+        while (Number(absNumber.toFixed(precision)) === 0 && precision < 8) {
+            precision++;
+        }
+        let formattedStr = absNumber.toFixed(precision);
+        // 移除尾部的 0
+        formattedStr = formattedStr.replace(/\.?0+$/, "");
+        
+        if (!formattedStr.includes('.')) {
+            formattedStr += '.00';
+        } else {
+            const parts = formattedStr.split('.');
+            if (parts[1].length === 1) {
+                formattedStr += '0';
+            }
+        }
+        
+        const parts = formattedStr.split('.');
+        integerPart = parts[0];
+        decimalPart = parts[1] || "";
+    } else {
+        // 正常數值保留兩位小數
+        const parts = absNumber.toFixed(2).split('.');
+        integerPart = parts[0];
+        decimalPart = parts[1];
+    }
+
+    // 為整數部分添加自訂千分位分隔符
+    if (thousandsSep !== undefined && thousandsSep !== "") {
+        integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSep);
+    }
+
+    let result = integerPart;
+    if (decimalPart) {
+        result += decimalSep + decimalPart;
+    }
+
+    return isNegative ? "-" + result : result;
+}
+
+// 更新格式預覽
+function updateFormatPreview() {
+    const formatPreview = document.getElementById('format-preview');
+    if (formatPreview) {
+        formatPreview.textContent = formatCustomNumber(12345.67, currentDecimalSeparator, currentThousandsSeparator);
+    }
+}
+
+// 初始化設定面板 UI
+function initSettingsUI() {
+    const decimalSepSelect = document.getElementById('decimal-separator');
+    const thousandsSepSelect = document.getElementById('thousands-separator');
+    const languageSelect = document.getElementById('language-select');
+
+    if (decimalSepSelect) {
+        decimalSepSelect.value = currentDecimalSeparator;
+        decimalSepSelect.addEventListener('change', (e) => {
+            currentDecimalSeparator = e.target.value;
+            handleSeparatorConflict('decimal');
+            saveUserSettingsAndRefresh();
+        });
+    }
+
+    if (thousandsSepSelect) {
+        thousandsSepSelect.value = currentThousandsSeparator;
+        thousandsSepSelect.addEventListener('change', (e) => {
+            currentThousandsSeparator = e.target.value;
+            handleSeparatorConflict('thousands');
+            saveUserSettingsAndRefresh();
+        });
+    }
+
+    if (languageSelect) {
+        languageSelect.value = currentLanguage || 'en';
+        languageSelect.addEventListener('change', (e) => {
+            currentLanguage = e.target.value;
+            applyLanguage(currentLanguage);
+            saveUserSettingsAndRefresh();
+        });
+    }
+
+    updateFormatPreview();
+}
+
+// 處理小數點與千分位衝突 (US3)
+function handleSeparatorConflict(changedSource) {
+    const decimalSepSelect = document.getElementById('decimal-separator');
+    const thousandsSepSelect = document.getElementById('thousands-separator');
+
+    if (currentDecimalSeparator === currentThousandsSeparator) {
+        if (changedSource === 'decimal') {
+            currentThousandsSeparator = currentDecimalSeparator === '.' ? ',' : '.';
+            if (thousandsSepSelect) thousandsSepSelect.value = currentThousandsSeparator;
+        } else {
+            currentDecimalSeparator = currentThousandsSeparator === '.' ? ',' : '.';
+            if (decimalSepSelect) decimalSepSelect.value = currentDecimalSeparator;
+        }
+    }
+}
+
+// 儲存設定並更新 UI
+function saveUserSettingsAndRefresh() {
+    chrome.storage.sync.set({
+        userSettings: {
+            decimalSeparator: currentDecimalSeparator,
+            thousandsSeparator: currentThousandsSeparator,
+            userLanguage: currentLanguage
+        }
+    }, () => {
+        updateFormatPreview();
+        updateAllAmounts(lastEditedAmount, lastEditedCurrency);
+    });
+}
+
+// 套用語系翻譯 (US4)
+function applyLanguage(lang) {
+    // 翻譯所有帶有 data-i18n 屬性的元素
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        const translation = getTranslation(key, lang);
+        if (translation) {
+            element.textContent = translation;
+        }
+    });
+
+    // 翻譯所有帶有 data-i18n-title 屬性的元素
+    document.querySelectorAll('[data-i18n-title]').forEach(element => {
+        const key = element.getAttribute('data-i18n-title');
+        const translation = getTranslation(key, lang);
+        if (translation) {
+            element.setAttribute('title', translation);
+        }
+    });
+
+    // 翻譯所有帶有 data-i18n-placeholder 屬性的元素
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+        const key = element.getAttribute('data-i18n-placeholder');
+        const translation = getTranslation(key, lang);
+        if (translation) {
+            element.setAttribute('placeholder', translation);
+        }
+    });
+    
+    // 額外更新一些動態或特殊的 UI
+    const deleteButtons = document.querySelectorAll('.delete-button');
+    deleteButtons.forEach(btn => {
+        btn.setAttribute('title', getTranslation('delete', lang));
+    });
+
+    // 更新記憶體中的貨幣名稱並刷新模態框
+    if (currencyConfig && allCurrencies) {
+        Object.keys(allCurrencies).forEach(code => {
+            allCurrencies[code].name = getCountryName(code, lang);
+        });
+        populateAllCurrencies();
+    }
 }
 
 // 加載貨幣配置
@@ -304,7 +551,7 @@ function addCurrencyItem(currency) {
             <input type="text" class="amount-input" data-currency="${currency}" value="">
             <span class="currency-symbol">${getCurrencySymbol(currency)}</span>
         </div>
-        <button class="delete-button" title="刪除"><i class="fas fa-times"></i></button>
+        <button class="delete-button" title="${getTranslation('delete', currentLanguage)}"><i class="fas fa-times"></i></button>
     `;
 
     const input = item.querySelector('.amount-input');
@@ -429,12 +676,13 @@ function updateDeleteButtons() {
 }
 
 // 處理金額輸入
+// 處理金額輸入
 function handleAmountInput(event) {
     const input = event.target;
     const cursorPosition = input.selectionStart;
     const oldValue = input.value;
     
-    // 移除任何非法字元（作為第二道防線）
+    // 移除任何非法字元（允許數字、運算符號、括號、空格、逗號、點）
     const newValue = oldValue.replace(/[^0-9.+\-*/(), ]/g, '');
     
     // 如果有非法字元，恢復原值
@@ -444,23 +692,32 @@ function handleAmountInput(event) {
         return;
     }
     
-    // 移除千分位逗號
-    let cleanValue = newValue.replace(/,/g, '');
+    // 移除千分位分隔符以進行純數字/算式處理
+    let cleanValue = newValue;
+    if (currentThousandsSeparator) {
+        cleanValue = cleanValue.split(currentThousandsSeparator).join('');
+    }
+    
+    // 正規化小數點為標準 '.' 以便計算與解析
+    let cleanValueForEval = cleanValue;
+    if (currentDecimalSeparator !== '.') {
+        cleanValueForEval = cleanValue.split(currentDecimalSeparator).join('.');
+    }
     
     // 檢查是否包含運算符
-    if (/[+\-*/]/.test(cleanValue)) {
+    if (/[+\-*/]/.test(cleanValueForEval)) {
         // 允許輸入運算符和數字
-        if (!/^[\d.+\-*/\s()]+$/.test(cleanValue)) {
+        if (!/^[\d.+\-*/\s()]+$/.test(cleanValueForEval)) {
             input.value = oldValue;
             input.setSelectionRange(cursorPosition, cursorPosition);
             return;
         }
         
-        // 保持當前輸入框的算式
+        // 保持當前輸入框的算式 (保留使用者輸入的小數點)
         input.value = cleanValue;
         
         // 嘗試計算結果
-        const result = evaluateExpression(cleanValue);
+        const result = evaluateExpression(cleanValueForEval);
         
         if (result !== null) {
             // 將計算結果四捨五入到兩位小數
@@ -485,7 +742,7 @@ function handleAmountInput(event) {
     } else {
         // 數字處理邏輯
         if (cleanValue !== '') {
-            const amount = parseFloat(cleanValue);
+            const amount = parseFloat(cleanValueForEval);
             if (!isNaN(amount)) {
                 // 先更新所有金額，確保使用正確的數值
                 lastEditedAmount = amount;
@@ -523,21 +780,25 @@ function handleAmountInput(event) {
     });
 }
 
-// 新增函數：格式化數字，添加千分位逗號
+// 新增函數：格式化數字，添加自訂千分位分隔符
 function formatNumberWithCommas(numStr) {
-    // 如果包含小數點，分別處理整數和小數部分
-    if (numStr.includes('.')) {
-        const [intPart, decPart] = numStr.split('.');
-        return intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '.' + decPart;
+    // 依據當前是否已包含自訂小數點來進行分割
+    const sep = numStr.includes(currentDecimalSeparator) ? currentDecimalSeparator : '.';
+    const parts = numStr.split(sep);
+    let intPart = parts[0];
+    const decPart = parts[1];
+    
+    if (currentThousandsSeparator) {
+        intPart = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, currentThousandsSeparator);
     }
-    // 只有整數部分
-    return numStr.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    
+    return decPart !== undefined ? intPart + currentDecimalSeparator + decPart : intPart;
 }
 
-// 修正：調整光標位置以考慮新增的逗號
+// 修正：調整光標位置以考慮新增的分隔符
 function adjustCursorPosition(oldValue, newValue, oldPosition) {
-    // 移除所有逗號，以便比較純數字
-    const cleanOldValue = oldValue.replace(/,/g, '');
+    // 移除所有千分位分隔符，以便比較純數字
+    const cleanOldValue = currentThousandsSeparator ? oldValue.split(currentThousandsSeparator).join('') : oldValue;
     
     // 計算游標前的數字部分
     const beforeCursor = cleanOldValue.substring(0, oldPosition);
@@ -633,10 +894,10 @@ function handleAmountBlur(event) {
 
 // 新增鍵盤事件處理函數
 function handleAmountKeydown(event) {
-    // 允許的按鍵：數字、小數點、運算符號、括號、方向鍵、刪除鍵等
+    // 允許的按鍵：數字、小數點、逗號、運算符號、括號、方向鍵、刪除鍵等
     const allowedKeys = [
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-        '.', '+', '-', '*', '/', '(', ')',
+        '.', ',', '+', '-', '*', '/', '(', ')',
         'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab',
         'Home', 'End', 'Enter'
     ];
@@ -652,21 +913,28 @@ function handleAmountKeydown(event) {
         return;
     }
 
-    // 特別處理小數點：確保不會有多個小數點
-    if (event.key === '.') {
+    // 特別處理小數點與分號：確保只有一個自訂小數點
+    if (event.key === '.' || event.key === ',') {
+        const activeKey = currentDecimalSeparator;
+        event.preventDefault();
+        
         const value = event.target.value;
         const cursorPosition = event.target.selectionStart;
         const selectedText = window.getSelection().toString();
         
-        // 檢查是否已有小數點（排除選中的文字）
         const valueWithoutSelection = selectedText ? 
             value.slice(0, cursorPosition) + value.slice(cursorPosition + selectedText.length) :
             value;
             
-        if (valueWithoutSelection.includes('.')) {
-            event.preventDefault();
-            return;
+        if (!valueWithoutSelection.includes(activeKey)) {
+            // 在游標處插入當前設定的自訂小數點
+            const newValue = value.slice(0, cursorPosition) + activeKey + value.slice(event.target.selectionEnd);
+            event.target.value = newValue;
+            event.target.setSelectionRange(cursorPosition + 1, cursorPosition + 1);
+            // 觸發 input 事件以便即時更新與計算
+            event.target.dispatchEvent(new Event('input'));
         }
+        return;
     }
 
     // 特別處理運算符號：防止連續輸入運算符號
@@ -996,7 +1264,6 @@ function evaluateExpression(expression) {
         
         return result;
     } catch (e) {
-        console.log('Evaluation error:', e);
         return null;
     }
 }
@@ -1007,80 +1274,29 @@ function formatUserInput(num) {
     if (typeof num === 'string' && /[+\-*/]/.test(num)) {
         return num;
     }
-    
-    // 將輸入轉換為字符串
-    let str = num.toString();
-    
-    // 分離整數和小數部分
-    let [integerPart, decimalPart] = str.split('.');
-    
-    // 為整數部分添加千分位分隔符
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    
-    // 如果有小數部分，重新組合
-    return decimalPart ? `${integerPart}.${decimalPart}` : integerPart;
+    return formatCustomNumber(num, currentDecimalSeparator, currentThousandsSeparator);
 }
 
 // 修改解析格式化數字的函數
 function parseFormattedNumber(str) {
+    let normalized = str;
+    if (currentThousandsSeparator) {
+        normalized = normalized.split(currentThousandsSeparator).join('');
+    }
+    if (currentDecimalSeparator !== '.') {
+        normalized = normalized.split(currentDecimalSeparator).join('.');
+    }
     // 如果包含運算符，嘗試計算結果
-    if (/[+\-*/]/.test(str)) {
-        const result = evaluateExpression(str);
+    if (/[+\-*/]/.test(normalized)) {
+        const result = evaluateExpression(normalized);
         return result !== null ? result : NaN;
     }
-    // 否則按原來的方式解析
-    return parseFloat(str.replace(/,/g, ''));
+    return parseFloat(normalized);
 }
 
 // 新增处理转换结果的格式化函数
 function formatConversionResult(num) {
-    // 將輸入轉換為數字
-    const number = Number(num);
-    
-    // 如果數字為 0，直接返回 "0.00"
-    if (number === 0) {
-        return "0.00";
-    }
-
-    // 處理非常小的數字
-    if (Math.abs(number) < 0.01) {
-        let precision = 2;
-        while (Number(Math.abs(number).toFixed(precision)) === 0 && precision < 8) {
-            precision++;
-        }
-        let formattedNum = Math.abs(number).toFixed(precision);
-        // 移除尾部的 0
-        formattedNum = formattedNum.replace(/\.?0+$/, "");
-        
-        // 如果小數點後沒有數字，添加 ".00"
-        if (!formattedNum.includes('.')) {
-            formattedNum += '.00';
-        } else if (formattedNum.split('.')[1].length === 1) {
-            // 如果只有一位小數，添加一個 0
-            formattedNum += '0';
-        }
-        
-        return number < 0 ? "-" + formattedNum : formattedNum;
-    }
-
-    // 對於正常範圍的數字，保持兩位小數
-    let formattedNum = Math.abs(number).toFixed(2);
-
-    // 分割整數部分和小數部分
-    let [integerPart, decimalPart] = formattedNum.split('.');
-    
-    // 添加千位分隔符到整數部分
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    // 組合結果
-    let result = integerPart + '.' + decimalPart;
-
-    // 如果原數字是負數，添加負號
-    if (number < 0) {
-        result = '-' + result;
-    }
-
-    return result;
+    return formatCustomNumber(num, currentDecimalSeparator, currentThousandsSeparator);
 }
 
 // 保存數據到快取
@@ -1126,7 +1342,8 @@ function showError(message) {
 
 // 在初始化函數中設置語言
 async function initialize() {
-    currentLanguage = await getUserLanguage();
+    await loadUserSettings();
+    applyLanguage(currentLanguage);
     await loadCurrencyConfig();
     if (!currencyConfig) {
         throw new Error('Failed to load currency config');
@@ -1135,6 +1352,7 @@ async function initialize() {
     initSortable();
     updateDeleteButtons();
     populateAllCurrencies(); // 確保所有貨幣列表在初始化時被填充
+    initSettingsUI();
 }
 
 // 初始化
@@ -1177,6 +1395,18 @@ document.addEventListener('DOMContentLoaded', async function() {
                 top: Math.round((screen.height - 480) / 2)
             });
         });
+    });
+
+    // 設定按鈕事件
+    openSettingsButton.addEventListener('click', () => {
+        mainView.style.display = 'none';
+        settingsView.style.display = 'flex';
+    });
+
+    // 返回按鈕事件
+    backButton.addEventListener('click', () => {
+        settingsView.style.display = 'none';
+        mainView.style.display = 'block';
     });
 
     // 添加貨幣按鈕
