@@ -670,3 +670,11 @@ body.popup-window .content-wrapper {
     color: var(--accent-color);
     font-weight: 600;
 }
+
+.settings-divider {
+    border: none;
+    height: 1px;
+    background-color: var(--border-color);
+    width: 100%;
+    margin: 0;
+}
