@@ -1,50 +1,509 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Multi-Currency Converter Extension 專案憲法
 
-## Core Principles
+## 核心原則
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. 棕地穩定性優先
+本專案是一個既有的 Chrome 擴充功能，所有開發皆必須以棕地專案方式演進。
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+除非規格明確要求改變，所有修改都必須維持目前擴充功能的既有行為。既有的使用者資料、已設定的貨幣清單、快取匯率、語言偏好設定、彈出視窗行為，以及拖曳排序結果，都必須在版本更新後保持相容。
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+除非同時具備以下內容，否則禁止對儲存鍵、腳本依賴的 DOM 結構、manifest 權限或公開的擴充功能行為進行破壞性變更：
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+- 已記錄的遷移策略
+- 向後相容處理
+- 明確的使用者影響說明
+- 可驗證的檢查步驟
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+**理由：** 瀏覽器擴充功能直接安裝於使用者環境中，任何靜默回歸都可能立即影響使用者日常工作流程。
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+---
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### II. 最小權限與本機優先隱私
+本擴充功能只能請求已宣告功能所需的最低限度 Chrome 權限。
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+使用者偏好設定與貨幣排序應優先透過 Chrome storage 保留在使用者本機瀏覽器中。除非為取得匯率資料所必須，否則不得傳送任何個人資料、瀏覽資料或使用者輸入的貨幣金額。
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+任何新的網路依賴都必須記錄：
 
-## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+- 用途
+- 端點
+- 傳送資料
+- 接收資料
+- 快取行為
+- 失敗處理方式
+- 隱私影響
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+除非另有新的規格、明確的使用者揭露，以及憲法審查，否則本擴充功能不得引入分析、追蹤、遙測、指紋辨識或廣告腳本。
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**理由：** Chrome 擴充功能運行於敏感的瀏覽器環境中，必須維持使用者信任。
+
+---
+
+### III. 可判定且可解釋的匯率換算行為
+貨幣換算邏輯必須具備可判定性、可解釋性，並且能在部分 API 失敗時保持韌性。
+
+本系統目前處理法幣、加密貨幣、快取匯率、BTC/USD 關係，以及使用者最後編輯的基準金額。任何影響匯率計算的功能，都必須明確定義：
+
+- 來源貨幣
+- 目標貨幣
+- 匯率來源
+- 基準匯率慣例
+- 快取時間
+- 四捨五入或格式化規則
+- 過期匯率處理方式
+- 無法取得匯率時的處理方式
+- 顯示格式
+
+若即時匯率取得失敗，擴充功能應優先使用最近一次有效的快取資料，並避免產生可能誤導使用者的結果。
+
+**理由：** 貨幣換算是本產品的核心功能；正確性與優雅降級比視覺強化更重要。
+
+---
+
+### IV. 國際化是產品需求
+所有使用者可見文字都必須支援既有的國際化模型。
+
+本專案目前透過翻譯物件與貨幣中繼資料支援多語系。任何新的可見標籤、按鈕、對話框、錯誤訊息、placeholder、tooltip 或狀態文字，都必須加入翻譯系統，而不得只以單一語言硬編碼。
+
+新文字至少必須包含以下語言：
+
+- 英文
+- 繁體中文
+- 簡體中文
+
+在可行時，亦應維持與目前其他已支援語系的一致性。
+
+貨幣名稱、符號、圖示與在地化標籤，必須來自 `currency_config.json` 或經文件化的等效設定來源。
+
+**理由：** 多語系支援已是本產品識別的一部分，不得退化。
+
+---
+
+### V. 彈出視窗使用體驗一致性與響應性
+擴充功能的 popup 必須維持快速、精簡、可鍵盤操作，並與既有設計語言保持一致。
+
+目前 UI 採用受限的彈出視窗版面、深色主題、強調色漸層、貨幣選擇 modal、可搜尋貨幣清單，以及可排序貨幣列。任何 UI 變更都必須尊重：
+
+- 除非規格明確要求，否則維持既有 popup 尺寸
+- 既有 CSS custom properties
+- 可讀的對比度
+- 滑鼠與觸控可用性
+- 拖曳排序的操作暗示
+- 清楚的 focus 狀態
+- modal 的基本可存取性期待
+
+視覺變更應優先重用 `styles.css` 中既有的 CSS 變數，再考慮新增顏色或設計 token。
+
+**理由：** 瀏覽器擴充功能 popup 空間有限，互動必須可預期且有效率。
+
+---
+
+### VI. 離線與快取感知操作
+當網路不可用或匯率 API 暫時無法連線時，本擴充功能仍必須提供有用的行為。
+
+匯率資料、貨幣中繼資料與使用者設定應依文件化的時間保留於快取中。既有快取行為不得在沒有規格的情況下被削弱。
+
+任何依賴外部資料的程式路徑都必須定義：
+
+- timeout 行為
+- retry 行為
+- fallback 行為
+- 必要時的使用者可見錯誤狀態
+- 快取失效規則
+
+**理由：** 使用者期望 popup 能快速開啟；網路不穩不應使擴充功能無法使用。
+
+---
+
+### VII. 優先使用原生 Web 平台能力
+本專案應優先使用與 Chrome Extension Manifest V3 相容的原生 HTML、CSS 與 JavaScript。
+
+除非新依賴能提供現有平台 API 難以合理達成的明確價值，否則不應新增依賴。任何新函式庫都必須說明：
+
+- 功能需求
+- 套件大小影響
+- 安全性與維護狀態
+- 與 Manifest V3 的相容性
+- 是否能安全地在擴充功能環境中執行
+
+既有依賴，例如 SortableJS，可在其支援既有功能的情況下繼續使用。
+
+**理由：** 較小的擴充功能 bundle 較容易稽核、載入更快，且較不容易在瀏覽器擴充功能限制下失效。
+
+---
+
+### VIII. 安全且符合 Manifest V3
+所有實作都必須持續符合 Chrome Extension Manifest V3 的要求。
+
+本擴充功能不得引入：
+
+- 遠端可執行程式碼
+- 不安全的 inline script 模式
+- 過度寬鬆的 host permissions
+- 未經合理說明的大範圍 content script 注入
+- 生產環境使用的不安全 HTTP 端點
+- 違反 CSP 的行為
+
+任何 `manifest.json` 的變更都必須審查：
+
+- 權限是否最小化
+- service worker 行為
+- host permissions
+- externally connectable 暴露面
+- web-accessible resources
+- action popup 行為
+- Chrome Web Store 政策相容性
+
+**理由：** Manifest V3 相容性是 Chrome Web Store 上架與使用者安全的必要條件。
+
+---
+
+### IX. 發佈來源邊界明確化
+所有與 Chrome 擴充功能本體相關的程式碼新增、修改與資源調整，都必須放置於專案根目錄下的 `Extension/` 目錄中。
+
+`Extension/` 目錄是本專案用於打包並上傳至 Chrome 開發者中心進行發佈的唯一來源目錄。任何會影響實際擴充功能執行、顯示、設定、權限、匯率邏輯、快取、在地化、樣式或資源的變更，都必須位於此目錄內。
+
+這包含但不限於：
+
+- `manifest.json`
+- popup 相關 HTML、CSS、JavaScript
+- background/service worker 程式
+- 貨幣設定檔
+- 圖示與圖片資源
+- 第三方前端函式庫
+- 任何會被 Chrome Extension 載入或引用的檔案
+
+除非規格明確定義為開發工具、文件、測試工具、CI/CD 設定或 Spec Kit 專用檔案，否則不得將擴充功能執行時需要的檔案放置於 `Extension/` 之外。
+
+任何新增或修改檔案的計畫都必須在實作計畫中明確標示：
+
+- 該檔案是否屬於擴充功能發佈內容
+- 若屬於發佈內容，必須位於 `Extension/`
+- 若不位於 `Extension/`，必須說明其用途與不被打包上傳的理由
+
+**理由：** 明確的發佈邊界可避免開發檔案、規格檔案、測試資源或臨時檔案被誤打包，也可確保 Chrome 開發者中心上傳內容與實際擴充功能來源一致。
+
+---
+
+### X. Spec Kit 文件語言必須使用繁體中文
+所有由 Spec Kit 流程產出的規格、技術計畫、任務文件、研究文件、資料模型文件、API 合約文件、快速開始文件、檢查清單，以及其他專案開發文件，都必須使用繁體中文，並以 `zh-TW` 作為語言標準。
+
+此要求適用於但不限於：
+
+- `/speckit.constitution` 產出的憲法文件
+- `/speckit.specify` 產出的功能規格
+- `/speckit.plan` 產出的實作計畫
+- `/speckit.tasks` 產出的任務清單
+- feature specification
+- implementation plan
+- research notes
+- data model
+- contracts
+- quickstart
+- checklist
+- README 或開發說明文件中由 Spec Kit 流程新增或修改的內容
+
+除非規格明確要求提供其他語言版本，否則不得以英文、簡體中文或其他語言作為主要文件語言。若因技術名詞、API 名稱、程式碼識別字、檔案名稱、指令、錯誤訊息原文或第三方服務名稱需要保留英文，應保留原文並以繁體中文補充說明。
+
+任何 Spec Kit 產出的文件若引用英文模板標題，應翻譯為繁體中文，或在保留必要原文的同時提供繁體中文說明。
+
+**理由：** 統一使用繁體中文可降低團隊溝通成本，確保規格、計畫與任務對主要維護者一致可讀，並避免語言混用造成需求解讀差異。
+
+---
+
+### XI. 先有可測試規格，再進行實作
+每一個非微小的功能、行為變更或重構，都必須先有書面規格。
+
+規格必須先描述使用者可見行為與驗收標準，再描述實作細節。實作計畫與任務必須由規格推導而來。
+
+對於棕地開發，每份規格都必須包含：
+
+- 要保留的既有行為
+- 受影響的檔案
+- 儲存相容性考量
+- 如有需要的遷移需求
+- 測試情境
+- 回滾考量
+
+**理由：** 規格驅動開發可降低既有系統中的意外回歸。
+
+---
+
+### XII. 在自動化測試建立前，必須進行人工驗證
+由於本專案目前看起來是一個輕量的瀏覽器擴充功能程式碼庫，且尚未明確具備自動化測試套件，因此每次變更都必須包含可重複的人工作業驗證步驟。
+
+至少應驗證：
+
+- 擴充功能可成功載入 Chrome
+- popup 開啟時沒有 console error
+- 預設貨幣可正常渲染
+- 編輯任一貨幣金額後，其他列會正確更新
+- 貨幣搜尋可正常運作
+- 新增貨幣可正常運作
+- 刪除確認可正常運作
+- 拖曳排序結果可持久化
+- 語言選擇或瀏覽器語言判斷可正常運作
+- 匯率快取行為可正常運作
+- 離線或網路失敗狀態不會破壞 UI
+
+當自動化測試被導入後，應涵蓋換算計算、儲存遷移、翻譯 fallback、快取過期，以及 UI 事件行為。
+
+**理由：** 在尚未有自動化覆蓋前，有紀律的人工測試是維持擴充功能品質的安全網。
+
+---
+
+## 棕地專案限制
+
+### 既有架構
+本專案是一個 Chrome 擴充功能，擴充功能本體位於 `Extension/` 目錄中，並使用：
+
+- `Extension/manifest.json` 作為 Manifest V3 設定
+- `Extension/popup.html` 作為擴充功能 popup 結構
+- `Extension/styles.css` 作為 popup 樣式
+- `Extension/popup.js` 處理主要 UI、換算、儲存、快取、modal 與清單行為
+- `Extension/background.js` 處理背景更新行為
+- `Extension/currency_config.json` 作為法幣與加密貨幣中繼資料
+- `Extension/Sortable.min.js` 處理拖曳排序
+
+除非規格明確提出並合理化重構，否則變更應維持此架構與 `Extension/` 發佈邊界。
+
+---
+
+### 儲存相容性
+既有 Chrome storage keys 與快取資料結構，必須被視為公開的內部契約。
+
+在變更任何儲存資料形狀前，實作必須定義：
+
+- 舊 schema
+- 新 schema
+- 遷移路徑
+- 缺失或異常資料的處理
+- 降版或回滾影響
+
+儲存遷移必須具備冪等性，也就是重複執行不應造成資料損壞。
+
+---
+
+### 貨幣設定相容性
+`currency_config.json` 是貨幣中繼資料的主要真實來源。
+
+任何新的貨幣相關功能都必須保留以下區分：
+
+- 法幣中繼資料
+- 加密貨幣中繼資料
+- 在地化貨幣名稱
+- 符號
+- 圖示
+- 支援語言欄位
+
+程式碼必須能在缺少特定語系名稱時，安全 fallback 至英文或貨幣代碼。
+
+---
+
+### 效能邊界
+popup 必須維持響應性。
+
+目標期待：
+
+- popup 初始渲染應能透過快取資料快速完成
+- 搜尋與過濾對已設定貨幣清單應保持即時感
+- 當快取資料可用時，匯率請求不得阻塞基本 UI 渲染
+- 大型設定讀取應在可行時進行快取
+
+任何會顯著增加 popup 啟動工作量的功能，都必須包含效能理由。
+
+---
+
+### 可存取性期待
+互動控制項應在可行範圍內具備可辨識的名稱、角色與鍵盤互動能力。
+
+這適用於：
+
+- 貨幣金額輸入欄位
+- 新增貨幣按鈕
+- popup-window 按鈕
+- modal 關閉按鈕
+- 搜尋輸入欄位
+- 貨幣清單項目
+- 刪除確認對話框
+- 可排序控制項
+
+任何新 UI 都應包含可見的 focus 指示與足夠的色彩對比。
+
+---
+
+## 開發工作流程
+
+### 必要的 Spec Kit 流程
+所有有意義的變更，貢獻者應遵循 Spec Kit 工作流程：
+
+1. 憲法  
+   使用 `/speckit.constitution` 建立或更新專案原則，並以繁體中文 zh-TW 撰寫。
+
+2. 規格  
+   使用 `/speckit.specify` 定義期望行為，並以繁體中文 zh-TW 撰寫。
+
+3. 計畫  
+   使用 `/speckit.plan` 定義技術實作方式，並以繁體中文 zh-TW 撰寫。
+
+4. 任務  
+   使用 `/speckit.tasks` 產生可執行任務，並以繁體中文 zh-TW 撰寫。
+
+5. 實作  
+   使用 `/speckit.implement` 依任務完成開發；相關提交說明、驗證紀錄與必要開發文件應以繁體中文 zh-TW 撰寫。
+
+若僅為錯字、註解或 metadata 等不影響行為的微小修改，可略過完整流程。
+
+---
+
+### 規格要求
+每份功能規格都必須包含：
+
+- 使用者故事或使用者目標
+- 目前行為
+- 期望行為
+- 非目標
+- 驗收標準
+- 邊界案例
+- 受影響檔案
+- 儲存影響
+- 網路/API 影響
+- 在地化影響
+- 人工驗證清單
+
+所有規格內容必須以繁體中文 zh-TW 撰寫；必要的程式碼、API 名稱、檔案名稱、指令與第三方服務名稱可保留原文。
+
+---
+
+### 實作計畫要求
+每份實作計畫都必須包含：
+
+- 將修改的檔案
+- 每個檔案是否位於 `Extension/`，以及是否屬於 Chrome Web Store 發佈內容
+- 若擴充功能執行時需要的檔案不在 `Extension/`，必須說明原因並取得規格允許
+- 受影響的函式或模組
+- 資料模型影響
+- Manifest 權限影響
+- API 依賴影響
+- 安全性考量
+- 效能考量
+- 測試或驗證方式
+- 回滾計畫
+
+所有實作計畫內容必須以繁體中文 zh-TW 撰寫；必要的程式碼、API 名稱、檔案名稱、指令與第三方服務名稱可保留原文。
+
+---
+
+### 任務要求
+產生的任務必須小型、排序清楚，並且可獨立驗證。
+
+任務應區分：
+
+- 資料或設定變更
+- UI 變更
+- 換算邏輯變更
+- 儲存變更
+- 在地化更新
+- 錯誤處理
+- 驗證
+- 文件
+
+所有任務文件必須以繁體中文 zh-TW 撰寫；必要的程式碼、API 名稱、檔案名稱、指令與第三方服務名稱可保留原文。
+
+---
+
+## 品質門檻
+
+在所有適用門檻通過前，不得將變更視為完成。
+
+### 功能門檻
+- 既有核心換算行為被保留。
+- 新行為符合其驗收標準。
+- popup 可開啟並渲染，且沒有 JavaScript error。
+- 使用者設定能如預期保存。
+- 預設貨幣仍可使用。
+
+### 在地化門檻
+- 沒有新的使用者可見文字只以單一語言硬編碼。
+- 必要翻譯項目已存在。
+- 缺失翻譯時能安全 fallback。
+
+### 文件語言門檻
+- 所有 Spec Kit 產出的規格、計畫、任務與技術文件皆以繁體中文 zh-TW 撰寫。
+- 必要英文原文僅限於程式碼、API、指令、檔名、錯誤訊息原文、第三方服務名稱或專有名詞。
+- 若保留英文模板標題或外部文件引用，必須提供繁體中文說明或翻譯。
+- 不得以英文、簡體中文或其他語言作為主要開發文件語言，除非規格明確要求多語版本。
+
+### 安全性門檻
+- Manifest 權限維持最小化。
+- 未引入遠端可執行程式碼。
+- 未洩漏使用者敏感資料。
+- 網路呼叫已有合理說明與文件化。
+
+### 隱私門檻
+- 未引入分析或追蹤。
+- 使用者輸入金額不被不必要地傳送。
+- storage 使用範圍限於產品功能。
+
+### 效能門檻
+- popup 啟動維持響應性。
+- 適當使用快取資料。
+- 網路請求失敗不會凍結 UI。
+
+### 棕地相容性門檻
+- 既有 storage 仍可讀取。
+- 既有設定被保留。
+- 既有 UI 工作流程仍可運作。
+- 既有支援貨幣仍可正常使用。
+
+### 發佈邊界門檻
+- 所有會被打包至 Chrome 擴充功能的檔案皆位於 `Extension/`。
+- 所有影響擴充功能執行的新增或修改檔案皆位於 `Extension/`。
+- 非發佈用檔案未被混入 `Extension/`，除非規格明確允許。
+- 打包上傳 Chrome 開發者中心時，以 `Extension/` 作為唯一來源目錄。
+
+### 驗證門檻
+- 人工驗證清單已完成。
+- console 已檢查且無非預期錯誤。
+- 至少測試一個線上情境與一個離線或網路失敗情境。
+
+---
+
+## 治理
+
+本憲法治理此 Chrome 擴充功能專案的所有規格、計畫、任務與實作。
+
+若發生衝突，優先順序如下：
+
+1. 使用者安全與隱私優先。
+2. Manifest V3 與 Chrome Web Store 相容性優先。
+3. `Extension/` 發佈邊界優先於任意檔案組織便利性。
+4. 棕地相容性優先於新功能便利性。
+5. 匯率換算正確性優先於 UI 裝飾。
+6. Spec Kit 規格與技術文件的繁體中文 zh-TW 要求優先於模板預設語言。
+7. 規格優先於實作捷徑。
+
+本憲法的任何修訂都必須：
+
+- 明確記錄
+- 包含理由
+- 描述預期影響
+- 並在相依規格或實作計畫被接受前完成審查
+
+所有未來功能規格與實作計畫，都必須包含憲法遵循性檢查。
+
+---
+
+## 版本資訊
+
+憲法版本：1.2.0  
+專案類型：Chrome Extension、Manifest V3、棕地專案  
+文件語言：繁體中文 zh-TW  
+採用日期：2026-06-05  
+最後修訂：2026-06-05  
+
+版本規則：
+
+- MAJOR：不相容的治理或專案方向變更。
+- MINOR：新增原則或實質擴充要求。
+- PATCH：不改變義務的文字釐清。
