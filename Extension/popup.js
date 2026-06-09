@@ -45,7 +45,9 @@ const translations = {
         'delete': 'Delete',
         'popupWindow': 'Popup window',
         'searchPlaceholder': 'Search currency...',
-        'noResults': 'No matching results'
+        'noResults': 'No matching results',
+        'dotLabel': 'Dot',
+        'commaLabel': 'Comma'
     },
     'zh-TW': {
         'confirmDelete': '確認刪除',
@@ -63,7 +65,9 @@ const translations = {
         'delete': '刪除',
         'popupWindow': '彈出視窗',
         'searchPlaceholder': '搜尋貨幣...',
-        'noResults': '沒有找到相符的貨幣'
+        'noResults': '沒有找到相符的貨幣',
+        'dotLabel': '點',
+        'commaLabel': '逗號'
     },
     'zh-CN': {
         'confirmDelete': '确认删除',
@@ -81,7 +85,9 @@ const translations = {
         'delete': '删除',
         'popupWindow': '弹出窗口',
         'searchPlaceholder': '搜索货币...',
-        'noResults': '没有找到相符的货币'
+        'noResults': '没有找到相符的货币',
+        'dotLabel': '点',
+        'commaLabel': '逗号'
     },
     'es': {
         'confirmDelete': 'Eliminar Moneda',
@@ -257,25 +263,45 @@ function updateFormatPreview() {
     }
 }
 
+// Helper function to update segmented control active state
+function updateSegmentedControl(containerId, value) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const buttons = container.querySelectorAll('.segmented-item');
+    buttons.forEach(btn => {
+        if (btn.getAttribute('data-value') === value) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+}
+
 // 初始化設定面板 UI
 function initSettingsUI() {
-    const decimalSepSelect = document.getElementById('decimal-separator');
-    const thousandsSepSelect = document.getElementById('thousands-separator');
+    const decimalSepToggle = document.getElementById('decimal-separator-toggle');
+    const thousandsSepToggle = document.getElementById('thousands-separator-toggle');
     const languageSelect = document.getElementById('language-select');
 
-    if (decimalSepSelect) {
-        decimalSepSelect.value = currentDecimalSeparator;
-        decimalSepSelect.addEventListener('change', (e) => {
-            currentDecimalSeparator = e.target.value;
+    if (decimalSepToggle) {
+        updateSegmentedControl('decimal-separator-toggle', currentDecimalSeparator);
+        decimalSepToggle.addEventListener('click', (e) => {
+            const btn = e.target.closest('.segmented-item');
+            if (!btn) return;
+            currentDecimalSeparator = btn.getAttribute('data-value');
+            updateSegmentedControl('decimal-separator-toggle', currentDecimalSeparator);
             handleSeparatorConflict('decimal');
             saveUserSettingsAndRefresh();
         });
     }
 
-    if (thousandsSepSelect) {
-        thousandsSepSelect.value = currentThousandsSeparator;
-        thousandsSepSelect.addEventListener('change', (e) => {
-            currentThousandsSeparator = e.target.value;
+    if (thousandsSepToggle) {
+        updateSegmentedControl('thousands-separator-toggle', currentThousandsSeparator);
+        thousandsSepToggle.addEventListener('click', (e) => {
+            const btn = e.target.closest('.segmented-item');
+            if (!btn) return;
+            currentThousandsSeparator = btn.getAttribute('data-value');
+            updateSegmentedControl('thousands-separator-toggle', currentThousandsSeparator);
             handleSeparatorConflict('thousands');
             saveUserSettingsAndRefresh();
         });
@@ -295,16 +321,13 @@ function initSettingsUI() {
 
 // 處理小數點與千分位衝突 (US3)
 function handleSeparatorConflict(changedSource) {
-    const decimalSepSelect = document.getElementById('decimal-separator');
-    const thousandsSepSelect = document.getElementById('thousands-separator');
-
     if (currentDecimalSeparator === currentThousandsSeparator) {
         if (changedSource === 'decimal') {
             currentThousandsSeparator = currentDecimalSeparator === '.' ? ',' : '.';
-            if (thousandsSepSelect) thousandsSepSelect.value = currentThousandsSeparator;
+            updateSegmentedControl('thousands-separator-toggle', currentThousandsSeparator);
         } else {
             currentDecimalSeparator = currentThousandsSeparator === '.' ? ',' : '.';
-            if (decimalSepSelect) decimalSepSelect.value = currentDecimalSeparator;
+            updateSegmentedControl('decimal-separator-toggle', currentDecimalSeparator);
         }
     }
 }

@@ -33,20 +33,38 @@
         </div>
         <div class="settings-content">
             <div class="settings-group">
-                <label for="decimal-separator" data-i18n="decimalSeparatorLabel">Decimal Separator</label>
-                <select id="decimal-separator">
-                    <option value=".">.</option>
-                    <option value=",">,</option>
-                </select>
+                <label data-i18n="decimalSeparatorLabel">Decimal Separator</label>
+                <div class="segmented-control" id="decimal-separator-toggle">
+                    <button class="segmented-item" data-value=".">
+                        <span class="symbol-large">.</span>
+                        <span class="symbol-name" data-i18n="dotLabel">Dot</span>
+                    </button>
+                    <button class="segmented-item" data-value=",">
+                        <span class="symbol-large">,</span>
+                        <span class="symbol-name" data-i18n="commaLabel">Comma</span>
+                    </button>
+                </div>
             </div>
             <div class="settings-group">
-                <label for="thousands-separator" data-i18n="thousandsSeparatorLabel">Thousands Separator</label>
-                <select id="thousands-separator">
-                    <option value=",">,</option>
-                    <option value=".">.</option>
-                    <option value=" " data-i18n="space">Space</option>
-                    <option value="" data-i18n="none">None</option>
-                </select>
+                <label data-i18n="thousandsSeparatorLabel">Thousands Separator</label>
+                <div class="segmented-control" id="thousands-separator-toggle">
+                    <button class="segmented-item" data-value=",">
+                        <span class="symbol-large">,</span>
+                        <span class="symbol-name" data-i18n="commaLabel">Comma</span>
+                    </button>
+                    <button class="segmented-item" data-value=".">
+                        <span class="symbol-large">.</span>
+                        <span class="symbol-name" data-i18n="dotLabel">Dot</span>
+                    </button>
+                    <button class="segmented-item" data-value=" ">
+                        <span class="symbol-large">␣</span>
+                        <span class="symbol-name" data-i18n="space">Space</span>
+                    </button>
+                    <button class="segmented-item" data-value="">
+                        <span class="symbol-large">∅</span>
+                        <span class="symbol-name" data-i18n="none">None</span>
+                    </button>
+                </div>
             </div>
             <div class="preview-group">
                 <span class="preview-label" data-i18n="previewLabel">Format Preview:</span>

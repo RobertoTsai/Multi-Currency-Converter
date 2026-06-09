@@ -617,7 +617,7 @@ body.popup-window .content-wrapper {
     padding: 20px 15px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 12px;
 }
 
 .settings-group {
@@ -677,4 +677,59 @@ body.popup-window .content-wrapper {
     background-color: var(--border-color);
     width: 100%;
     margin: 0;
+}
+
+/* Segmented Control Switch Styles */
+.segmented-control {
+    display: flex;
+    background-color: var(--hover-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 2px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.segmented-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    background: transparent;
+    border: none;
+    color: var(--secondary-text-color);
+    padding: 6px 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.segmented-item .symbol-large {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.segmented-item .symbol-name {
+    font-size: 10px;
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+.segmented-item:hover {
+    color: var(--text-color);
+}
+
+.segmented-item.active {
+    background-color: var(--accent-color);
+    color: var(--background-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.segmented-item.active .symbol-name {
+    font-weight: 600;
+    opacity: 1;
 }
