@@ -19,6 +19,8 @@ function extractFunction(name) {
 
 eval(extractFunction('normalizeDecimalPlaces'));
 eval(extractFunction('formatCustomNumber'));
+eval(extractFunction('getSupportedLanguages'));
+eval(extractFunction('resolveSupportedLanguage'));
 
 assert.strictEqual(source.includes('approx'), false, 'Approximation UI code should be removed');
 assert.strictEqual(formatCustomNumber(12345.67, '.', ',', 2), '12,345.67');
@@ -31,3 +33,19 @@ assert.strictEqual(formatCustomNumber(0.234, '.', ',', 0), '0.23');
 assert.strictEqual(formatCustomNumber(0.057, '.', ',', 0), '0.06');
 assert.strictEqual(formatCustomNumber(0.057, '.', ',', 1), '0.06');
 assert.strictEqual(formatCustomNumber(0.004, '.', ',', 2), '0.004');
+
+const languageConfig = {
+    fiat: {
+        USD: { names: { en: 'Dollar', 'zh-TW': '美元', pt: 'dólar' } }
+    },
+    crypto: {
+        BTC: { names: { en: 'Bitcoin', ja: 'ビットコイン' } }
+    }
+};
+
+assert.deepStrictEqual(getSupportedLanguages(languageConfig), ['en', 'zh-TW', 'pt', 'ja']);
+assert.strictEqual(resolveSupportedLanguage('zh-HK', ['en', 'zh-TW', 'zh-CN']), 'zh-TW');
+assert.strictEqual(resolveSupportedLanguage('zh-Hant-TW', ['en', 'zh-TW', 'zh-CN']), 'zh-TW');
+assert.strictEqual(resolveSupportedLanguage('zh-Hans-CN', ['en', 'zh-TW', 'zh-CN']), 'zh-CN');
+assert.strictEqual(resolveSupportedLanguage('pt-BR', ['en', 'pt']), 'pt');
+assert.strictEqual(resolveSupportedLanguage('it-IT', ['en', 'pt']), 'en');

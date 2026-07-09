@@ -149,6 +149,203 @@ const translations = {
     }
 };
 
+const languageLabels = {
+    'en': 'English',
+    'zh-TW': '繁體中文',
+    'zh-CN': '简体中文',
+    'es': 'Español',
+    'ar': 'العربية',
+    'hi': 'हिन्दी',
+    'pt': 'Português',
+    'bn': 'বাংলা',
+    'ru': 'Русский',
+    'ja': '日本語',
+    'de': 'Deutsch',
+    'fr': 'Français',
+    'ko': '한국어'
+};
+
+const settingsTranslations = {
+    'es': {
+        'settings': 'Configuración',
+        'back': 'Atrás',
+        'decimalSeparatorLabel': 'Separador decimal',
+        'thousandsSeparatorLabel': 'Separador de miles',
+        'decimalPlacesLabel': 'Decimales',
+        'languageLabel': 'Idioma',
+        'previewLabel': 'Vista previa:',
+        'none': 'Ninguno',
+        'space': 'Espacio',
+        'delete': 'Eliminar',
+        'popupWindow': 'Ventana emergente',
+        'searchPlaceholder': 'Buscar moneda...',
+        'noResults': 'No hay resultados',
+        'dotLabel': 'Punto',
+        'commaLabel': 'Coma'
+    },
+    'ar': {
+        'settings': 'الإعدادات',
+        'back': 'رجوع',
+        'decimalSeparatorLabel': 'فاصل الأرقام العشرية',
+        'thousandsSeparatorLabel': 'فاصل الآلاف',
+        'decimalPlacesLabel': 'عدد المنازل العشرية',
+        'languageLabel': 'اللغة',
+        'previewLabel': 'معاينة التنسيق:',
+        'none': 'بدون',
+        'space': 'مسافة',
+        'delete': 'حذف',
+        'popupWindow': 'نافذة منبثقة',
+        'searchPlaceholder': 'ابحث عن عملة...',
+        'noResults': 'لا توجد نتائج مطابقة',
+        'dotLabel': 'نقطة',
+        'commaLabel': 'فاصلة'
+    },
+    'hi': {
+        'settings': 'सेटिंग्स',
+        'back': 'वापस',
+        'decimalSeparatorLabel': 'दशमलव विभाजक',
+        'thousandsSeparatorLabel': 'हज़ार विभाजक',
+        'decimalPlacesLabel': 'दशमलव स्थान',
+        'languageLabel': 'भाषा',
+        'previewLabel': 'फ़ॉर्मेट पूर्वावलोकन:',
+        'none': 'कोई नहीं',
+        'space': 'स्पेस',
+        'delete': 'हटाएं',
+        'popupWindow': 'पॉपअप विंडो',
+        'searchPlaceholder': 'मुद्रा खोजें...',
+        'noResults': 'कोई मिलान परिणाम नहीं',
+        'dotLabel': 'डॉट',
+        'commaLabel': 'कॉमा'
+    },
+    'pt': {
+        'settings': 'Configurações',
+        'back': 'Voltar',
+        'decimalSeparatorLabel': 'Separador decimal',
+        'thousandsSeparatorLabel': 'Separador de milhares',
+        'decimalPlacesLabel': 'Casas decimais',
+        'languageLabel': 'Idioma',
+        'previewLabel': 'Prévia do formato:',
+        'none': 'Nenhum',
+        'space': 'Espaço',
+        'delete': 'Excluir',
+        'popupWindow': 'Janela pop-up',
+        'searchPlaceholder': 'Buscar moeda...',
+        'noResults': 'Nenhum resultado encontrado',
+        'dotLabel': 'Ponto',
+        'commaLabel': 'Vírgula'
+    },
+    'bn': {
+        'settings': 'সেটিংস',
+        'back': 'ফিরে যান',
+        'decimalSeparatorLabel': 'দশমিক বিভাজক',
+        'thousandsSeparatorLabel': 'হাজার বিভাজক',
+        'decimalPlacesLabel': 'দশমিক স্থান',
+        'languageLabel': 'ভাষা',
+        'previewLabel': 'ফরম্যাট প্রিভিউ:',
+        'none': 'কোনোটিই নয়',
+        'space': 'স্পেস',
+        'delete': 'মুছুন',
+        'popupWindow': 'পপআপ উইন্ডো',
+        'searchPlaceholder': 'মুদ্রা খুঁজুন...',
+        'noResults': 'কোনো মিল পাওয়া যায়নি',
+        'dotLabel': 'ডট',
+        'commaLabel': 'কমা'
+    },
+    'ru': {
+        'settings': 'Настройки',
+        'back': 'Назад',
+        'decimalSeparatorLabel': 'Десятичный разделитель',
+        'thousandsSeparatorLabel': 'Разделитель тысяч',
+        'decimalPlacesLabel': 'Десятичные знаки',
+        'languageLabel': 'Язык',
+        'previewLabel': 'Предпросмотр формата:',
+        'none': 'Нет',
+        'space': 'Пробел',
+        'delete': 'Удалить',
+        'popupWindow': 'Всплывающее окно',
+        'searchPlaceholder': 'Поиск валюты...',
+        'noResults': 'Нет совпадений',
+        'dotLabel': 'Точка',
+        'commaLabel': 'Запятая'
+    },
+    'ja': {
+        'settings': '設定',
+        'back': '戻る',
+        'decimalSeparatorLabel': '小数点区切り',
+        'thousandsSeparatorLabel': '桁区切り',
+        'decimalPlacesLabel': '小数点以下の桁数',
+        'languageLabel': '言語',
+        'previewLabel': '形式プレビュー:',
+        'none': 'なし',
+        'space': 'スペース',
+        'delete': '削除',
+        'popupWindow': 'ポップアップウィンドウ',
+        'searchPlaceholder': '通貨を検索...',
+        'noResults': '一致する結果がありません',
+        'dotLabel': 'ドット',
+        'commaLabel': 'カンマ'
+    },
+    'de': {
+        'settings': 'Einstellungen',
+        'back': 'Zurück',
+        'decimalSeparatorLabel': 'Dezimaltrennzeichen',
+        'thousandsSeparatorLabel': 'Tausendertrennzeichen',
+        'decimalPlacesLabel': 'Dezimalstellen',
+        'languageLabel': 'Sprache',
+        'previewLabel': 'Formatvorschau:',
+        'none': 'Keine',
+        'space': 'Leerzeichen',
+        'delete': 'Löschen',
+        'popupWindow': 'Popup-Fenster',
+        'searchPlaceholder': 'Währung suchen...',
+        'noResults': 'Keine Treffer',
+        'dotLabel': 'Punkt',
+        'commaLabel': 'Komma'
+    },
+    'fr': {
+        'settings': 'Paramètres',
+        'back': 'Retour',
+        'decimalSeparatorLabel': 'Séparateur décimal',
+        'thousandsSeparatorLabel': 'Séparateur des milliers',
+        'decimalPlacesLabel': 'Décimales',
+        'languageLabel': 'Langue',
+        'previewLabel': 'Aperçu du format:',
+        'none': 'Aucun',
+        'space': 'Espace',
+        'delete': 'Supprimer',
+        'popupWindow': 'Fenêtre pop-up',
+        'searchPlaceholder': 'Rechercher une devise...',
+        'noResults': 'Aucun résultat',
+        'dotLabel': 'Point',
+        'commaLabel': 'Virgule'
+    },
+    'ko': {
+        'settings': '설정',
+        'back': '뒤로',
+        'decimalSeparatorLabel': '소수 구분 기호',
+        'thousandsSeparatorLabel': '천 단위 구분 기호',
+        'decimalPlacesLabel': '소수 자릿수',
+        'languageLabel': '언어',
+        'previewLabel': '형식 미리보기:',
+        'none': '없음',
+        'space': '공백',
+        'delete': '삭제',
+        'popupWindow': '팝업 창',
+        'searchPlaceholder': '통화 검색...',
+        'noResults': '일치하는 결과 없음',
+        'dotLabel': '점',
+        'commaLabel': '쉼표'
+    }
+};
+
+Object.keys(settingsTranslations).forEach(lang => {
+    translations[lang] = {
+        ...translations['en'],
+        ...(translations[lang] || {}),
+        ...settingsTranslations[lang]
+    };
+});
+
 //取得用戶語言設定 (向後相容)
 async function getUserLanguage() {
     return currentLanguage;
@@ -159,18 +356,65 @@ function normalizeDecimalPlaces(value) {
     return [0, 1, 2].includes(places) ? places : 2;
 }
 
+function getSupportedLanguages(config = currencyConfig) {
+    const languages = [];
+    if (!config) return ['en'];
+
+    [...Object.values(config.fiat || {}), ...Object.values(config.crypto || {})].forEach(currency => {
+        Object.keys(currency.names || {}).forEach(lang => {
+            if (!languages.includes(lang)) {
+                languages.push(lang);
+            }
+        });
+    });
+
+    return languages.length ? languages : ['en'];
+}
+
+function resolveSupportedLanguage(language, supportedLanguages = getSupportedLanguages()) {
+    const supported = supportedLanguages.length ? supportedLanguages : ['en'];
+    const fallback = supported.includes('en') ? 'en' : supported[0];
+    if (!language) return fallback;
+
+    const candidate = String(language).replace('_', '-');
+    const exact = supported.find(lang => lang.toLowerCase() === candidate.toLowerCase());
+    if (exact) return exact;
+
+    const lowerCandidate = candidate.toLowerCase();
+    if (lowerCandidate.startsWith('zh')) {
+        if ((lowerCandidate.includes('hant') || lowerCandidate === 'zh-tw' || lowerCandidate === 'zh-hk' || lowerCandidate === 'zh-mo') && supported.includes('zh-TW')) {
+            return 'zh-TW';
+        }
+        if (lowerCandidate.includes('hans') && supported.includes('zh-CN')) return 'zh-CN';
+        if (supported.includes('zh-CN')) return 'zh-CN';
+        if (supported.includes('zh-TW')) return 'zh-TW';
+    }
+
+    const baseLanguage = lowerCandidate.split('-')[0];
+    const base = supported.find(lang => lang.toLowerCase() === baseLanguage);
+    return base || fallback;
+}
+
 // 加載用戶設定與多語系
 async function loadUserSettings() {
     return new Promise((resolve) => {
         chrome.storage.sync.get(['userSettings', 'userLanguage'], function(result) {
             let migrated = false;
             let settings = result.userSettings;
+            const supportedLanguages = getSupportedLanguages();
 
             if (settings) {
                 currentDecimalSeparator = settings.decimalSeparator || '.';
                 currentThousandsSeparator = settings.thousandsSeparator !== undefined ? settings.thousandsSeparator : ',';
                 currentDecimalPlaces = normalizeDecimalPlaces(settings.decimalPlaces);
-                currentLanguage = settings.userLanguage || '';
+                if (settings.userLanguage) {
+                    currentLanguage = resolveSupportedLanguage(settings.userLanguage, supportedLanguages);
+                    if (currentLanguage !== settings.userLanguage) {
+                        migrated = true;
+                    }
+                } else {
+                    currentLanguage = '';
+                }
                 if (settings.decimalPlaces === undefined) {
                     migrated = true;
                 }
@@ -184,19 +428,11 @@ async function loadUserSettings() {
             // 處理向後相容性與遷移 (Migration to userSettings)
             if (!currentLanguage) {
                 if (result.userLanguage) {
-                    currentLanguage = result.userLanguage;
+                    currentLanguage = resolveSupportedLanguage(result.userLanguage, supportedLanguages);
                     migrated = true;
                 } else {
-                    const browserLang = navigator.language || navigator.userLanguage;
-                    if (browserLang.startsWith('zh')) {
-                        if (browserLang === 'zh-TW' || browserLang === 'zh-HK') {
-                            currentLanguage = 'zh-TW';
-                        } else {
-                            currentLanguage = 'zh-CN';
-                        }
-                    } else {
-                        currentLanguage = 'en';
-                    }
+                    const browserLang = (navigator.languages && navigator.languages[0]) || navigator.language || navigator.userLanguage;
+                    currentLanguage = resolveSupportedLanguage(browserLang, supportedLanguages);
                     migrated = true;
                 }
             }
@@ -278,6 +514,18 @@ function updateSegmentedControl(containerId, value) {
     });
 }
 
+function populateLanguageSelect(select) {
+    if (!select) return;
+    const supportedLanguages = getSupportedLanguages();
+    select.innerHTML = '';
+    supportedLanguages.forEach(lang => {
+        const option = document.createElement('option');
+        option.value = lang;
+        option.textContent = languageLabels[lang] || lang;
+        select.appendChild(option);
+    });
+}
+
 // 初始化設定面板 UI
 function initSettingsUI() {
     const decimalSepToggle = document.getElementById('decimal-separator-toggle');
@@ -318,6 +566,7 @@ function initSettingsUI() {
     }
 
     if (languageSelect) {
+        populateLanguageSelect(languageSelect);
         languageSelect.value = currentLanguage || 'en';
         languageSelect.addEventListener('change', (e) => {
             currentLanguage = e.target.value;
@@ -359,6 +608,8 @@ function saveUserSettingsAndRefresh() {
 
 // 套用語系翻譯 (US4)
 function applyLanguage(lang) {
+    document.documentElement.lang = lang;
+
     // 翻譯所有帶有 data-i18n 屬性的元素
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
@@ -1375,12 +1626,12 @@ function showError(message) {
 
 // 在初始化函數中設置語言
 async function initialize() {
-    await loadUserSettings();
-    applyLanguage(currentLanguage);
     await loadCurrencyConfig();
     if (!currencyConfig) {
         throw new Error('Failed to load currency config');
     }
+    await loadUserSettings();
+    applyLanguage(currentLanguage);
     await initCurrencyList();
     initSortable();
     updateDeleteButtons();
