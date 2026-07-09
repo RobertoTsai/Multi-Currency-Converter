@@ -1468,7 +1468,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (currencySearch && clearSearchButton) {
         currencySearch.addEventListener('input', (e) => {
             currentSearchTerm = e.target.value;
-            clearSearchButton.style.display = currentSearchTerm ? 'block' : 'none';
+            clearSearchButton.style.display = currentSearchTerm ? 'flex' : 'none';
             populateAllCurrencies();
         });
 
