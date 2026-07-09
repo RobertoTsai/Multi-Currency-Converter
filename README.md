@@ -23,3 +23,8 @@ https://chromewebstore.google.com/detail/multi-currency-converter/pdijoelkgapghg
 Effortlessly manage your multi-currency calculations with Multi-Currency Converter. Whether you're planning a trip, making international purchases, or monitoring your investments, our extension provides you with accurate, up-to-date conversions at your fingertips. The built-in calculator allows you to perform basic arithmetic operations directly in the currency input field, making it even more convenient for quick calculations and conversions.
 
 Simplify your currency conversions today – add Multi-Currency Converter to your Chrome browser and experience the convenience of instant, multi-currency calculations!
+
+## Release Notes
+### Version 1.4
+- Added a new decimal places setting, allowing conversion results to display 0, 1, or 2 decimal places.
+- Expanded Settings language support to more languages, including automatic browser language matching when available.
