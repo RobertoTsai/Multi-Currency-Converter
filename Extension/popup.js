@@ -1439,7 +1439,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // 返回按鈕事件
     backButton.addEventListener('click', () => {
         settingsView.style.display = 'none';
-        mainView.style.display = 'block';
+        mainView.style.display = 'flex';
     });
 
     // 添加貨幣按鈕

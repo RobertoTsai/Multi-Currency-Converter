@@ -83,11 +83,20 @@ h1 {
 
 .content-wrapper {
     flex-grow: 1;
+    min-height: 0;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 2px 0;
     display: flex;
     flex-direction: column;
+}
+
+#main-view {
+    flex: 0 0 380px;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .content-wrapper::-webkit-scrollbar,
@@ -429,6 +438,11 @@ body.popup-window .content-wrapper {
     overflow-y: auto;
 }
 
+body.popup-window #main-view,
+body.popup-window #settings-view {
+    flex: 1 1 auto;
+}
+
 .flag-icon {
     font-size: 16px;
     /* 調整大小以適應表情符號 */
@@ -631,11 +645,9 @@ body.popup-window .content-wrapper {
 }
 
 #settings-view {
-    flex-grow: 1;
-    display: flex;
+    flex: 0 0 380px;
+    min-height: 0;
     flex-direction: column;
-    height: calc(100% - 48px);
-    /* Height minus header */
     box-sizing: border-box;
     overflow: hidden;
 }
@@ -643,14 +655,15 @@ body.popup-window .content-wrapper {
 .settings-header {
     display: flex;
     align-items: center;
-    padding: 12px 15px;
+    padding: 8px 15px;
     border-bottom: 1px solid var(--border-color);
-    gap: 12px;
+    gap: 10px;
 }
 
 .settings-header h2 {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
+    line-height: 1.2;
     margin: 0;
     color: var(--text-color);
 }
@@ -659,11 +672,11 @@ body.popup-window .content-wrapper {
     background: none;
     border: none;
     color: var(--accent-color);
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
     padding: 0;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 6px;
     transition: transform 0.2s, color 0.2s, background-color 0.2s;
     display: flex;
@@ -681,13 +694,14 @@ body.popup-window .content-wrapper {
 }
 
 .settings-content {
-    padding: 16px 15px 18px;
+    padding: 14px 15px 16px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
     overflow-y: auto;
     overflow-x: hidden;
     flex-grow: 1;
+    min-height: 0;
 }
 
 .settings-group {
@@ -706,13 +720,21 @@ body.popup-window .content-wrapper {
 
 .settings-group select {
     background-color: var(--hover-color);
+    background-image: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23B3C3D9' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 14px;
     border: 1px solid var(--border-color);
     color: var(--text-color);
-    padding: 9px 12px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 9px 38px 9px 12px;
     border-radius: 6px;
     font-size: 14px;
     outline: none;
     cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
     transition: border-color 0.2s, background-color 0.2s;
 }
 
@@ -752,7 +774,7 @@ body.popup-window .content-wrapper {
     background-color: var(--hover-color);
     border: 1px solid var(--border-color);
     border-radius: 6px;
-    padding: 3px;
+    padding: 2px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -767,8 +789,8 @@ body.popup-window .content-wrapper {
     background: transparent;
     border: none;
     color: var(--secondary-text-color);
-    min-height: 44px;
-    padding: 7px 4px;
+    min-height: 34px;
+    padding: 4px;
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -776,13 +798,13 @@ body.popup-window .content-wrapper {
 }
 
 .segmented-item .symbol-large {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     line-height: 1;
 }
 
 .segmented-item .symbol-name {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 500;
     opacity: 0.8;
 }
