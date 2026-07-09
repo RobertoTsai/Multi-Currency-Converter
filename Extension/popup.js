@@ -16,6 +16,7 @@ const CURRENCY_INFO_CACHE_DURATION = 7 * 24 * 60 * 60 * 1000; // 7天的毫秒�
 let currentLanguage = 'en'; 
 let currentDecimalSeparator = '.';
 let currentThousandsSeparator = ',';
+let currentDecimalPlaces = 2;
 let allCurrencies = {};
 let lastEditedCurrency = 'USD';
 let lastEditedAmount = 100;
@@ -38,6 +39,7 @@ const translations = {
         'back': 'Back',
         'decimalSeparatorLabel': 'Decimal Separator',
         'thousandsSeparatorLabel': 'Thousands Separator',
+        'decimalPlacesLabel': 'Decimal Places',
         'languageLabel': 'Language',
         'previewLabel': 'Format Preview:',
         'none': 'None',
@@ -58,6 +60,7 @@ const translations = {
         'back': '返回',
         'decimalSeparatorLabel': '小數點格式',
         'thousandsSeparatorLabel': '千分位設定',
+        'decimalPlacesLabel': '小數位數',
         'languageLabel': '語言設定',
         'previewLabel': '格式預覽:',
         'none': '無',
@@ -78,6 +81,7 @@ const translations = {
         'back': '返回',
         'decimalSeparatorLabel': '小数点格式',
         'thousandsSeparatorLabel': '千分位设置',
+        'decimalPlacesLabel': '小数位数',
         'languageLabel': '语言设置',
         'previewLabel': '格式预览:',
         'none': '无',
@@ -150,6 +154,11 @@ async function getUserLanguage() {
     return currentLanguage;
 }
 
+function normalizeDecimalPlaces(value) {
+    const places = Number(value);
+    return [0, 1, 2].includes(places) ? places : 2;
+}
+
 // 加載用戶設定與多語系
 async function loadUserSettings() {
     return new Promise((resolve) => {
@@ -160,10 +169,15 @@ async function loadUserSettings() {
             if (settings) {
                 currentDecimalSeparator = settings.decimalSeparator || '.';
                 currentThousandsSeparator = settings.thousandsSeparator !== undefined ? settings.thousandsSeparator : ',';
+                currentDecimalPlaces = normalizeDecimalPlaces(settings.decimalPlaces);
                 currentLanguage = settings.userLanguage || '';
+                if (settings.decimalPlaces === undefined) {
+                    migrated = true;
+                }
             } else {
                 currentDecimalSeparator = '.';
                 currentThousandsSeparator = ',';
+                currentDecimalPlaces = 2;
                 currentLanguage = '';
             }
 
@@ -192,6 +206,7 @@ async function loadUserSettings() {
                     userSettings: {
                         decimalSeparator: currentDecimalSeparator,
                         thousandsSeparator: currentThousandsSeparator,
+                        decimalPlaces: currentDecimalPlaces,
                         userLanguage: currentLanguage
                     }
                 });
@@ -202,45 +217,31 @@ async function loadUserSettings() {
 }
 
 // 客製化數字格式化函數
-function formatCustomNumber(value, decimalSep, thousandsSep) {
+function formatCustomNumber(value, decimalSep, thousandsSep, decimalPlaces = 2) {
+    const places = normalizeDecimalPlaces(decimalPlaces);
     const number = Number(value);
-    if (isNaN(number)) return "0" + decimalSep + "00";
+    const safeNumber = isNaN(number) ? 0 : number;
 
     // 處理負數符號
-    const isNegative = number < 0;
-    const absNumber = Math.abs(number);
+    const isNegative = safeNumber < 0;
+    const absNumber = Math.abs(safeNumber);
 
     let integerPart = "";
     let decimalPart = "";
 
-    // 處理非常微小的數字
-    if (absNumber > 0 && absNumber < 0.01) {
-        let precision = 2;
-        while (Number(absNumber.toFixed(precision)) === 0 && precision < 8) {
-            precision++;
+    let displayPlaces = places;
+    if (absNumber > 0) {
+        if (absNumber < 1) {
+            displayPlaces = Math.max(displayPlaces, 2);
         }
-        let formattedStr = absNumber.toFixed(precision);
-        // 移除尾部的 0
-        formattedStr = formattedStr.replace(/\.?0+$/, "");
-        
-        if (!formattedStr.includes('.')) {
-            formattedStr += '.00';
-        } else {
-            const parts = formattedStr.split('.');
-            if (parts[1].length === 1) {
-                formattedStr += '0';
-            }
+        while (Number(absNumber.toFixed(displayPlaces)) === 0 && displayPlaces < 8) {
+            displayPlaces++;
         }
-        
-        const parts = formattedStr.split('.');
-        integerPart = parts[0];
-        decimalPart = parts[1] || "";
-    } else {
-        // 正常數值保留兩位小數
-        const parts = absNumber.toFixed(2).split('.');
-        integerPart = parts[0];
-        decimalPart = parts[1];
     }
+
+    const parts = absNumber.toFixed(displayPlaces).split('.');
+    integerPart = parts[0];
+    decimalPart = parts[1] || "";
 
     // 為整數部分添加自訂千分位分隔符
     if (thousandsSep !== undefined && thousandsSep !== "") {
@@ -259,7 +260,7 @@ function formatCustomNumber(value, decimalSep, thousandsSep) {
 function updateFormatPreview() {
     const formatPreview = document.getElementById('format-preview');
     if (formatPreview) {
-        formatPreview.textContent = formatCustomNumber(12345.67, currentDecimalSeparator, currentThousandsSeparator);
+        formatPreview.textContent = formatCustomNumber(12345.67, currentDecimalSeparator, currentThousandsSeparator, currentDecimalPlaces);
     }
 }
 
@@ -281,6 +282,7 @@ function updateSegmentedControl(containerId, value) {
 function initSettingsUI() {
     const decimalSepToggle = document.getElementById('decimal-separator-toggle');
     const thousandsSepToggle = document.getElementById('thousands-separator-toggle');
+    const decimalPlacesSelect = document.getElementById('decimal-places-select');
     const languageSelect = document.getElementById('language-select');
 
     if (decimalSepToggle) {
@@ -303,6 +305,14 @@ function initSettingsUI() {
             currentThousandsSeparator = btn.getAttribute('data-value');
             updateSegmentedControl('thousands-separator-toggle', currentThousandsSeparator);
             handleSeparatorConflict('thousands');
+            saveUserSettingsAndRefresh();
+        });
+    }
+
+    if (decimalPlacesSelect) {
+        decimalPlacesSelect.value = String(currentDecimalPlaces);
+        decimalPlacesSelect.addEventListener('change', (e) => {
+            currentDecimalPlaces = normalizeDecimalPlaces(e.target.value);
             saveUserSettingsAndRefresh();
         });
     }
@@ -338,6 +348,7 @@ function saveUserSettingsAndRefresh() {
         userSettings: {
             decimalSeparator: currentDecimalSeparator,
             thousandsSeparator: currentThousandsSeparator,
+            decimalPlaces: currentDecimalPlaces,
             userLanguage: currentLanguage
         }
     }, () => {
@@ -755,8 +766,7 @@ function handleAmountInput(event) {
                 const currency = item.dataset.currency;
                 if (currency !== input.dataset.currency) {
                     const convertedAmount = convert(roundedResult, input.dataset.currency, currency);
-                    const currencyInput = item.querySelector('.amount-input');
-                    currencyInput.value = formatConversionResult(convertedAmount);
+                    updateCurrencyAmount(currency, convertedAmount);
                 }
             });
             
@@ -1297,7 +1307,7 @@ function formatUserInput(num) {
     if (typeof num === 'string' && /[+\-*/]/.test(num)) {
         return num;
     }
-    return formatCustomNumber(num, currentDecimalSeparator, currentThousandsSeparator);
+    return formatCustomNumber(num, currentDecimalSeparator, currentThousandsSeparator, currentDecimalPlaces);
 }
 
 // 修改解析格式化數字的函數
@@ -1319,7 +1329,7 @@ function parseFormattedNumber(str) {
 
 // 新增处理转换结果的格式化函数
 function formatConversionResult(num) {
-    return formatCustomNumber(num, currentDecimalSeparator, currentThousandsSeparator);
+    return formatCustomNumber(num, currentDecimalSeparator, currentThousandsSeparator, currentDecimalPlaces);
 }
 
 // 保存數據到快取
